@@ -43,6 +43,11 @@ AVAppShellScaffold(
     footerPlayer: { footerPlayer },
     assistantIcon: { isSelected in assistantIcon(isSelected) }
 )
+
+AVAppShellShowMoreButton(
+    title: "Show 12 more",
+    action: showMore
+)
 ```
 
 The product owns reusable shell layout, footer glass styling, tab affordances, and assistant entry treatment. Product-specific apps keep their own tab model, localized labels, assistant assets, navigation, playback, and business rules.
