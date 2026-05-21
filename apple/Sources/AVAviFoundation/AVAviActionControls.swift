@@ -247,6 +247,43 @@ public struct AVAviPreviewPrimaryButton: View {
     }
 }
 
+public struct AVAviPreviewCapabilityRow: View {
+    private let systemImage: String
+    private let title: String
+    private let detail: String
+
+    public init(systemImage: String, title: String, detail: String) {
+        self.systemImage = systemImage
+        self.title = title
+        self.detail = detail
+    }
+
+    public var body: some View {
+        HStack(alignment: .top, spacing: AVBrandSpacing.md) {
+            Image(systemName: systemImage)
+                .font(.system(size: 13, weight: .black))
+                .foregroundStyle(AVBrandColor.accent)
+                .frame(width: 30, height: 30)
+                .background(AVBrandColor.accent.opacity(0.1), in: Circle())
+
+            VStack(alignment: .leading, spacing: 3) {
+                Text(title)
+                    .font(.system(size: 14, weight: .black, design: .rounded))
+                    .foregroundStyle(AVBrandColor.textPrimary)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.82)
+
+                Text(detail)
+                    .font(.system(size: 12, weight: .semibold, design: .rounded))
+                    .foregroundStyle(AVBrandColor.textSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .accessibilityElement(children: .combine)
+    }
+}
+
 public struct AVAviPreviewSecondaryButton: View {
     private let title: String
     private let systemImage: String
