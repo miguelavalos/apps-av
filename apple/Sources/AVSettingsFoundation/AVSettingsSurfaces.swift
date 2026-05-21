@@ -81,6 +81,62 @@ public struct AVSettingsScreenHeader: View {
     }
 }
 
+public struct AVSettingsSheetScaffold<Content: View>: View {
+    private let spacing: CGFloat
+    private let horizontalPadding: CGFloat
+    private let topPadding: CGFloat
+    private let bottomPadding: CGFloat
+    private let backgroundColor: Color
+    private let closeTitle: String?
+    private let closeAccessibilityIdentifier: String?
+    private let onClose: (() -> Void)?
+    private let content: Content
+
+    public init(
+        spacing: CGFloat = 22,
+        horizontalPadding: CGFloat = 20,
+        topPadding: CGFloat = 22,
+        bottomPadding: CGFloat = 28,
+        backgroundColor: Color = AVBrandColor.footerBackdrop,
+        closeTitle: String? = nil,
+        closeAccessibilityIdentifier: String? = nil,
+        onClose: (() -> Void)? = nil,
+        @ViewBuilder content: () -> Content
+    ) {
+        self.spacing = spacing
+        self.horizontalPadding = horizontalPadding
+        self.topPadding = topPadding
+        self.bottomPadding = bottomPadding
+        self.backgroundColor = backgroundColor
+        self.closeTitle = closeTitle
+        self.closeAccessibilityIdentifier = closeAccessibilityIdentifier
+        self.onClose = onClose
+        self.content = content()
+    }
+
+    public var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: spacing) {
+                    content
+                }
+                .padding(.horizontal, horizontalPadding)
+                .padding(.top, topPadding)
+                .padding(.bottom, bottomPadding)
+            }
+            .background(backgroundColor.ignoresSafeArea())
+            .toolbar {
+                if let closeTitle, let onClose {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button(closeTitle, action: onClose)
+                            .applyAccessibilityIdentifier(closeAccessibilityIdentifier)
+                    }
+                }
+            }
+        }
+    }
+}
+
 public struct AVSettingsNoticeCard: View {
     private let systemImage: String
     private let title: String
@@ -478,5 +534,16 @@ private struct AVSettingsRowBackground: View {
                 RoundedRectangle(cornerRadius: AVBrandRadius.row, style: .continuous)
                     .stroke(AVBrandColor.borderSubtle, lineWidth: 1)
             }
+    }
+}
+
+private extension View {
+    @ViewBuilder
+    func applyAccessibilityIdentifier(_ identifier: String?) -> some View {
+        if let identifier {
+            accessibilityIdentifier(identifier)
+        } else {
+            self
+        }
     }
 }
