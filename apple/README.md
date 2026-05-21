@@ -85,6 +85,9 @@ AVSettingsSectionHeader(title: "Account", subtitle: "Manage your AV account")
 AVSettingsNoticeCard(systemImage: "person.2", title: "Shared account", detail: "This affects all AV apps.")
 AVSettingsStatusCard(systemImage: "checkmark.shield", title: "Ready", detail: "Your account is eligible.")
 AVSettingsDetailCard(title: "Subscription", detail: "Manage your billing before deleting.", linkTitle: "Manage", linkDestination: billingURL)
+AVSettingsDetailList(items: [
+    AVSettingsDetailListItem(id: "subscription", title: "Active subscription", detail: "Manage billing first.", linkTitle: "Manage", linkDestination: billingURL)
+])
 AVSettingsTextField("DELETE", text: $confirmationText, accessibilityIdentifier: "account.confirmation")
 AVSettingsLoadingState("Loading account")
 AVSettingsDestructiveActionCard(sectionTitle: "Danger zone", systemImage: "trash", title: "Clear data", detail: "Remove local data") { }
