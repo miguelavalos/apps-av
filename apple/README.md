@@ -108,6 +108,12 @@ AVAviPreviewPrimaryButton(
     accessibilityIdentifier: "avi.preview.primary",
     action: start
 )
+
+AVAviPreviewCapabilityRow(
+    systemImage: "text.quote",
+    title: "Understands context",
+    detail: "Uses current app signals to suggest next steps"
+)
 ```
 
 The product owns shared companion cards, headers, command controls, panel chrome, and generic reaction effects. Host apps keep their Avi personality model, assets, recommendation logic, playback, account state, and localized copy.
