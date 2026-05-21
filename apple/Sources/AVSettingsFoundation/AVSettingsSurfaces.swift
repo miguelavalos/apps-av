@@ -1,0 +1,201 @@
+import AVBrandFoundation
+import SwiftUI
+
+public struct AVSettingsCardBackground: View {
+    private let cornerRadius: CGFloat
+
+    public init(cornerRadius: CGFloat = AVBrandRadius.sheet) {
+        self.cornerRadius = cornerRadius
+    }
+
+    public var body: some View {
+        RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+            .fill(AVBrandColor.cardSurface)
+            .overlay {
+                RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                    .stroke(AVBrandColor.borderSubtle, lineWidth: 1)
+            }
+    }
+}
+
+public struct AVSettingsSectionHeader: View {
+    private let title: String
+    private let subtitle: String
+
+    public init(title: String, subtitle: String) {
+        self.title = title
+        self.subtitle = subtitle
+    }
+
+    public var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(title)
+                .font(.system(size: 20, weight: .bold))
+                .foregroundStyle(AVBrandColor.textPrimary)
+
+            Text(subtitle)
+                .font(.system(size: 14, weight: .medium))
+                .foregroundStyle(AVBrandColor.textSecondary)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+}
+
+public struct AVSettingsInfoRow: View {
+    private let systemImage: String
+    private let title: String
+    private let detail: String
+
+    public init(systemImage: String, title: String, detail: String) {
+        self.systemImage = systemImage
+        self.title = title
+        self.detail = detail
+    }
+
+    public var body: some View {
+        AVSettingsRowLayout(systemImage: systemImage, title: title, detail: detail)
+    }
+}
+
+public struct AVSettingsActionRow: View {
+    private let systemImage: String
+    private let title: String
+    private let detail: String
+    private let action: () -> Void
+
+    public init(
+        systemImage: String,
+        title: String,
+        detail: String,
+        action: @escaping () -> Void
+    ) {
+        self.systemImage = systemImage
+        self.title = title
+        self.detail = detail
+        self.action = action
+    }
+
+    public var body: some View {
+        Button(action: action) {
+            AVSettingsRowLayout(systemImage: systemImage, title: title, detail: detail) {
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(AVBrandColor.textSecondary.opacity(0.7))
+                    .padding(.top, 4)
+            }
+            .padding(16)
+            .background(AVSettingsRowBackground())
+        }
+        .buttonStyle(.plain)
+    }
+}
+
+public struct AVSettingsToggleRow: View {
+    private let systemImage: String
+    private let title: String
+    private let detail: String
+    @Binding private var isOn: Bool
+
+    public init(
+        systemImage: String,
+        title: String,
+        detail: String,
+        isOn: Binding<Bool>
+    ) {
+        self.systemImage = systemImage
+        self.title = title
+        self.detail = detail
+        _isOn = isOn
+    }
+
+    public var body: some View {
+        AVSettingsRowLayout(systemImage: systemImage, title: title, detail: detail) {
+            Toggle("", isOn: $isOn)
+                .labelsHidden()
+        }
+        .padding(16)
+        .background(AVSettingsRowBackground())
+    }
+}
+
+public struct AVSettingsInlineActionRow: View {
+    private let systemImage: String
+    private let title: String
+    private let detail: String
+    private let actionTitle: String
+    private let action: () -> Void
+
+    public init(
+        systemImage: String,
+        title: String,
+        detail: String,
+        actionTitle: String,
+        action: @escaping () -> Void
+    ) {
+        self.systemImage = systemImage
+        self.title = title
+        self.detail = detail
+        self.actionTitle = actionTitle
+        self.action = action
+    }
+
+    public var body: some View {
+        AVSettingsRowLayout(systemImage: systemImage, title: title, detail: detail) {
+            Button(actionTitle, action: action)
+                .font(.system(size: 13, weight: .bold))
+                .foregroundStyle(AVBrandColor.accent)
+                .buttonStyle(.plain)
+        }
+        .padding(16)
+        .background(AVSettingsRowBackground())
+    }
+}
+
+private struct AVSettingsRowLayout<Trailing: View>: View {
+    let systemImage: String
+    let title: String
+    let detail: String
+    @ViewBuilder var trailing: () -> Trailing
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 12) {
+            Image(systemName: systemImage)
+                .font(.system(size: 16, weight: .semibold))
+                .foregroundStyle(AVBrandColor.accent)
+                .frame(width: 22)
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                    .font(.system(size: 15, weight: .semibold))
+                    .foregroundStyle(AVBrandColor.textPrimary)
+
+                Text(detail)
+                    .font(.system(size: 13, weight: .medium))
+                    .foregroundStyle(AVBrandColor.textSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
+            trailing()
+        }
+    }
+}
+
+private extension AVSettingsRowLayout where Trailing == EmptyView {
+    init(systemImage: String, title: String, detail: String) {
+        self.systemImage = systemImage
+        self.title = title
+        self.detail = detail
+        self.trailing = { EmptyView() }
+    }
+}
+
+private struct AVSettingsRowBackground: View {
+    var body: some View {
+        RoundedRectangle(cornerRadius: AVBrandRadius.row, style: .continuous)
+            .fill(AVBrandColor.mutedSurface)
+            .overlay {
+                RoundedRectangle(cornerRadius: AVBrandRadius.row, style: .continuous)
+                    .stroke(AVBrandColor.borderSubtle, lineWidth: 1)
+            }
+    }
+}

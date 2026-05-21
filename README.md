@@ -16,6 +16,12 @@ The Apple Swift package lives in `apple/`.
 
 Current products:
 
+- `AVBrandFoundation`: shared brand tokens for Apple app UI foundations
+- `AVAppShellFoundation`: shared Apple app shell scaffold primitives
+- `AVLaunchFoundation`: shared Apple splash and launch transition primitives
+- `AVSettingsFoundation`: shared Apple settings, account, and legal surface primitives
+- `AVAviFoundation`: shared Apple Avi UI primitives without app-specific behavior
+- `AVPaywallFoundation`: shared Apple paywall and upgrade prompt UI primitives
 - `AVHaptics`: semantic haptics for common app events
 
 During local development, apps can add the Apple package by path. For app repositories that live next to this package, use the relative path that matches the app project. For example, from `public/tune-av/apps/ios` the package path is `../../../apps-av/apple`.
