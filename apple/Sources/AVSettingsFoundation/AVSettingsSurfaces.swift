@@ -247,6 +247,36 @@ public struct AVSettingsDetailCard: View {
     }
 }
 
+public struct AVSettingsTextField: View {
+    private let placeholder: String
+    @Binding private var text: String
+    private let accessibilityIdentifier: String?
+
+    public init(
+        _ placeholder: String,
+        text: Binding<String>,
+        accessibilityIdentifier: String? = nil
+    ) {
+        self.placeholder = placeholder
+        _text = text
+        self.accessibilityIdentifier = accessibilityIdentifier
+    }
+
+    public var body: some View {
+        TextField(placeholder, text: $text)
+            .padding(14)
+            .background(
+                AVBrandColor.mutedSurface,
+                in: RoundedRectangle(cornerRadius: AVBrandRadius.sm, style: .continuous)
+            )
+            .overlay {
+                RoundedRectangle(cornerRadius: AVBrandRadius.sm, style: .continuous)
+                    .stroke(AVBrandColor.borderSubtle, lineWidth: 1)
+            }
+            .applyAccessibilityIdentifier(accessibilityIdentifier)
+    }
+}
+
 public struct AVSettingsDestructiveActionCard: View {
     private let sectionTitle: String
     private let systemImage: String
