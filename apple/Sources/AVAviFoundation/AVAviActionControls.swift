@@ -160,6 +160,46 @@ public struct AVAviActionButton: View {
     }
 }
 
+public struct AVAviPrimaryActionButton: View {
+    private let title: String
+    private let systemImage: String
+    private let accessibilityIdentifier: String?
+    private let action: () -> Void
+
+    public init(
+        title: String,
+        systemImage: String,
+        accessibilityIdentifier: String? = nil,
+        action: @escaping () -> Void
+    ) {
+        self.title = title
+        self.systemImage = systemImage
+        self.accessibilityIdentifier = accessibilityIdentifier
+        self.action = action
+    }
+
+    public var body: some View {
+        Button(action: action) {
+            HStack(spacing: AVBrandSpacing.xs) {
+                Image(systemName: systemImage)
+                    .font(.system(size: 13, weight: .black))
+
+                Text(title)
+                    .font(.system(size: 13, weight: .black))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.82)
+            }
+            .foregroundStyle(AVBrandColor.textInverse)
+            .frame(maxWidth: .infinity)
+            .frame(height: 44)
+            .background(AVBrandColor.accent, in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(title)
+        .accessibilityIdentifierIfPresent(accessibilityIdentifier)
+    }
+}
+
 public struct AVAviPromptButton: View {
     private let title: String
     private let systemImage: String
