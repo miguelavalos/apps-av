@@ -21,6 +21,7 @@ public enum AVBrandColor {
     public static let neutral800 = Color(red: 26 / 255, green: 29 / 255, blue: 27 / 255)
 
     public static let accent = brandAccent
+    public static let destructive = Color(red: 0.84, green: 0.16, blue: 0.22)
     public static let textPrimary = dynamicColor(
         light: AVBrandPlatformColor(red: 58 / 255, green: 58 / 255, blue: 54 / 255, alpha: 1),
         dark: AVBrandPlatformColor(red: 242 / 255, green: 245 / 255, blue: 243 / 255, alpha: 1)

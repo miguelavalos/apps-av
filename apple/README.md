@@ -83,6 +83,8 @@ AVSettingsStatusCard(systemImage: "checkmark.shield", title: "Ready", detail: "Y
 AVSettingsInfoRow(systemImage: "person.crop.circle", title: "Account", detail: "Signed in")
 AVSettingsToggleRow(systemImage: "bell", title: "Alerts", detail: "Show important warnings", isOn: $isOn)
 AVSettingsButton(title: "Continue", style: .primary) { }
+AVSettingsButton(title: "Delete account", style: .destructivePrimary, isLoading: isDeleting) { }
+AVSettingsLinkButton(title: "Manage account", systemImage: "safari", destination: accountURL)
 AVSettingsOptionButton(title: "System", systemImage: "gearshape", isSelected: true) { }
 AVSettingsGroupedActionList(title: "Local data") {
     AVSettingsGroupedActionRow(

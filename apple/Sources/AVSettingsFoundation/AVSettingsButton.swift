@@ -6,6 +6,7 @@ public struct AVSettingsButton: View {
         case primary
         case secondary
         case destructive
+        case destructivePrimary
     }
 
     private let title: String
@@ -31,7 +32,7 @@ public struct AVSettingsButton: View {
                 Text(title)
                     .font(.system(size: 15, weight: .bold))
 
-                if style != .primary {
+                if style != .primary && style != .destructivePrimary {
                     Spacer()
                 }
 
@@ -43,11 +44,11 @@ public struct AVSettingsButton: View {
             .foregroundStyle(titleTint)
             .frame(maxWidth: .infinity)
             .frame(height: 48)
-            .padding(.horizontal, style == .primary ? 0 : 18)
+            .padding(.horizontal, style == .primary || style == .destructivePrimary ? 0 : 18)
             .background(backgroundShape)
             .overlay {
                 RoundedRectangle(cornerRadius: AVBrandRadius.footerSelection, style: .continuous)
-                    .stroke(borderTint, lineWidth: style == .primary ? 0 : 1)
+                    .stroke(borderTint, lineWidth: style == .primary || style == .destructivePrimary ? 0 : 1)
             }
         }
         .buttonStyle(.plain)
@@ -62,6 +63,8 @@ public struct AVSettingsButton: View {
         switch style {
         case .primary:
             AVBrandColor.accent
+        case .destructivePrimary:
+            AVBrandColor.destructive
         case .secondary, .destructive:
             AVBrandColor.cardSurface
         }
@@ -71,21 +74,23 @@ public struct AVSettingsButton: View {
         switch style {
         case .primary:
             AVBrandColor.brandBlack
+        case .destructivePrimary:
+            .white
         case .secondary:
             AVBrandColor.textPrimary
         case .destructive:
-            Color(red: 0.84, green: 0.16, blue: 0.22)
+            AVBrandColor.destructive
         }
     }
 
     private var borderTint: Color {
         switch style {
-        case .primary:
+        case .primary, .destructivePrimary:
             .clear
         case .secondary:
             AVBrandColor.borderSubtle
         case .destructive:
-            Color(red: 0.84, green: 0.16, blue: 0.22).opacity(0.18)
+            AVBrandColor.destructive.opacity(0.18)
         }
     }
 
@@ -93,8 +98,40 @@ public struct AVSettingsButton: View {
         switch style {
         case .primary:
             AVBrandColor.brandBlack
+        case .destructivePrimary:
+            .white
         case .secondary, .destructive:
             AVBrandColor.textPrimary
+        }
+    }
+}
+
+public struct AVSettingsLinkButton: View {
+    private let title: String
+    private let systemImage: String
+    private let destination: URL
+
+    public init(title: String, systemImage: String, destination: URL) {
+        self.title = title
+        self.systemImage = systemImage
+        self.destination = destination
+    }
+
+    public var body: some View {
+        Link(destination: destination) {
+            Label(title, systemImage: systemImage)
+                .font(.system(size: 15, weight: .bold))
+                .foregroundStyle(AVBrandColor.textPrimary)
+                .frame(maxWidth: .infinity)
+                .frame(height: 48)
+                .background(
+                    AVBrandColor.cardSurface,
+                    in: RoundedRectangle(cornerRadius: AVBrandRadius.footerSelection, style: .continuous)
+                )
+                .overlay {
+                    RoundedRectangle(cornerRadius: AVBrandRadius.footerSelection, style: .continuous)
+                        .stroke(AVBrandColor.borderSubtle, lineWidth: 1)
+                }
         }
     }
 }
