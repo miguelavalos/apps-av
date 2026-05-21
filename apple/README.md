@@ -77,6 +77,7 @@ Use `AVSplashTransitionPolicy` from the host app to keep launch timing consisten
 import AVSettingsFoundation
 
 AVSettingsCardBackground()
+AVSettingsScreenHeader(title: "Settings", subtitle: "Manage account and preferences")
 AVSettingsSectionHeader(title: "Account", subtitle: "Manage your AV account")
 AVSettingsNoticeCard(systemImage: "person.2", title: "Shared account", detail: "This affects all AV apps.")
 AVSettingsStatusCard(systemImage: "checkmark.shield", title: "Ready", detail: "Your account is eligible.")
