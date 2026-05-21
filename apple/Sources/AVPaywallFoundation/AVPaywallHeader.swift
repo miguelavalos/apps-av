@@ -5,11 +5,21 @@ public struct AVPaywallHeader: View {
     private let eyebrow: String
     private let title: String
     private let subtitle: String
+    private let titleFontSize: CGFloat
+    private let subtitleFontSize: CGFloat
 
-    public init(eyebrow: String, title: String, subtitle: String) {
+    public init(
+        eyebrow: String,
+        title: String,
+        subtitle: String,
+        titleFontSize: CGFloat = 30,
+        subtitleFontSize: CGFloat = 15
+    ) {
         self.eyebrow = eyebrow
         self.title = title
         self.subtitle = subtitle
+        self.titleFontSize = titleFontSize
+        self.subtitleFontSize = subtitleFontSize
     }
 
     public var body: some View {
@@ -20,13 +30,13 @@ public struct AVPaywallHeader: View {
                 .textCase(.uppercase)
 
             Text(title)
-                .font(.system(size: 30, weight: .black, design: .rounded))
+                .font(.system(size: titleFontSize, weight: .black, design: .rounded))
                 .foregroundStyle(AVBrandColor.textPrimary)
                 .lineLimit(2)
                 .minimumScaleFactor(0.82)
 
             Text(subtitle)
-                .font(AVBrandTypography.bodyStrong)
+                .font(.system(size: subtitleFontSize, weight: .semibold, design: .rounded))
                 .foregroundStyle(AVBrandColor.textSecondary)
                 .lineLimit(2)
                 .minimumScaleFactor(0.84)

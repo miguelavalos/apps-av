@@ -118,6 +118,13 @@ AVPaywallHeader(
     subtitle: "More capacity and richer assistant actions"
 )
 
+AVPlanComparisonCard(
+    title: "Pro",
+    subtitle: "For frequent use",
+    rows: ["Unlimited assistant actions"],
+    isHighlighted: true
+)
+
 AVUpgradePromptSheet(
     eyebrow: "Limit reached",
     title: "Upgrade to continue",
