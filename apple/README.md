@@ -98,6 +98,9 @@ AVSettingsButton(title: "Continue", style: .primary) { }
 AVSettingsButton(title: "Delete account", style: .destructivePrimary, isLoading: isDeleting) { }
 AVSettingsLinkButton(title: "Manage account", systemImage: "safari", destination: accountURL)
 AVSettingsOptionButton(title: "System", systemImage: "gearshape", isSelected: true) { }
+AVAuthProviderButton(title: "Continue with Apple", isLoading: false, style: .dark, action: signIn) {
+    Image(systemName: "applelogo")
+}
 AVSettingsGroupedActionList(title: "Local data") {
     AVSettingsGroupedActionRow(
         systemImage: "clock",
