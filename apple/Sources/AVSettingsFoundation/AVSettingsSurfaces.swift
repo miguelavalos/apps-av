@@ -247,6 +247,58 @@ public struct AVSettingsDetailCard: View {
     }
 }
 
+public struct AVSettingsDetailListItem: Identifiable {
+    public let id: String
+    public let title: String
+    public let detail: String?
+    public let linkTitle: String?
+    public let linkDestination: URL?
+    public let accessibilityIdentifier: String?
+
+    public init(
+        id: String,
+        title: String,
+        detail: String? = nil,
+        linkTitle: String? = nil,
+        linkDestination: URL? = nil,
+        accessibilityIdentifier: String? = nil
+    ) {
+        self.id = id
+        self.title = title
+        self.detail = detail
+        self.linkTitle = linkTitle
+        self.linkDestination = linkDestination
+        self.accessibilityIdentifier = accessibilityIdentifier
+    }
+}
+
+public struct AVSettingsDetailList: View {
+    private let items: [AVSettingsDetailListItem]
+    private let spacing: CGFloat
+
+    public init(
+        items: [AVSettingsDetailListItem],
+        spacing: CGFloat = 10
+    ) {
+        self.items = items
+        self.spacing = spacing
+    }
+
+    public var body: some View {
+        VStack(alignment: .leading, spacing: spacing) {
+            ForEach(items) { item in
+                AVSettingsDetailCard(
+                    title: item.title,
+                    detail: item.detail,
+                    linkTitle: item.linkTitle,
+                    linkDestination: item.linkDestination
+                )
+                .applyAccessibilityIdentifier(item.accessibilityIdentifier)
+            }
+        }
+    }
+}
+
 public struct AVSettingsTextField: View {
     private let placeholder: String
     @Binding private var text: String
