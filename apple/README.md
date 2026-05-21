@@ -120,6 +120,12 @@ AVAviPreviewCapabilityRow(
     title: "Understands context",
     detail: "Uses current app signals to suggest next steps"
 )
+
+AVAviAvatarBadge(backgroundStyle: .muted) {
+    Image("AviHead")
+        .resizable()
+        .scaledToFit()
+}
 ```
 
 The product owns shared companion cards, headers, command controls, panel chrome, and generic reaction effects. Host apps keep their Avi personality model, assets, recommendation logic, playback, account state, and localized copy.
