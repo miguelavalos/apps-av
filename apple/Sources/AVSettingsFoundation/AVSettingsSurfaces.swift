@@ -277,6 +277,29 @@ public struct AVSettingsTextField: View {
     }
 }
 
+public struct AVSettingsLoadingState: View {
+    private let title: String
+    private let verticalPadding: CGFloat
+    private let accessibilityIdentifier: String?
+
+    public init(
+        _ title: String,
+        verticalPadding: CGFloat = 40,
+        accessibilityIdentifier: String? = nil
+    ) {
+        self.title = title
+        self.verticalPadding = verticalPadding
+        self.accessibilityIdentifier = accessibilityIdentifier
+    }
+
+    public var body: some View {
+        ProgressView(title)
+            .frame(maxWidth: .infinity, alignment: .center)
+            .padding(.vertical, verticalPadding)
+            .applyAccessibilityIdentifier(accessibilityIdentifier)
+    }
+}
+
 public struct AVSettingsDestructiveActionCard: View {
     private let sectionTitle: String
     private let systemImage: String
