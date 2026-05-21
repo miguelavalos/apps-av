@@ -110,6 +110,14 @@ AVAuthOptionsPanelScaffold(
 ) {
     providerButtons
 }
+AVOnboardingCallToActionSection(
+    primaryTitle: "Continue",
+    secondaryTitle: "Skip",
+    primaryAction: continueFlow,
+    secondaryAction: skip
+) {
+    companion
+}
 AVSettingsGroupedActionList(title: "Local data") {
     AVSettingsGroupedActionRow(
         systemImage: "clock",
