@@ -101,6 +101,15 @@ AVSettingsOptionButton(title: "System", systemImage: "gearshape", isSelected: tr
 AVAuthProviderButton(title: "Continue with Apple", isLoading: false, style: .dark, action: signIn) {
     Image(systemName: "applelogo")
 }
+AVAuthOptionsPanelScaffold(
+    title: "Save your account",
+    subtitle: "Continue with your preferred provider.",
+    legalConsentText: legalText,
+    skipTitle: "Not now",
+    onSkip: skip
+) {
+    providerButtons
+}
 AVSettingsGroupedActionList(title: "Local data") {
     AVSettingsGroupedActionRow(
         systemImage: "clock",
