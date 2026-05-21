@@ -128,6 +128,21 @@ AVAviPanelOptionButton(
     action: openDetails
 )
 
+AVAviPopoverActionPanel(
+    title: "Ask Avi",
+    pageLabel: "1 of 2",
+    showsPagingControls: true,
+    canGoPrevious: false,
+    canGoNext: true,
+    previousAccessibilityLabel: "Previous options",
+    nextAccessibilityLabel: "More options",
+    closeAccessibilityLabel: "Close options",
+    nextPage: showNextPage,
+    close: closePanel
+) {
+    actions
+}
+
 AVAviAvatarBadge(backgroundStyle: .muted) {
     Image("AviHead")
         .resizable()
