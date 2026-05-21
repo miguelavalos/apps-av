@@ -187,6 +187,67 @@ public struct AVSettingsDetailCard: View {
     }
 }
 
+public struct AVSettingsDestructiveActionCard: View {
+    private let sectionTitle: String
+    private let systemImage: String
+    private let title: String
+    private let detail: String
+    private let action: () -> Void
+
+    public init(
+        sectionTitle: String,
+        systemImage: String,
+        title: String,
+        detail: String,
+        action: @escaping () -> Void
+    ) {
+        self.sectionTitle = sectionTitle
+        self.systemImage = systemImage
+        self.title = title
+        self.detail = detail
+        self.action = action
+    }
+
+    public var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text(sectionTitle)
+                .font(.system(size: 13, weight: .bold))
+                .foregroundStyle(AVBrandColor.textSecondary)
+                .textCase(.uppercase)
+
+            Button(action: action) {
+                HStack(alignment: .center, spacing: 12) {
+                    Image(systemName: systemImage)
+                        .font(.system(size: 16, weight: .semibold))
+                        .frame(width: 22)
+
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(title)
+                            .font(.system(size: 15, weight: .bold))
+
+                        Text(detail)
+                            .font(.system(size: 13, weight: .medium))
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+
+                    Spacer(minLength: 12)
+                }
+                .foregroundStyle(AVBrandColor.destructive)
+                .padding(16)
+                .background(
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        .fill(AVBrandColor.destructive.opacity(0.07))
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                .stroke(AVBrandColor.destructive.opacity(0.18), lineWidth: 1)
+                        }
+                )
+            }
+            .buttonStyle(.plain)
+        }
+    }
+}
+
 public struct AVSettingsInfoRow: View {
     private let systemImage: String
     private let title: String
