@@ -151,6 +151,80 @@ public struct AVSettingsInlineActionRow: View {
     }
 }
 
+public struct AVSettingsGroupedActionList<Rows: View>: View {
+    private let title: String
+    private let rows: Rows
+
+    public init(title: String, @ViewBuilder rows: () -> Rows) {
+        self.title = title
+        self.rows = rows()
+    }
+
+    public var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text(title)
+                .font(.system(size: 13, weight: .bold))
+                .foregroundStyle(AVBrandColor.textSecondary)
+                .textCase(.uppercase)
+
+            VStack(spacing: 0) {
+                rows
+            }
+            .background(
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .fill(AVBrandColor.mutedSurface)
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 20, style: .continuous)
+                            .stroke(AVBrandColor.borderSubtle, lineWidth: 1)
+                    }
+            )
+        }
+    }
+}
+
+public struct AVSettingsGroupedActionRow: View {
+    private let systemImage: String
+    private let title: String
+    private let detail: String
+    private let showsDivider: Bool
+    private let action: () -> Void
+
+    public init(
+        systemImage: String,
+        title: String,
+        detail: String,
+        showsDivider: Bool = false,
+        action: @escaping () -> Void
+    ) {
+        self.systemImage = systemImage
+        self.title = title
+        self.detail = detail
+        self.showsDivider = showsDivider
+        self.action = action
+    }
+
+    public var body: some View {
+        VStack(spacing: 0) {
+            Button(action: action) {
+                AVSettingsRowLayout(systemImage: systemImage, title: title, detail: detail) {
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(AVBrandColor.textSecondary.opacity(0.7))
+                        .padding(.top, 4)
+                }
+                .padding(16)
+            }
+            .buttonStyle(.plain)
+
+            if showsDivider {
+                Divider()
+                    .overlay(AVBrandColor.borderSubtle)
+                    .padding(.leading, 50)
+            }
+        }
+    }
+}
+
 private struct AVSettingsRowLayout<Trailing: View>: View {
     let systemImage: String
     let title: String
