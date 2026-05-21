@@ -67,7 +67,7 @@ AVSplashScreen(
 )
 ```
 
-Use `AVSplashTransitionPolicy` from the host app to keep launch timing consistent while preserving app-specific test flags, assets, and startup work.
+Use `AVSplashTransitionPolicy` and `AVSplashTransitionState` from the host app to keep launch timing and one-shot presentation consistent while preserving app-specific test flags, assets, and startup work.
 
 ### AVSettingsFoundation
 
