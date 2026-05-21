@@ -12,6 +12,7 @@ Swift packages for AV apps on Apple platforms.
 import AVHaptics
 
 AVHaptics.perform(.save)
+AVHaptics.perform(.impactLight)
 AVHaptics.perform(.playbackToggle)
 AVHaptics.perform(.warning)
 ```
