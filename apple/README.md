@@ -70,6 +70,12 @@ AVAppShellDetailHeaderScaffold(
 AVAppShellSectionHeader(title: "Recently played") {
     sectionActions
 }
+AVAppShellSearchField(
+    query: $query,
+    prompt: "Search",
+    clearTitle: "Clear",
+    focusRequest: focusToken
+)
 ```
 
 The product owns reusable shell layout, footer glass styling, tab affordances, and assistant entry treatment. Product-specific apps keep their own tab model, localized labels, assistant assets, navigation, playback, and business rules.
