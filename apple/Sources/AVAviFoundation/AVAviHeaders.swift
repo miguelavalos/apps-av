@@ -74,3 +74,69 @@ public extension AVAviScreenHeader where Avatar == EmptyView {
         self.avatar = EmptyView()
     }
 }
+
+public struct AVAviFullPlayerHeaderScaffold<Avatar: View>: View {
+    private let label: String
+    private let title: String
+    private let summary: String
+    private let accessibilityValue: String?
+    private let accessibilityIdentifier: String
+    private let avatar: Avatar
+
+    public init(
+        label: String,
+        title: String,
+        summary: String,
+        accessibilityValue: String? = nil,
+        accessibilityIdentifier: String = "avi.fullPlayer.header",
+        @ViewBuilder avatar: () -> Avatar
+    ) {
+        self.label = label
+        self.title = title
+        self.summary = summary
+        self.accessibilityValue = accessibilityValue
+        self.accessibilityIdentifier = accessibilityIdentifier
+        self.avatar = avatar()
+    }
+
+    public var body: some View {
+        HStack(alignment: .center, spacing: AVBrandSpacing.lg) {
+            avatar
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(label)
+                    .font(.system(size: 11, weight: .black))
+                    .foregroundStyle(AVBrandColor.accent)
+                    .textCase(.uppercase)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.78)
+                    .allowsTightening(true)
+                    .frame(height: 12)
+
+                Text(title)
+                    .font(.system(size: 22, weight: .black, design: .rounded))
+                    .foregroundStyle(AVBrandColor.textPrimary)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.72)
+                    .allowsTightening(true)
+                    .truncationMode(.tail)
+                    .frame(height: 46, alignment: .topLeading)
+
+                Text(summary)
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundStyle(AVBrandColor.textSecondary)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.76)
+                    .allowsTightening(true)
+                    .truncationMode(.tail)
+                    .frame(height: 28, alignment: .topLeading)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .padding(.vertical, 2)
+        .frame(height: 96)
+        .accessibilityElement(children: .contain)
+        .accessibilityValue(accessibilityValue ?? "")
+        .accessibilityIdentifier(accessibilityIdentifier)
+    }
+}

@@ -186,6 +186,14 @@ AVAviScreenHeader(
     avatar: { avatar }
 )
 
+AVAviFullPlayerHeaderScaffold(
+    label: "Now listening",
+    title: "Avi is tuned in",
+    summary: "Reading the current signal",
+    accessibilityValue: "static:focused",
+    avatar: { avatar }
+)
+
 AVAviPreviewPrimaryButton(
     title: "Start with Avi",
     systemImage: "sparkles",
