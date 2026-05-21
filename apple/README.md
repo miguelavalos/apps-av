@@ -148,6 +148,13 @@ AVAviAvatarBadge(backgroundStyle: .muted) {
         .resizable()
         .scaledToFit()
 }
+
+AVAviStableAssetImage(
+    value: emotion,
+    width: 58,
+    assetName: { $0.assetName },
+    transitionPriority: { $0.priority }
+)
 ```
 
 The product owns shared companion cards, headers, command controls, panel chrome, and generic reaction effects. Host apps keep their Avi personality model, assets, recommendation logic, playback, account state, and localized copy.
