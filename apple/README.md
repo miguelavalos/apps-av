@@ -121,6 +121,13 @@ AVAviPreviewCapabilityRow(
     detail: "Uses current app signals to suggest next steps"
 )
 
+AVAviPanelOptionButton(
+    title: "Open details",
+    systemImage: "info.circle",
+    accessibilityIdentifier: "avi.actions.details",
+    action: openDetails
+)
+
 AVAviAvatarBadge(backgroundStyle: .muted) {
     Image("AviHead")
         .resizable()

@@ -198,6 +198,122 @@ public struct AVAviPromptButton: View {
     }
 }
 
+public enum AVAviPanelOptionButtonStyle {
+    case regular
+    case compact
+
+    var spacing: CGFloat {
+        switch self {
+        case .regular: 12
+        case .compact: 7
+        }
+    }
+
+    var iconSize: CGFloat {
+        switch self {
+        case .regular: 30
+        case .compact: 25
+        }
+    }
+
+    var iconFontSize: CGFloat {
+        switch self {
+        case .regular: 13
+        case .compact: 12
+        }
+    }
+
+    var titleFontSize: CGFloat {
+        switch self {
+        case .regular: 13
+        case .compact: 12
+        }
+    }
+
+    var horizontalPadding: CGFloat {
+        switch self {
+        case .regular: 10
+        case .compact: 9
+        }
+    }
+
+    var height: CGFloat {
+        switch self {
+        case .regular: 44
+        case .compact: 42
+        }
+    }
+
+    var strokeOpacity: Double {
+        switch self {
+        case .regular: 0.46
+        case .compact: 0.6
+        }
+    }
+}
+
+public struct AVAviPanelOptionButton: View {
+    private let title: String
+    private let systemImage: String
+    private let role: ButtonRole?
+    private let style: AVAviPanelOptionButtonStyle
+    private let accessibilityIdentifier: String?
+    private let action: () -> Void
+
+    public init(
+        title: String,
+        systemImage: String,
+        role: ButtonRole? = nil,
+        style: AVAviPanelOptionButtonStyle = .regular,
+        accessibilityIdentifier: String? = nil,
+        action: @escaping () -> Void
+    ) {
+        self.title = title
+        self.systemImage = systemImage
+        self.role = role
+        self.style = style
+        self.accessibilityIdentifier = accessibilityIdentifier
+        self.action = action
+    }
+
+    public var body: some View {
+        Button(role: role, action: action) {
+            HStack(spacing: style.spacing) {
+                Image(systemName: systemImage)
+                    .font(.system(size: style.iconFontSize, weight: .bold))
+                    .foregroundStyle(iconColor)
+                    .frame(width: style.iconSize, height: style.iconSize)
+                    .background(iconColor.opacity(0.1), in: Circle())
+
+                Text(title)
+                    .font(.system(size: style.titleFontSize, weight: .bold))
+                    .foregroundStyle(AVBrandColor.textPrimary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.76)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 10, weight: .black))
+                    .foregroundStyle(AVBrandColor.textSecondary.opacity(0.7))
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(height: style.height)
+            .padding(.horizontal, style.horizontalPadding)
+            .background(AVBrandColor.cardSurface.opacity(0.92), in: RoundedRectangle(cornerRadius: 15, style: .continuous))
+            .overlay {
+                RoundedRectangle(cornerRadius: 15, style: .continuous)
+                    .stroke(AVBrandColor.borderSubtle.opacity(style.strokeOpacity), lineWidth: 1)
+            }
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifierIfPresent(accessibilityIdentifier)
+    }
+
+    private var iconColor: Color {
+        role == .destructive ? .red : AVBrandColor.accent
+    }
+}
+
 public struct AVAviPreviewPrimaryButton: View {
     private let title: String
     private let systemImage: String
