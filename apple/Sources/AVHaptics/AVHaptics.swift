@@ -15,6 +15,7 @@ public enum AVHapticEvent: Sendable {
     case closePanel
     case playbackToggle
     case queueStep
+    case loadMore
     case stopPlayback
     case save
     case unsave
@@ -48,7 +49,7 @@ private extension AVHaptics {
             let generator = UISelectionFeedbackGenerator()
             generator.prepare()
             generator.selectionChanged()
-        case .impactLight, .playbackToggle, .queueStep, .stopPlayback, .unsave:
+        case .impactLight, .playbackToggle, .queueStep, .loadMore, .stopPlayback, .unsave:
             let generator = UIImpactFeedbackGenerator(style: .light)
             generator.prepare()
             generator.impactOccurred()
@@ -72,7 +73,7 @@ private extension AVHaptics {
         switch event {
         case .selection, .navigation, .modeChange, .openPanel, .closePanel, .notForMe, .clear:
             NSHapticFeedbackManager.defaultPerformer.perform(.alignment, performanceTime: .default)
-        case .impactLight, .playbackToggle, .queueStep, .stopPlayback, .save, .unsave, .like, .dislike, .warning, .blocked:
+        case .impactLight, .playbackToggle, .queueStep, .loadMore, .stopPlayback, .save, .unsave, .like, .dislike, .warning, .blocked:
             NSHapticFeedbackManager.defaultPerformer.perform(.generic, performanceTime: .default)
         }
     }
