@@ -1,42 +1,23 @@
 # Apps AV
 
-Shared Swift packages for AV apps.
+Shared libraries for AV apps.
 
-`AppsAV` contains small Apple-platform libraries shared by Tune AV, Moments AV, Series AV, and other AV apps. Keep product-specific behavior in each app; use this repo for cross-app primitives that should behave consistently everywhere.
+`apps-av` contains cross-app building blocks for AV products such as Tune AV, Moments AV, Series AV, and future apps. Keep product-specific behavior in each app; use this repo for primitives that should behave consistently across products.
 
-## Products
+Platform-specific libraries live in dedicated folders:
 
-### AVHaptics
+- `apple/`: Swift packages for Apple platforms
 
-`AVHaptics` provides a semantic haptics API for common app events:
+Future platform folders can be added as needed, for example `android/`, `kotlin/`, or `web/`.
 
-```swift
-import AVHaptics
+## Apple
 
-AVHaptics.perform(.save)
-AVHaptics.perform(.playbackToggle)
-AVHaptics.perform(.warning)
-```
+The Apple Swift package lives in `apple/`.
 
-The implementation uses native platform feedback:
+Current products:
 
-- iOS: `UISelectionFeedbackGenerator`, `UIImpactFeedbackGenerator`, and `UINotificationFeedbackGenerator`
-- macOS: `NSHapticFeedbackManager`
+- `AVHaptics`: semantic haptics for common app events
 
-## Installation
-
-During local development, add the package by path:
-
-```swift
-.package(path: "../apps-av")
-```
-
-For app repositories that live next to this package, use the relative path that matches the app project. For example, from `public/tune-av/apps/ios` the package path is `../../../apps-av`.
+During local development, apps can add the Apple package by path. For app repositories that live next to this package, use the relative path that matches the app project. For example, from `public/tune-av/apps/ios` the package path is `../../../apps-av/apple`.
 
 When publishing a stable release, prefer pinning this package by Git tag.
-
-## Requirements
-
-- iOS 18+
-- macOS 14+
-- Swift 6
