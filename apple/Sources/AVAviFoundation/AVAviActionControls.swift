@@ -132,6 +132,104 @@ public struct AVAviInfoRow: View {
     }
 }
 
+public struct AVAviRecommendationItemRow<Trailing: View>: View {
+    private let title: String
+    private let detail: String
+    private let playAccessibilityLabel: String
+    private let detailsAccessibilityLabel: String
+    private let accessibilityIdentifier: String
+    private let playAction: () -> Void
+    private let detailsAction: () -> Void
+    private let trailing: Trailing
+
+    public init(
+        title: String,
+        detail: String,
+        playAccessibilityLabel: String,
+        detailsAccessibilityLabel: String,
+        accessibilityIdentifier: String,
+        playAction: @escaping () -> Void,
+        detailsAction: @escaping () -> Void,
+        @ViewBuilder trailing: () -> Trailing
+    ) {
+        self.title = title
+        self.detail = detail
+        self.playAccessibilityLabel = playAccessibilityLabel
+        self.detailsAccessibilityLabel = detailsAccessibilityLabel
+        self.accessibilityIdentifier = accessibilityIdentifier
+        self.playAction = playAction
+        self.detailsAction = detailsAction
+        self.trailing = trailing()
+    }
+
+    public var body: some View {
+        HStack(spacing: AVBrandSpacing.sm) {
+            Button(action: playAction) {
+                Image(systemName: "play.fill")
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundStyle(AVBrandColor.textInverse)
+                    .frame(width: 32, height: 32)
+                    .background(AVBrandColor.accent, in: Circle())
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(playAccessibilityLabel)
+
+            VStack(alignment: .leading, spacing: AVBrandSpacing.xxs) {
+                Text(title)
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundStyle(AVBrandColor.textPrimary)
+                    .lineLimit(1)
+
+                HStack(spacing: 5) {
+                    Text(detail)
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(AVBrandColor.textSecondary)
+                        .lineLimit(1)
+
+                    trailing
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            Button(action: detailsAction) {
+                Image(systemName: "info.circle")
+                    .font(.system(size: 17, weight: .semibold))
+                    .foregroundStyle(AVBrandColor.textSecondary)
+                    .frame(width: 34, height: 34)
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(detailsAccessibilityLabel)
+        }
+        .padding(AVBrandSpacing.sm)
+        .background(AVBrandColor.accent.opacity(0.07), in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
+        .accessibilityIdentifier(accessibilityIdentifier)
+    }
+}
+
+public extension AVAviRecommendationItemRow where Trailing == EmptyView {
+    init(
+        title: String,
+        detail: String,
+        playAccessibilityLabel: String,
+        detailsAccessibilityLabel: String,
+        accessibilityIdentifier: String,
+        playAction: @escaping () -> Void,
+        detailsAction: @escaping () -> Void
+    ) {
+        self.init(
+            title: title,
+            detail: detail,
+            playAccessibilityLabel: playAccessibilityLabel,
+            detailsAccessibilityLabel: detailsAccessibilityLabel,
+            accessibilityIdentifier: accessibilityIdentifier,
+            playAction: playAction,
+            detailsAction: detailsAction
+        ) {
+            EmptyView()
+        }
+    }
+}
+
 public struct AVAviActionButton: View {
     private let title: String
     private let systemImage: String
