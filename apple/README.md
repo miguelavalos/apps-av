@@ -59,6 +59,14 @@ AVAppShellBrandHeaderScaffold(
     logo: { wordmark },
     trailing: { accountButton }
 )
+AVAppShellDetailHeaderScaffold(
+    title: "Recently played",
+    subtitle: "Your latest activity",
+    status: "Library",
+    accessibilityIdentifier: "library.detail.header",
+    leading: { backButton },
+    accessory: { statusBadge }
+)
 ```
 
 The product owns reusable shell layout, footer glass styling, tab affordances, and assistant entry treatment. Product-specific apps keep their own tab model, localized labels, assistant assets, navigation, playback, and business rules.
