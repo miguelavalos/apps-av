@@ -197,3 +197,102 @@ public struct AVAviPromptButton: View {
         .buttonStyle(.plain)
     }
 }
+
+public struct AVAviPreviewPrimaryButton: View {
+    private let title: String
+    private let systemImage: String
+    private let accessibilityIdentifier: String
+    private let action: () -> Void
+
+    public init(
+        title: String,
+        systemImage: String,
+        accessibilityIdentifier: String,
+        action: @escaping () -> Void
+    ) {
+        self.title = title
+        self.systemImage = systemImage
+        self.accessibilityIdentifier = accessibilityIdentifier
+        self.action = action
+    }
+
+    public var body: some View {
+        Button(action: action) {
+            HStack(spacing: AVBrandSpacing.md) {
+                Image(systemName: systemImage)
+                    .font(.system(size: 16, weight: .black))
+                    .frame(width: 30, height: 30)
+                    .background(AVBrandColor.textInverse.opacity(0.16), in: Circle())
+
+                Text(title)
+                    .font(.system(size: 16, weight: .black, design: .rounded))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.82)
+
+                Spacer(minLength: 0)
+
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 12, weight: .black))
+            }
+            .foregroundStyle(AVBrandColor.textInverse)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(height: 52)
+            .padding(.horizontal, AVBrandSpacing.lg)
+            .background(AVBrandColor.accent, in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
+            .shadow(color: AVBrandColor.accent.opacity(0.24), radius: 12, y: 7)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(title)
+        .accessibilityIdentifier(accessibilityIdentifier)
+    }
+}
+
+public struct AVAviPreviewSecondaryButton: View {
+    private let title: String
+    private let systemImage: String
+    private let accessibilityIdentifier: String
+    private let action: () -> Void
+
+    public init(
+        title: String,
+        systemImage: String,
+        accessibilityIdentifier: String,
+        action: @escaping () -> Void
+    ) {
+        self.title = title
+        self.systemImage = systemImage
+        self.accessibilityIdentifier = accessibilityIdentifier
+        self.action = action
+    }
+
+    public var body: some View {
+        Button(action: action) {
+            VStack(spacing: AVBrandSpacing.xs) {
+                Image(systemName: systemImage)
+                    .font(.system(size: 16, weight: .black))
+                    .foregroundStyle(AVBrandColor.accent)
+                    .frame(width: 30, height: 30)
+                    .background(AVBrandColor.accent.opacity(0.1), in: Circle())
+
+                Text(title)
+                    .font(.system(size: 13, weight: .black, design: .rounded))
+                    .foregroundStyle(AVBrandColor.textPrimary)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.center)
+                    .minimumScaleFactor(0.82)
+                    .frame(maxWidth: .infinity)
+            }
+            .frame(maxWidth: .infinity)
+            .frame(height: 76)
+            .padding(.horizontal, AVBrandSpacing.sm)
+            .background(AVBrandColor.cardSurface, in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
+            .overlay {
+                RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous)
+                    .stroke(AVBrandColor.borderSubtle.opacity(0.5), lineWidth: 1)
+            }
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(title)
+        .accessibilityIdentifier(accessibilityIdentifier)
+    }
+}
