@@ -208,6 +208,10 @@ AVPlanComparisonCard(
     isHighlighted: true
 )
 
+AVPaywallBenefitList(items: [
+    AVPaywallBenefitItem(id: "sync", systemImage: "icloud", title: "Sync", detail: "Keep data available across AV apps")
+])
+
 AVPaywallPrimaryButton(
     title: "Continue",
     accessibilityIdentifier: "paywall.continue",

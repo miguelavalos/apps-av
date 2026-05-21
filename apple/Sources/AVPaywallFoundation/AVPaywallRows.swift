@@ -45,6 +45,42 @@ public struct AVPaywallBenefitRow: View {
     }
 }
 
+public struct AVPaywallBenefitItem: Identifiable {
+    public let id: String
+    public let systemImage: String
+    public let title: String
+    public let detail: String
+
+    public init(id: String, systemImage: String, title: String, detail: String) {
+        self.id = id
+        self.systemImage = systemImage
+        self.title = title
+        self.detail = detail
+    }
+}
+
+public struct AVPaywallBenefitList: View {
+    private let items: [AVPaywallBenefitItem]
+    private let spacing: CGFloat
+
+    public init(items: [AVPaywallBenefitItem], spacing: CGFloat = 8) {
+        self.items = items
+        self.spacing = spacing
+    }
+
+    public var body: some View {
+        VStack(spacing: spacing) {
+            ForEach(items) { item in
+                AVPaywallBenefitRow(
+                    systemImage: item.systemImage,
+                    title: item.title,
+                    detail: item.detail
+                )
+            }
+        }
+    }
+}
+
 public struct AVPaywallStatusRow: View {
     private let systemImage: String
     private let message: String
