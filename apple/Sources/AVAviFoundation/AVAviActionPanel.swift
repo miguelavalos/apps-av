@@ -151,6 +151,131 @@ public extension AVAviActionPanel where Footer == EmptyView {
     }
 }
 
+public struct AVAviPopoverActionPanel<Content: View>: View {
+    private let title: String
+    private let pageLabel: String
+    private let showsPagingControls: Bool
+    private let canGoPrevious: Bool
+    private let canGoNext: Bool
+    private let previousAccessibilityLabel: String
+    private let nextAccessibilityLabel: String
+    private let closeAccessibilityLabel: String
+    private let previousPage: () -> Void
+    private let nextPage: () -> Void
+    private let close: () -> Void
+    private let content: Content
+
+    public init(
+        title: String,
+        pageLabel: String,
+        showsPagingControls: Bool = false,
+        canGoPrevious: Bool = false,
+        canGoNext: Bool = false,
+        previousAccessibilityLabel: String,
+        nextAccessibilityLabel: String,
+        closeAccessibilityLabel: String,
+        previousPage: @escaping () -> Void = {},
+        nextPage: @escaping () -> Void = {},
+        close: @escaping () -> Void,
+        @ViewBuilder content: () -> Content
+    ) {
+        self.title = title
+        self.pageLabel = pageLabel
+        self.showsPagingControls = showsPagingControls
+        self.canGoPrevious = canGoPrevious
+        self.canGoNext = canGoNext
+        self.previousAccessibilityLabel = previousAccessibilityLabel
+        self.nextAccessibilityLabel = nextAccessibilityLabel
+        self.closeAccessibilityLabel = closeAccessibilityLabel
+        self.previousPage = previousPage
+        self.nextPage = nextPage
+        self.close = close
+        self.content = content()
+    }
+
+    public var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            header
+
+            VStack(spacing: 7) {
+                content
+            }
+        }
+        .padding(13)
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+        .background(AVBrandColor.elevatedSurface.opacity(0.96), in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                .stroke(AVBrandColor.accent.opacity(0.2), lineWidth: 1)
+        }
+        .shadow(color: AVBrandColor.glassShadow, radius: 24, y: 12)
+    }
+
+    private var header: some View {
+        HStack(alignment: .center, spacing: 10) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundStyle(AVBrandColor.textPrimary)
+                    .lineLimit(1)
+
+                Text(pageLabel)
+                    .font(.system(size: 11, weight: .bold))
+                    .foregroundStyle(AVBrandColor.textSecondary)
+            }
+
+            Spacer(minLength: 0)
+
+            if showsPagingControls {
+                HStack(spacing: 6) {
+                    popoverPagingButton(
+                        systemImage: "chevron.left",
+                        isEnabled: canGoPrevious,
+                        accessibilityLabel: previousAccessibilityLabel,
+                        action: previousPage
+                    )
+
+                    popoverPagingButton(
+                        systemImage: "chevron.right",
+                        isEnabled: canGoNext,
+                        accessibilityLabel: nextAccessibilityLabel,
+                        action: nextPage
+                    )
+                }
+                .foregroundStyle(AVBrandColor.textSecondary)
+            }
+
+            Button(action: close) {
+                Image(systemName: "xmark")
+                    .font(.system(size: 11, weight: .black))
+                    .foregroundStyle(AVBrandColor.textSecondary)
+                    .frame(width: 30, height: 30)
+                    .background(AVBrandColor.cardSurface, in: Circle())
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(closeAccessibilityLabel)
+        }
+    }
+
+    private func popoverPagingButton(
+        systemImage: String,
+        isEnabled: Bool,
+        accessibilityLabel: String,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) {
+            Image(systemName: systemImage)
+                .font(.system(size: 10, weight: .black))
+                .frame(width: 28, height: 28)
+                .background(AVBrandColor.cardSurface, in: Circle())
+        }
+        .buttonStyle(.plain)
+        .disabled(!isEnabled)
+        .opacity(isEnabled ? 1 : 0.34)
+        .accessibilityLabel(accessibilityLabel)
+    }
+}
+
 public struct AVAviCommandButton: View {
     private let title: String
     private let systemImage: String
