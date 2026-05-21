@@ -109,19 +109,14 @@ public struct AVMiniPlayerControlButton<Label: View>: View {
     }
 
     public var body: some View {
-        Button(action: action) {
+        AVMaterialControlButton(
+            size: 34,
+            isEnabled: isEnabled,
+            accessibilityIdentifier: accessibilityIdentifier,
+            action: action
+        ) {
             label
-                .foregroundStyle(AVBrandColor.textSecondary.opacity(isEnabled ? 1 : 0.28))
-                .frame(width: 34, height: 34)
-                .background(.ultraThinMaterial.opacity(isEnabled ? 1 : 0.45), in: Circle())
-                .overlay {
-                    Circle()
-                        .stroke(.white.opacity(isEnabled ? 0.12 : 0.06), lineWidth: 1)
-                }
         }
-        .buttonStyle(.plain)
-        .disabled(!isEnabled)
-        .accessibilityIdentifier(accessibilityIdentifier)
     }
 }
 
@@ -319,19 +314,14 @@ public struct AVFooterPlayerControlButton<Label: View>: View {
     }
 
     public var body: some View {
-        Button(action: action) {
+        AVMaterialControlButton(
+            size: 54,
+            isEnabled: isEnabled,
+            accessibilityIdentifier: accessibilityIdentifier,
+            action: action
+        ) {
             label
-                .foregroundStyle(AVBrandColor.textSecondary.opacity(isEnabled ? 1 : 0.28))
-                .frame(width: 54, height: 54)
-                .background(.ultraThinMaterial.opacity(isEnabled ? 1 : 0.45), in: Circle())
-                .overlay {
-                    Circle()
-                        .stroke(.white.opacity(isEnabled ? 0.12 : 0.06), lineWidth: 1)
-                }
         }
-        .buttonStyle(.plain)
-        .disabled(!isEnabled)
-        .accessibilityIdentifier(accessibilityIdentifier)
     }
 }
 
@@ -352,5 +342,29 @@ public extension AVFooterPlayerControlButton where Label == AnyView {
                     .font(.system(size: 18, weight: .bold))
             )
         }
+    }
+}
+
+private struct AVMaterialControlButton<Label: View>: View {
+    let size: CGFloat
+    let isEnabled: Bool
+    let accessibilityIdentifier: String
+    let action: () -> Void
+    @ViewBuilder let label: () -> Label
+
+    var body: some View {
+        Button(action: action) {
+            label()
+                .foregroundStyle(AVBrandColor.textSecondary.opacity(isEnabled ? 1 : 0.28))
+                .frame(width: size, height: size)
+                .background(.ultraThinMaterial.opacity(isEnabled ? 1 : 0.45), in: Circle())
+                .overlay {
+                    Circle()
+                        .stroke(.white.opacity(isEnabled ? 0.12 : 0.06), lineWidth: 1)
+                }
+        }
+        .buttonStyle(.plain)
+        .disabled(!isEnabled)
+        .accessibilityIdentifier(accessibilityIdentifier)
     }
 }
