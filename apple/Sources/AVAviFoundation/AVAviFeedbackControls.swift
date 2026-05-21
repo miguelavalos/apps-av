@@ -131,3 +131,159 @@ public struct AVAviCompactFeedbackButton: View {
         .accessibilityIdentifier(accessibilityIdentifier)
     }
 }
+
+public struct AVAviFeedbackCompactActionButton: View {
+    private let title: String
+    private let systemImage: String
+    private let accessibilityIdentifier: String
+    private let action: () -> Void
+
+    public init(
+        title: String,
+        systemImage: String,
+        accessibilityIdentifier: String,
+        action: @escaping () -> Void
+    ) {
+        self.title = title
+        self.systemImage = systemImage
+        self.accessibilityIdentifier = accessibilityIdentifier
+        self.action = action
+    }
+
+    public var body: some View {
+        Button(action: action) {
+            Label(title, systemImage: systemImage)
+                .font(.system(size: 12, weight: .black))
+                .labelStyle(.titleAndIcon)
+                .lineLimit(1)
+                .minimumScaleFactor(0.78)
+                .foregroundStyle(AVBrandColor.textPrimary)
+                .frame(width: 96, height: 38)
+                .background(
+                    AVBrandSurface.shellBackground,
+                    in: RoundedRectangle(cornerRadius: AVBrandRadius.sm, style: .continuous)
+                )
+                .overlay {
+                    RoundedRectangle(cornerRadius: AVBrandRadius.sm, style: .continuous)
+                        .stroke(AVBrandColor.borderSubtle, lineWidth: 1)
+                }
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(title)
+        .accessibilityIdentifier(accessibilityIdentifier)
+    }
+}
+
+public struct AVAviFeedbackDecisionButton: View {
+    private let title: String
+    private let systemImage: String
+    private let isSelected: Bool
+    private let accessibilityIdentifier: String
+    private let action: () -> Void
+
+    public init(
+        title: String,
+        systemImage: String,
+        isSelected: Bool = false,
+        accessibilityIdentifier: String,
+        action: @escaping () -> Void
+    ) {
+        self.title = title
+        self.systemImage = systemImage
+        self.isSelected = isSelected
+        self.accessibilityIdentifier = accessibilityIdentifier
+        self.action = action
+    }
+
+    public var body: some View {
+        Button(action: action) {
+            Label(title, systemImage: systemImage)
+                .font(.system(size: 12, weight: .black))
+                .labelStyle(.titleAndIcon)
+                .lineLimit(1)
+                .minimumScaleFactor(0.72)
+                .foregroundStyle(isSelected ? AVBrandColor.brandBlack : AVBrandColor.textPrimary)
+                .frame(maxWidth: .infinity)
+                .frame(height: 38)
+                .background {
+                    backgroundShape
+                }
+                .overlay {
+                    RoundedRectangle(cornerRadius: AVBrandRadius.sm, style: .continuous)
+                        .stroke(isSelected ? AVBrandColor.accent.opacity(0.44) : AVBrandColor.borderSubtle, lineWidth: 1)
+                }
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(title)
+        .accessibilityIdentifier(accessibilityIdentifier)
+    }
+
+    @ViewBuilder
+    private var backgroundShape: some View {
+        if isSelected {
+            RoundedRectangle(cornerRadius: AVBrandRadius.sm, style: .continuous)
+                .fill(AVBrandColor.accent)
+        } else {
+            RoundedRectangle(cornerRadius: AVBrandRadius.sm, style: .continuous)
+                .fill(AVBrandSurface.shellBackground)
+        }
+    }
+}
+
+public struct AVAviFeedbackInfoRow: View {
+    private let title: String
+    private let subtitle: String
+    private let systemImage: String
+    private let isAction: Bool
+
+    public init(
+        title: String,
+        subtitle: String,
+        systemImage: String,
+        isAction: Bool = false
+    ) {
+        self.title = title
+        self.subtitle = subtitle
+        self.systemImage = systemImage
+        self.isAction = isAction
+    }
+
+    public var body: some View {
+        HStack(spacing: 9) {
+            Image(systemName: systemImage)
+                .font(.system(size: 12, weight: .black))
+                .foregroundStyle(isAction ? AVBrandColor.brandBlack : AVBrandColor.accent)
+                .frame(width: 28, height: 28)
+                .background(iconBackgroundColor, in: Circle())
+
+            VStack(alignment: .leading, spacing: 1) {
+                Text(title)
+                    .font(.system(size: 12, weight: .black))
+                    .foregroundStyle(AVBrandColor.textPrimary)
+                    .lineLimit(1)
+
+                Text(subtitle)
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundStyle(AVBrandColor.textSecondary)
+                    .lineLimit(1)
+            }
+
+            Spacer(minLength: 0)
+        }
+        .padding(.horizontal, 11)
+        .frame(maxWidth: .infinity)
+        .frame(height: 38)
+        .background(
+            AVBrandColor.accent.opacity(0.08),
+            in: RoundedRectangle(cornerRadius: AVBrandRadius.sm, style: .continuous)
+        )
+        .overlay {
+            RoundedRectangle(cornerRadius: AVBrandRadius.sm, style: .continuous)
+                .stroke(AVBrandColor.accent.opacity(0.16), lineWidth: 1)
+        }
+    }
+
+    private var iconBackgroundColor: Color {
+        isAction ? AVBrandColor.brandBlack.opacity(0.12) : AVBrandColor.accent.opacity(0.12)
+    }
+}
