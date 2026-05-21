@@ -81,6 +81,7 @@ AVSettingsSheetScaffold(backgroundStyle: AnyShapeStyle(appBackground), closeTitl
     content
 }
 AVSettingsScreenHeader(title: "Settings", subtitle: "Manage account and preferences")
+AVSettingsSheetHeader(title: "Local storage", subtitle: "Choose what to clear")
 AVSettingsSectionHeader(title: "Account", subtitle: "Manage your AV account")
 AVSettingsNoticeCard(systemImage: "person.2", title: "Shared account", detail: "This affects all AV apps.")
 AVSettingsStatusCard(systemImage: "checkmark.shield", title: "Ready", detail: "Your account is eligible.")

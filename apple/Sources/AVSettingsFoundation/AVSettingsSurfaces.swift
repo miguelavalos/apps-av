@@ -81,6 +81,46 @@ public struct AVSettingsScreenHeader: View {
     }
 }
 
+public struct AVSettingsSheetHeader: View {
+    private let title: String
+    private let subtitle: String
+    private let titleAccessibilityIdentifier: String?
+
+    public init(
+        title: String,
+        subtitle: String,
+        titleAccessibilityIdentifier: String? = nil
+    ) {
+        self.title = title
+        self.subtitle = subtitle
+        self.titleAccessibilityIdentifier = titleAccessibilityIdentifier
+    }
+
+    public var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            titleView
+
+            Text(subtitle)
+                .font(.system(size: 15, weight: .medium))
+                .foregroundStyle(AVBrandColor.textSecondary)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
+    @ViewBuilder
+    private var titleView: some View {
+        let text = Text(title)
+            .font(.system(size: 28, weight: .bold))
+            .foregroundStyle(AVBrandColor.textPrimary)
+
+        if let titleAccessibilityIdentifier {
+            text.accessibilityIdentifier(titleAccessibilityIdentifier)
+        } else {
+            text
+        }
+    }
+}
+
 public struct AVSettingsSheetScaffold<Content: View>: View {
     private let spacing: CGFloat
     private let horizontalPadding: CGFloat
