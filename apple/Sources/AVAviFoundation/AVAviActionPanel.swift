@@ -90,16 +90,11 @@ public struct AVAviActionPanel<Content: View, Footer: View>: View {
             }
             .foregroundStyle(AVBrandColor.textSecondary)
 
-            Button(action: close) {
-                Image(systemName: "xmark")
-                    .font(.system(size: 11, weight: .black))
-                    .foregroundStyle(AVBrandColor.textSecondary)
-                    .frame(width: 30, height: 30)
-                    .background(AVBrandColor.cardSurface, in: Circle())
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel(closeAccessibilityLabel)
-            .accessibilityIdentifier("avi.actions.close")
+            AVAviPanelCloseButton(
+                accessibilityLabel: closeAccessibilityLabel,
+                accessibilityIdentifier: "avi.actions.close",
+                action: close
+            )
         }
     }
 
@@ -245,15 +240,10 @@ public struct AVAviPopoverActionPanel<Content: View>: View {
                 .foregroundStyle(AVBrandColor.textSecondary)
             }
 
-            Button(action: close) {
-                Image(systemName: "xmark")
-                    .font(.system(size: 11, weight: .black))
-                    .foregroundStyle(AVBrandColor.textSecondary)
-                    .frame(width: 30, height: 30)
-                    .background(AVBrandColor.cardSurface, in: Circle())
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel(closeAccessibilityLabel)
+            AVAviPanelCloseButton(
+                accessibilityLabel: closeAccessibilityLabel,
+                action: close
+            )
         }
     }
 
@@ -273,6 +263,35 @@ public struct AVAviPopoverActionPanel<Content: View>: View {
         .disabled(!isEnabled)
         .opacity(isEnabled ? 1 : 0.34)
         .accessibilityLabel(accessibilityLabel)
+    }
+}
+
+public struct AVAviPanelCloseButton: View {
+    private let accessibilityLabel: String
+    private let accessibilityIdentifier: String?
+    private let action: () -> Void
+
+    public init(
+        accessibilityLabel: String,
+        accessibilityIdentifier: String? = nil,
+        action: @escaping () -> Void
+    ) {
+        self.accessibilityLabel = accessibilityLabel
+        self.accessibilityIdentifier = accessibilityIdentifier
+        self.action = action
+    }
+
+    public var body: some View {
+        Button(action: action) {
+            Image(systemName: "xmark")
+                .font(.system(size: 11, weight: .black))
+                .foregroundStyle(AVBrandColor.textSecondary)
+                .frame(width: 30, height: 30)
+                .background(AVBrandColor.cardSurface, in: Circle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(accessibilityLabel)
+        .accessibilityIdentifierIfPresent(accessibilityIdentifier)
     }
 }
 
