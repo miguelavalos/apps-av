@@ -86,7 +86,7 @@ public struct AVSettingsSheetScaffold<Content: View>: View {
     private let horizontalPadding: CGFloat
     private let topPadding: CGFloat
     private let bottomPadding: CGFloat
-    private let backgroundColor: Color
+    private let backgroundStyle: AnyShapeStyle
     private let closeTitle: String?
     private let closeAccessibilityIdentifier: String?
     private let onClose: (() -> Void)?
@@ -97,7 +97,7 @@ public struct AVSettingsSheetScaffold<Content: View>: View {
         horizontalPadding: CGFloat = 20,
         topPadding: CGFloat = 22,
         bottomPadding: CGFloat = 28,
-        backgroundColor: Color = AVBrandColor.footerBackdrop,
+        backgroundStyle: AnyShapeStyle = AnyShapeStyle(AVBrandColor.footerBackdrop),
         closeTitle: String? = nil,
         closeAccessibilityIdentifier: String? = nil,
         onClose: (() -> Void)? = nil,
@@ -107,7 +107,7 @@ public struct AVSettingsSheetScaffold<Content: View>: View {
         self.horizontalPadding = horizontalPadding
         self.topPadding = topPadding
         self.bottomPadding = bottomPadding
-        self.backgroundColor = backgroundColor
+        self.backgroundStyle = backgroundStyle
         self.closeTitle = closeTitle
         self.closeAccessibilityIdentifier = closeAccessibilityIdentifier
         self.onClose = onClose
@@ -124,7 +124,11 @@ public struct AVSettingsSheetScaffold<Content: View>: View {
                 .padding(.top, topPadding)
                 .padding(.bottom, bottomPadding)
             }
-            .background(backgroundColor.ignoresSafeArea())
+            .background {
+                Rectangle()
+                    .fill(backgroundStyle)
+                    .ignoresSafeArea()
+            }
             .toolbar {
                 if let closeTitle, let onClose {
                     ToolbarItem(placement: .cancellationAction) {
