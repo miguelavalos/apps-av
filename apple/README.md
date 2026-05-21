@@ -118,6 +118,7 @@ AVOnboardingCallToActionSection(
 ) {
     companion
 }
+AVOnboardingHeroText(title: "Meet Avi", subtitle: "A helpful companion for your app.")
 AVSettingsGroupedActionList(title: "Local data") {
     AVSettingsGroupedActionRow(
         systemImage: "clock",
