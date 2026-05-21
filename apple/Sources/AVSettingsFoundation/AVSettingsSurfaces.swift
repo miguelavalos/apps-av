@@ -41,6 +41,67 @@ public struct AVSettingsSectionHeader: View {
     }
 }
 
+public struct AVSettingsNoticeCard: View {
+    private let systemImage: String
+    private let title: String
+    private let detail: String
+
+    public init(systemImage: String, title: String, detail: String) {
+        self.systemImage = systemImage
+        self.title = title
+        self.detail = detail
+    }
+
+    public var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Label(title, systemImage: systemImage)
+                .font(.system(size: 16, weight: .bold))
+                .foregroundStyle(AVBrandColor.textPrimary)
+
+            Text(detail)
+                .font(.system(size: 14, weight: .medium))
+                .foregroundStyle(AVBrandColor.textSecondary)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(18)
+        .background(AVSettingsCardBackground())
+    }
+}
+
+public struct AVSettingsStatusCard: View {
+    private let systemImage: String
+    private let title: String
+    private let detail: String
+
+    public init(systemImage: String, title: String, detail: String) {
+        self.systemImage = systemImage
+        self.title = title
+        self.detail = detail
+    }
+
+    public var body: some View {
+        HStack(alignment: .top, spacing: 12) {
+            Image(systemName: systemImage)
+                .font(.system(size: 18, weight: .semibold))
+                .foregroundStyle(AVBrandColor.accent)
+                .frame(width: 24)
+
+            VStack(alignment: .leading, spacing: 5) {
+                Text(title)
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundStyle(AVBrandColor.textPrimary)
+
+                Text(detail)
+                    .font(.system(size: 14, weight: .medium))
+                    .foregroundStyle(AVBrandColor.textSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .padding(18)
+        .background(AVSettingsCardBackground())
+    }
+}
+
 public struct AVSettingsInfoRow: View {
     private let systemImage: String
     private let title: String
