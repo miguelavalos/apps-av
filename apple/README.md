@@ -125,6 +125,12 @@ AVPlanComparisonCard(
     isHighlighted: true
 )
 
+AVPaywallPrimaryButton(
+    title: "Continue",
+    accessibilityIdentifier: "paywall.continue",
+    action: continueAction
+)
+
 AVUpgradePromptSheet(
     eyebrow: "Limit reached",
     title: "Upgrade to continue",

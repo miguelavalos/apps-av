@@ -53,16 +53,12 @@ public struct AVPaywallOfferCard<Avatar: View, RestoreButton: View>: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
 
-            Button(action: primaryAction) {
-                Text(primaryButtonTitle)
-                    .font(.system(size: 17, weight: .black))
-                    .foregroundStyle(AVBrandColor.brandBlack)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 54)
-                    .background(AVBrandColor.accent, in: RoundedRectangle(cornerRadius: AVBrandRadius.control, style: .continuous))
-            }
-            .disabled(primaryButtonIsDisabled)
-            .accessibilityIdentifier(primaryAccessibilityIdentifier)
+            AVPaywallPrimaryButton(
+                title: primaryButtonTitle,
+                isDisabled: primaryButtonIsDisabled,
+                accessibilityIdentifier: primaryAccessibilityIdentifier,
+                action: primaryAction
+            )
 
             restoreButton
         }
@@ -73,6 +69,43 @@ public struct AVPaywallOfferCard<Avatar: View, RestoreButton: View>: View {
                 .stroke(AVBrandColor.accent.opacity(0.32), lineWidth: 1.5)
         }
         .shadow(color: AVBrandColor.softShadow.opacity(0.18), radius: 12, y: 6)
+    }
+}
+
+public struct AVPaywallPrimaryButton: View {
+    private let title: String
+    private let isDisabled: Bool
+    private let accessibilityIdentifier: String
+    private let action: () -> Void
+
+    public init(
+        title: String,
+        isDisabled: Bool = false,
+        accessibilityIdentifier: String = "paywall.primary",
+        action: @escaping () -> Void
+    ) {
+        self.title = title
+        self.isDisabled = isDisabled
+        self.accessibilityIdentifier = accessibilityIdentifier
+        self.action = action
+    }
+
+    public var body: some View {
+        Button(action: action) {
+            Text(title)
+                .font(.system(size: 17, weight: .black, design: .rounded))
+                .foregroundStyle(AVBrandColor.brandBlack)
+                .lineLimit(1)
+                .minimumScaleFactor(0.78)
+                .frame(maxWidth: .infinity)
+                .frame(height: 54)
+                .background(
+                    AVBrandColor.accent,
+                    in: RoundedRectangle(cornerRadius: AVBrandRadius.control, style: .continuous)
+                )
+        }
+        .disabled(isDisabled)
+        .accessibilityIdentifier(accessibilityIdentifier)
     }
 }
 
