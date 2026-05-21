@@ -77,7 +77,7 @@ Use `AVSplashTransitionPolicy` from the host app to keep launch timing consisten
 import AVSettingsFoundation
 
 AVSettingsCardBackground()
-AVSettingsSheetScaffold(closeTitle: "Done", onClose: dismiss) {
+AVSettingsSheetScaffold(backgroundStyle: AnyShapeStyle(appBackground), closeTitle: "Done", onClose: dismiss) {
     content
 }
 AVSettingsScreenHeader(title: "Settings", subtitle: "Manage account and preferences")
