@@ -101,6 +101,13 @@ AVAviScreenHeader(
     accessibilityIdentifier: "avi.header",
     avatar: { avatar }
 )
+
+AVAviPreviewPrimaryButton(
+    title: "Start with Avi",
+    systemImage: "sparkles",
+    accessibilityIdentifier: "avi.preview.primary",
+    action: start
+)
 ```
 
 The product owns shared companion cards, headers, command controls, panel chrome, and generic reaction effects. Host apps keep their Avi personality model, assets, recommendation logic, playback, account state, and localized copy.
