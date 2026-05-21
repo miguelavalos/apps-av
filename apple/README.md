@@ -82,6 +82,19 @@ AVSettingsInfoRow(systemImage: "person.crop.circle", title: "Account", detail: "
 AVSettingsToggleRow(systemImage: "bell", title: "Alerts", detail: "Show important warnings", isOn: $isOn)
 AVSettingsButton(title: "Continue", style: .primary) { }
 AVSettingsOptionButton(title: "System", systemImage: "gearshape", isSelected: true) { }
+AVSettingsGroupedActionList(title: "Local data") {
+    AVSettingsGroupedActionRow(
+        systemImage: "clock",
+        title: "Clear recents",
+        detail: "Remove recent activity",
+        showsDivider: true
+    ) { }
+    AVSettingsGroupedActionRow(
+        systemImage: "slider.horizontal.3",
+        title: "Reset settings",
+        detail: "Restore defaults"
+    ) { }
+}
 ```
 
 The product owns shared layout and styling only. Host apps keep their account state, legal URLs, deletion policies, settings models, and localized copy.
