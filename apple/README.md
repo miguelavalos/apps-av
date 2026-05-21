@@ -48,6 +48,12 @@ AVAppShellShowMoreButton(
     title: "Show 12 more",
     action: showMore
 )
+AVAppShellIconButton(
+    systemName: "gearshape.fill",
+    accessibilityLabel: "Settings",
+    accessibilityIdentifier: "header.settings",
+    action: openSettings
+)
 ```
 
 The product owns reusable shell layout, footer glass styling, tab affordances, and assistant entry treatment. Product-specific apps keep their own tab model, localized labels, assistant assets, navigation, playback, and business rules.
