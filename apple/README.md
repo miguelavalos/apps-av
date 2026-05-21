@@ -80,6 +80,7 @@ AVSettingsCardBackground()
 AVSettingsSectionHeader(title: "Account", subtitle: "Manage your AV account")
 AVSettingsNoticeCard(systemImage: "person.2", title: "Shared account", detail: "This affects all AV apps.")
 AVSettingsStatusCard(systemImage: "checkmark.shield", title: "Ready", detail: "Your account is eligible.")
+AVSettingsDetailCard(title: "Subscription", detail: "Manage your billing before deleting.", linkTitle: "Manage", linkDestination: billingURL)
 AVSettingsInfoRow(systemImage: "person.crop.circle", title: "Account", detail: "Signed in")
 AVSettingsToggleRow(systemImage: "bell", title: "Alerts", detail: "Show important warnings", isOn: $isOn)
 AVSettingsButton(title: "Continue", style: .primary) { }

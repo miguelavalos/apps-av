@@ -102,6 +102,51 @@ public struct AVSettingsStatusCard: View {
     }
 }
 
+public struct AVSettingsDetailCard: View {
+    private let title: String
+    private let detail: String?
+    private let linkTitle: String?
+    private let linkDestination: URL?
+
+    public init(
+        title: String,
+        detail: String? = nil,
+        linkTitle: String? = nil,
+        linkDestination: URL? = nil
+    ) {
+        self.title = title
+        self.detail = detail
+        self.linkTitle = linkTitle
+        self.linkDestination = linkDestination
+    }
+
+    public var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(title)
+                .font(.system(size: 15, weight: .bold))
+                .foregroundStyle(AVBrandColor.textPrimary)
+
+            if let detail, !detail.isEmpty {
+                Text(detail)
+                    .font(.system(size: 13, weight: .medium))
+                    .foregroundStyle(AVBrandColor.textSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
+            if let linkTitle, let linkDestination {
+                Link(linkTitle, destination: linkDestination)
+                    .font(.system(size: 13, weight: .bold))
+            }
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            AVBrandColor.mutedSurface,
+            in: RoundedRectangle(cornerRadius: AVBrandRadius.footerSelection, style: .continuous)
+        )
+    }
+}
+
 public struct AVSettingsInfoRow: View {
     private let systemImage: String
     private let title: String
