@@ -81,6 +81,7 @@ AVSettingsSectionHeader(title: "Account", subtitle: "Manage your AV account")
 AVSettingsInfoRow(systemImage: "person.crop.circle", title: "Account", detail: "Signed in")
 AVSettingsToggleRow(systemImage: "bell", title: "Alerts", detail: "Show important warnings", isOn: $isOn)
 AVSettingsButton(title: "Continue", style: .primary) { }
+AVSettingsOptionButton(title: "System", systemImage: "gearshape", isSelected: true) { }
 ```
 
 The product owns shared layout and styling only. Host apps keep their account state, legal URLs, deletion policies, settings models, and localized copy.
