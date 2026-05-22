@@ -16,7 +16,7 @@ public struct AVPaywallOfferCard<Avatar: View, RestoreButton: View>: View {
         detail: String,
         primaryButtonTitle: String,
         primaryButtonIsDisabled: Bool = false,
-        primaryAccessibilityIdentifier: String = "paywall.purchase",
+        primaryAccessibilityIdentifier: String = "paywall.primary",
         primaryAction: @escaping () -> Void,
         @ViewBuilder avatar: () -> Avatar,
         @ViewBuilder restoreButton: () -> RestoreButton
@@ -115,7 +115,7 @@ public extension AVPaywallOfferCard where RestoreButton == EmptyView {
         detail: String,
         primaryButtonTitle: String,
         primaryButtonIsDisabled: Bool = false,
-        primaryAccessibilityIdentifier: String = "paywall.purchase",
+        primaryAccessibilityIdentifier: String = "paywall.primary",
         primaryAction: @escaping () -> Void,
         @ViewBuilder avatar: () -> Avatar
     ) {

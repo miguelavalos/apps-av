@@ -85,7 +85,7 @@ public struct AVAuthOptionsPanelScaffold<Actions: View, Accessory: View>: View {
         .padding(.bottom, 32)
         .background(
             RoundedRectangle(cornerRadius: 30, style: .continuous)
-                .fill(Color(red: 0.99, green: 0.97, blue: 0.91).opacity(0.98))
+                .fill(AVBrandColor.warmPanelSurface.opacity(0.98))
                 .overlay {
                     RoundedRectangle(cornerRadius: 30, style: .continuous)
                         .stroke(AVBrandColor.ink.opacity(0.12), lineWidth: 1)

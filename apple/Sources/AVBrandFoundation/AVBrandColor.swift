@@ -18,6 +18,9 @@ public enum AVBrandColor {
     public static let neutral300 = Color(red: 200 / 255, green: 209 / 255, blue: 203 / 255)
     public static let neutral600 = Color(red: 95 / 255, green: 104 / 255, blue: 98 / 255)
     public static let neutral800 = Color(red: 26 / 255, green: 29 / 255, blue: 27 / 255)
+    public static let launchSurfaceStart = Color(red: 0.97, green: 0.94, blue: 0.86)
+    public static let launchSurfaceMid = Color(red: 0.99, green: 0.97, blue: 0.91)
+    public static let warmPanelSurface = launchSurfaceMid
 
     public static let accent = accentBase
     public static let destructive = Color(red: 0.84, green: 0.16, blue: 0.22)

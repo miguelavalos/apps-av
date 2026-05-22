@@ -26,6 +26,16 @@ public enum AVBrandSurface {
         endPoint: .bottom
     )
 
+    public static let launchBackground = LinearGradient(
+        colors: [
+            AVBrandColor.launchSurfaceStart,
+            AVBrandColor.launchSurfaceMid,
+            AVBrandColor.neutral50
+        ],
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
+
     public static let accentGradient = LinearGradient(
         colors: [AVBrandColor.accentBase.opacity(0.96), AVBrandColor.canvas.opacity(0.9)],
         startPoint: .topLeading,
