@@ -3,6 +3,7 @@ import SwiftUI
 
 public struct AVSplashScreen<Logo: View, Hero: View>: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.avBrandPalette) private var brandPalette
 
     private let tagline: String
     private let status: String
@@ -27,10 +28,10 @@ public struct AVSplashScreen<Logo: View, Hero: View>: View {
 
     public var body: some View {
         ZStack {
-            AVBrandSurface.launchBackground
+            AVBrandSurface.launchBackground(for: brandPalette)
                 .ignoresSafeArea()
 
-            AVSplashAmbientBackdrop(expanded: backdropExpanded)
+            AVSplashAmbientBackdrop(expanded: backdropExpanded, palette: brandPalette)
 
             VStack(spacing: 0) {
                 logo()
@@ -50,17 +51,17 @@ public struct AVSplashScreen<Logo: View, Hero: View>: View {
                 VStack(spacing: 10) {
                     Text(tagline)
                         .font(.system(size: 25, weight: .black, design: .rounded))
-                        .foregroundStyle(AVBrandColor.ink)
+                        .foregroundStyle(brandPalette.ink)
                         .multilineTextAlignment(.center)
 
                     HStack(spacing: 8) {
                         Circle()
-                            .fill(AVBrandColor.accent)
+                            .fill(brandPalette.accent)
                             .frame(width: 7, height: 7)
 
                         Text(status)
                             .font(.system(size: 14, weight: .semibold))
-                            .foregroundStyle(AVBrandColor.ink.opacity(0.72))
+                            .foregroundStyle(brandPalette.ink.opacity(0.72))
                     }
                     .opacity(statusVisible ? 1 : 0)
                     .offset(y: statusVisible ? 0 : 8)
@@ -100,13 +101,14 @@ public struct AVSplashScreen<Logo: View, Hero: View>: View {
 
 private struct AVSplashAmbientBackdrop: View {
     let expanded: Bool
+    let palette: AVBrandPalette
 
     var body: some View {
         ZStack {
             RadialGradient(
                 colors: [
-                    AVBrandColor.accent.opacity(0.18),
-                    AVBrandColor.accent.opacity(0.06),
+                    palette.accent.opacity(0.18),
+                    palette.accent.opacity(0.06),
                     .clear
                 ],
                 center: .center,
@@ -120,7 +122,7 @@ private struct AVSplashAmbientBackdrop: View {
             ForEach(Array([110.0, 166.0, 224.0].enumerated()), id: \.offset) { index, size in
                 Circle()
                     .trim(from: 0.05, to: 0.35)
-                    .stroke(AVBrandColor.accent.opacity(0.13 - Double(index) * 0.025), lineWidth: 1.4)
+                    .stroke(palette.accent.opacity(0.13 - Double(index) * 0.025), lineWidth: 1.4)
                     .frame(width: size, height: size)
                     .rotationEffect(.degrees(-32))
                     .offset(x: 92, y: -18)
@@ -129,7 +131,7 @@ private struct AVSplashAmbientBackdrop: View {
 
             ForEach(Array([0.0, 1.0, 2.0, 3.0].enumerated()), id: \.offset) { index, _ in
                 Circle()
-                    .fill(index == 1 ? AVBrandColor.accent.opacity(0.24) : AVBrandColor.ink.opacity(0.08))
+                    .fill(index == 1 ? palette.accent.opacity(0.24) : palette.ink.opacity(0.08))
                     .frame(width: index == 1 ? 7 : 4, height: index == 1 ? 7 : 4)
                     .offset(x: CGFloat(index * 52 - 92), y: CGFloat(index % 2 == 0 ? 132 : -138))
                     .opacity(expanded ? 1 : 0.2)

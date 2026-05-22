@@ -27,18 +27,50 @@ public enum AVBrandSurface {
     )
 
     public static let launchBackground = LinearGradient(
-        colors: [
-            AVBrandColor.launchSurfaceStart,
-            AVBrandColor.launchSurfaceMid,
-            AVBrandColor.neutral50
-        ],
+        colors: launchBackgroundColors(for: .standard),
         startPoint: .topLeading,
         endPoint: .bottomTrailing
     )
 
     public static let accentGradient = LinearGradient(
-        colors: [AVBrandColor.accentBase.opacity(0.96), AVBrandColor.canvas.opacity(0.9)],
+        colors: accentGradientColors(for: .standard),
         startPoint: .topLeading,
         endPoint: .bottomTrailing
     )
+
+    public static func onboardingBackground(for palette: AVBrandPalette) -> LinearGradient {
+        LinearGradient(
+            colors: [palette.ink, palette.darkSurfaceAlt],
+            startPoint: .top,
+            endPoint: .bottom
+        )
+    }
+
+    public static func launchBackground(for palette: AVBrandPalette) -> LinearGradient {
+        LinearGradient(
+            colors: launchBackgroundColors(for: palette),
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
+
+    public static func accentGradient(for palette: AVBrandPalette) -> LinearGradient {
+        LinearGradient(
+            colors: accentGradientColors(for: palette),
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
+
+    private static func launchBackgroundColors(for palette: AVBrandPalette) -> [Color] {
+        [
+            palette.launchSurfaceStart,
+            palette.launchSurfaceMid,
+            AVBrandColor.neutral50
+        ]
+    }
+
+    private static func accentGradientColors(for palette: AVBrandPalette) -> [Color] {
+        [palette.accent.opacity(0.96), palette.canvas.opacity(0.9)]
+    }
 }
