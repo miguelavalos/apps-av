@@ -339,17 +339,20 @@ public struct AVAviQuickActionButton: View {
 
 public struct AVAviIconActionButton: View {
     private let systemImage: String
+    private let isSelected: Bool
     private let accessibilityLabel: String
     private let accessibilityIdentifier: String?
     private let action: () -> Void
 
     public init(
         systemImage: String,
+        isSelected: Bool = false,
         accessibilityLabel: String,
         accessibilityIdentifier: String? = nil,
         action: @escaping () -> Void
     ) {
         self.systemImage = systemImage
+        self.isSelected = isSelected
         self.accessibilityLabel = accessibilityLabel
         self.accessibilityIdentifier = accessibilityIdentifier
         self.action = action
@@ -359,12 +362,12 @@ public struct AVAviIconActionButton: View {
         Button(action: action) {
             Image(systemName: systemImage)
                 .font(.system(size: 16, weight: .black))
-                .foregroundStyle(AVBrandColor.textPrimary)
+                .foregroundStyle(isSelected ? AVBrandColor.accent : AVBrandColor.textPrimary)
                 .frame(width: 44, height: 44)
                 .background(AVBrandColor.elevatedSurface, in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
                 .overlay {
                     RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous)
-                        .stroke(AVBrandColor.borderSubtle, lineWidth: 1)
+                        .stroke(isSelected ? AVBrandColor.accent.opacity(0.34) : AVBrandColor.borderSubtle, lineWidth: 1)
                 }
         }
         .buttonStyle(.plain)
