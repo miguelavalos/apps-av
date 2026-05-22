@@ -132,7 +132,7 @@ public struct AVAviInfoRow: View {
     }
 }
 
-public struct AVAviRecommendationItemRow<Trailing: View>: View {
+public struct AVAviSuggestedItemRow<Trailing: View>: View {
     private let title: String
     private let detail: String
     private let playAccessibilityLabel: String
@@ -206,7 +206,7 @@ public struct AVAviRecommendationItemRow<Trailing: View>: View {
     }
 }
 
-public extension AVAviRecommendationItemRow where Trailing == EmptyView {
+public extension AVAviSuggestedItemRow where Trailing == EmptyView {
     init(
         title: String,
         detail: String,
