@@ -350,14 +350,14 @@ public struct AVAviCommandButton: View {
     }
 }
 
-public struct AVAviCloseSignalPanelButton: View {
+public struct AVAviStopPanelButton: View {
     private let title: String
     private let accessibilityIdentifier: String
     private let action: () -> Void
 
     public init(
         title: String,
-        accessibilityIdentifier: String = "avi.actions.closeSignal",
+        accessibilityIdentifier: String = "avi.actions.stop",
         action: @escaping () -> Void
     ) {
         self.title = title
