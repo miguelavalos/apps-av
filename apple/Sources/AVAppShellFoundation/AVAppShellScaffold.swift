@@ -2,6 +2,8 @@ import AVBrandFoundation
 import SwiftUI
 
 public struct AVAppShellScaffold<ID: Hashable, Content: View, FooterPlayer: View, AssistantIcon: View>: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let selectedTabID: ID
     private let tabs: [AVAppShellTab<ID>]
     private let assistantID: ID
@@ -84,6 +86,7 @@ public struct AVAppShellScaffold<ID: Hashable, Content: View, FooterPlayer: View
                                 title: tab.title,
                                 systemImage: tab.systemImage,
                                 isSelected: selectedTabID == tab.id,
+                                accentColor: brandPalette.accent,
                                 selectionNamespace: footerSelectionAnimation,
                                 accessibilityIdentifier: tab.accessibilityIdentifier
                             ) {
@@ -107,6 +110,7 @@ public struct AVAppShellScaffold<ID: Hashable, Content: View, FooterPlayer: View
                     AVAppShellAssistantButton(
                         isSelected: selectedTabID == assistantID,
                         hasActiveContext: hasAssistantActiveContext,
+                        accentColor: brandPalette.accent,
                         accessibilityLabel: assistantAccessibilityLabel,
                         accessibilityIdentifier: assistantAccessibilityIdentifier,
                         icon: assistantIcon,
@@ -127,6 +131,7 @@ private struct AVAppShellFooterTabButton: View {
     let title: String
     let systemImage: String
     let isSelected: Bool
+    let accentColor: Color
     let selectionNamespace: Namespace.ID
     let accessibilityIdentifier: String
     let action: () -> Void
@@ -149,7 +154,7 @@ private struct AVAppShellFooterTabButton: View {
                     .frame(width: AVBrandIconSize.footerTab, height: AVBrandIconSize.footerTab)
                     .symbolRenderingMode(.monochrome)
             }
-            .foregroundStyle(isSelected ? AVBrandColor.accent : AVBrandColor.textSecondary)
+            .foregroundStyle(isSelected ? accentColor : AVBrandColor.textSecondary)
             .frame(width: 64, height: 46)
             .contentShape(Rectangle())
         }
@@ -167,6 +172,7 @@ private struct AVAppShellFooterTabButton: View {
 private struct AVAppShellAssistantButton<Icon: View>: View {
     let isSelected: Bool
     let hasActiveContext: Bool
+    let accentColor: Color
     let accessibilityLabel: String
     let accessibilityIdentifier: String
     let icon: (_ isSelected: Bool) -> Icon
@@ -189,7 +195,7 @@ private struct AVAppShellAssistantButton<Icon: View>: View {
                         .padding(4)
 
                     Circle()
-                        .fill(AVBrandColor.accent.opacity(0.14))
+                        .fill(accentColor.opacity(0.14))
                         .padding(9)
                 }
 
@@ -198,19 +204,19 @@ private struct AVAppShellAssistantButton<Icon: View>: View {
                     .opacity(isSelected ? 1 : 0.84)
                     .saturation(isSelected ? 1.06 : 0.82)
                     .padding(8)
-                    .shadow(color: AVBrandColor.accent.opacity(isSelected ? 0.24 : 0), radius: 6, y: 2)
+                    .shadow(color: accentColor.opacity(isSelected ? 0.24 : 0), radius: 6, y: 2)
 
                 if hasActiveContext && !isSelected {
                     Image(systemName: "waveform")
                         .font(.system(size: 9, weight: .black))
-                        .foregroundStyle(AVBrandColor.accent)
+                        .foregroundStyle(accentColor)
                         .frame(width: 20, height: 20)
                         .background(AVBrandColor.cardSurface, in: Circle())
                         .overlay {
                             Circle()
-                                .stroke(AVBrandColor.accent.opacity(0.32), lineWidth: 1)
+                                .stroke(accentColor.opacity(0.32), lineWidth: 1)
                         }
-                        .shadow(color: AVBrandColor.accent.opacity(0.18), radius: 4, y: 2)
+                        .shadow(color: accentColor.opacity(0.18), radius: 4, y: 2)
                         .offset(x: 20, y: -18)
                 }
             }
