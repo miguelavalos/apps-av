@@ -542,7 +542,7 @@ public struct AVAviPanelOptionButton: View {
     }
 
     private var iconColor: Color {
-        role == .destructive ? .red : brandPalette.accent
+        role == .destructive ? brandPalette.destructive : brandPalette.accent
     }
 }
 
