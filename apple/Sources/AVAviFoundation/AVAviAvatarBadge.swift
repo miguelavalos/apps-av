@@ -14,6 +14,8 @@ public enum AVAviAvatarBadgeStroke {
 }
 
 public struct AVAviAvatarBadge<Avatar: View>: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let imageSize: CGFloat
     private let badgeSize: CGFloat
     private let padding: CGFloat
@@ -53,7 +55,7 @@ public struct AVAviAvatarBadge<Avatar: View>: View {
     private var backgroundColor: Color {
         switch backgroundStyle {
         case .accentSoft:
-            AVBrandColor.accent.opacity(0.1)
+            brandPalette.accent.opacity(0.1)
         case .elevated:
             AVBrandColor.elevatedSurface
         case .muted:
@@ -66,7 +68,7 @@ public struct AVAviAvatarBadge<Avatar: View>: View {
     private var strokeColor: Color {
         switch strokeStyle {
         case .accentSoft:
-            AVBrandColor.accent.opacity(0.22)
+            brandPalette.accent.opacity(0.22)
         case .subtle:
             AVBrandColor.borderSubtle
         }

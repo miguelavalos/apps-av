@@ -2,6 +2,8 @@ import AVBrandFoundation
 import SwiftUI
 
 public struct AVPaywallBenefitRow: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let systemImage: String
     private let title: String
     private let detail: String
@@ -16,9 +18,9 @@ public struct AVPaywallBenefitRow: View {
         HStack(alignment: .top, spacing: 11) {
             Image(systemName: systemImage)
                 .font(.system(size: 15, weight: .bold))
-                .foregroundStyle(AVBrandColor.accent)
+                .foregroundStyle(brandPalette.accent)
                 .frame(width: 32, height: 32)
-                .background(AVBrandColor.accent.opacity(0.1), in: Circle())
+                .background(brandPalette.accent.opacity(0.1), in: Circle())
 
             VStack(alignment: .leading, spacing: 3) {
                 Text(title)
@@ -107,6 +109,8 @@ public struct AVPaywallStatusRow: View {
 }
 
 public struct AVPaywallLegalLinks: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let links: [AVPaywallLegalLink]
 
     public init(links: [AVPaywallLegalLink]) {
@@ -126,7 +130,7 @@ public struct AVPaywallLegalLinks: View {
             }
         }
         .font(AVBrandTypography.captionStrong)
-        .foregroundStyle(AVBrandColor.accent)
+        .foregroundStyle(brandPalette.accent)
     }
 }
 

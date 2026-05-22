@@ -2,6 +2,8 @@ import AVBrandFoundation
 import SwiftUI
 
 public struct AVMiniPlayerScaffold<Artwork: View, Controls: View>: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let subtitle: String
     private let detail: String
@@ -49,7 +51,7 @@ public struct AVMiniPlayerScaffold<Artwork: View, Controls: View>: View {
 
                 Text(subtitle)
                     .font(.caption.weight(.semibold))
-                    .foregroundStyle(isSubtitleHighlighted ? AVBrandColor.accent : AVBrandColor.textSecondary)
+                    .foregroundStyle(isSubtitleHighlighted ? brandPalette.accent : AVBrandColor.textSecondary)
                     .lineLimit(1)
 
                 Text(detail)
@@ -72,7 +74,7 @@ public struct AVMiniPlayerScaffold<Artwork: View, Controls: View>: View {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .stroke(
                     LinearGradient(
-                        colors: [AVBrandColor.glassStroke, AVBrandColor.accent.opacity(0.12)],
+                        colors: [AVBrandColor.glassStroke, brandPalette.accent.opacity(0.12)],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     ),
@@ -141,6 +143,8 @@ public extension AVMiniPlayerControlButton where Label == AnyView {
 }
 
 public struct AVExpandedFooterPlayerScaffold<Artwork: View, Controls: View>: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let primaryTitle: String
     private let subtitle: String
     private let title: String
@@ -244,7 +248,7 @@ public struct AVExpandedFooterPlayerScaffold<Artwork: View, Controls: View>: Vie
             RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .stroke(
                     LinearGradient(
-                        colors: [AVBrandColor.glassStroke, AVBrandColor.accent.opacity(0.12)],
+                        colors: [AVBrandColor.glassStroke, brandPalette.accent.opacity(0.12)],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     ),
@@ -262,7 +266,7 @@ public struct AVExpandedFooterPlayerScaffold<Artwork: View, Controls: View>: Vie
         VStack(alignment: .center, spacing: 5) {
             Text(subtitle)
                 .font(.system(size: 16, weight: .bold))
-                .foregroundStyle(isSubtitleHighlighted ? AVBrandColor.accent : AVBrandColor.textSecondary)
+                .foregroundStyle(isSubtitleHighlighted ? brandPalette.accent : AVBrandColor.textSecondary)
                 .multilineTextAlignment(.center)
                 .lineLimit(1)
                 .truncationMode(.tail)

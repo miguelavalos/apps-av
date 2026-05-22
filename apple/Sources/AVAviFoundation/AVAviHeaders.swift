@@ -2,6 +2,8 @@ import AVBrandFoundation
 import SwiftUI
 
 public struct AVAviScreenHeader<Avatar: View>: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let summary: String
     private let status: String?
@@ -44,10 +46,10 @@ public struct AVAviScreenHeader<Avatar: View>: View {
                     if let status {
                         Text(status)
                             .font(.system(size: 10, weight: .black))
-                            .foregroundStyle(AVBrandColor.accent)
+                            .foregroundStyle(brandPalette.accent)
                             .padding(.horizontal, AVBrandSpacing.xs)
                             .padding(.vertical, 5)
-                            .background(AVBrandColor.accent.opacity(0.11), in: Capsule(style: .continuous))
+                            .background(brandPalette.accent.opacity(0.11), in: Capsule(style: .continuous))
                     }
 
                     Spacer(minLength: 0)
@@ -76,6 +78,8 @@ public extension AVAviScreenHeader where Avatar == EmptyView {
 }
 
 public struct AVAviFocusedHeaderScaffold<Avatar: View>: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let label: String
     private let title: String
     private let summary: String
@@ -106,7 +110,7 @@ public struct AVAviFocusedHeaderScaffold<Avatar: View>: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(label)
                     .font(.system(size: 11, weight: .black))
-                    .foregroundStyle(AVBrandColor.accent)
+                    .foregroundStyle(brandPalette.accent)
                     .textCase(.uppercase)
                     .lineLimit(1)
                     .minimumScaleFactor(0.78)

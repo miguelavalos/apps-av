@@ -2,6 +2,8 @@ import AVBrandFoundation
 import SwiftUI
 
 public struct AVUpgradePromptSheet: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let iconSystemImage: String
     private let eyebrow: String
     private let title: String
@@ -50,12 +52,12 @@ public struct AVUpgradePromptSheet: View {
                     .font(.system(size: 22, weight: .bold))
                     .foregroundStyle(AVBrandColor.textInverse)
                     .frame(width: 48, height: 48)
-                    .background(AVBrandColor.accent, in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
+                    .background(brandPalette.accent, in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
 
                 VStack(alignment: .leading, spacing: AVBrandSpacing.xxs) {
                     Text(eyebrow)
                         .font(.system(size: 12, weight: .bold))
-                        .foregroundStyle(AVBrandColor.accent)
+                        .foregroundStyle(brandPalette.accent)
                         .textCase(.uppercase)
 
                     Text(title)
@@ -80,7 +82,7 @@ public struct AVUpgradePromptSheet: View {
                         .allowsTightening(true)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, AVBrandSpacing.lg)
-                        .background(AVBrandColor.accent, in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
+                        .background(brandPalette.accent, in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
                 }
                 .disabled(primaryButtonIsDisabled)
                 .accessibilityIdentifier(primaryAccessibilityIdentifier)

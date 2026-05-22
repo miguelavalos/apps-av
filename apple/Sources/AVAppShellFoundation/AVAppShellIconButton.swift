@@ -2,6 +2,8 @@ import AVBrandFoundation
 import SwiftUI
 
 public struct AVAppShellIconButton: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let systemName: String
     private let accessibilityLabel: String
     private let accessibilityValue: String?
@@ -32,17 +34,17 @@ public struct AVAppShellIconButton: View {
         Button(action: action) {
             Image(systemName: systemName)
                 .font(.system(size: fontSize, weight: .semibold))
-                .foregroundStyle(isSelected ? AVBrandColor.accent : AVBrandColor.textPrimary)
+                .foregroundStyle(isSelected ? brandPalette.accent : AVBrandColor.textPrimary)
                 .frame(width: 36, height: 36)
                 .background(isSelected ? AVBrandColor.footerGlassSelected : AVBrandColor.elevatedSurface, in: Circle())
                 .overlay {
                     Circle()
                         .stroke(
-                            isSelected ? AVBrandColor.accent.opacity(0.28) : AVBrandColor.borderSubtle.opacity(0.52),
+                            isSelected ? brandPalette.accent.opacity(0.28) : AVBrandColor.borderSubtle.opacity(0.52),
                             lineWidth: 1
                         )
                 }
-                .shadow(color: AVBrandColor.accent.opacity(isSelected ? 0.12 : 0), radius: 8, y: 3)
+                .shadow(color: brandPalette.accent.opacity(isSelected ? 0.12 : 0), radius: 8, y: 3)
         }
         .buttonStyle(.plain)
         .accessibilityLabel(accessibilityLabel)

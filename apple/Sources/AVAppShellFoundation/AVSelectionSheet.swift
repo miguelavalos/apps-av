@@ -51,6 +51,8 @@ private extension View {
 }
 
 public struct AVSelectionSheetRow: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let detail: String
     private let isSelected: Bool
@@ -73,7 +75,7 @@ public struct AVSelectionSheetRow: View {
             HStack(spacing: 12) {
                 Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
                     .font(.system(size: 18, weight: .bold))
-                    .foregroundStyle(isSelected ? AVBrandColor.accent : AVBrandColor.textSecondary.opacity(0.55))
+                    .foregroundStyle(isSelected ? brandPalette.accent : AVBrandColor.textSecondary.opacity(0.55))
 
                 VStack(alignment: .leading, spacing: 3) {
                     Text(title)

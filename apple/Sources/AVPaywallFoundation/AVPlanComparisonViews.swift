@@ -39,6 +39,8 @@ public struct AVPlanSummaryPill: View {
 }
 
 public struct AVPlanComparisonCard: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let subtitle: String
     private let rows: [String]
@@ -86,7 +88,7 @@ public struct AVPlanComparisonCard: View {
                         .padding(.horizontal, AVBrandSpacing.sm)
                         .padding(.vertical, 6)
                         .background(
-                            AVBrandColor.accent,
+                            brandPalette.accent,
                             in: Capsule()
                         )
                 }
@@ -100,13 +102,13 @@ public struct AVPlanComparisonCard: View {
         }
         .padding(AVBrandSpacing.xl)
         .background(
-            isHighlighted ? AVBrandColor.accent.opacity(0.08) : AVBrandColor.elevatedSurface,
+            isHighlighted ? brandPalette.accent.opacity(0.08) : AVBrandColor.elevatedSurface,
             in: RoundedRectangle(cornerRadius: AVBrandRadius.card, style: .continuous)
         )
         .overlay {
             RoundedRectangle(cornerRadius: AVBrandRadius.card, style: .continuous)
                 .stroke(
-                    isHighlighted ? AVBrandColor.accent.opacity(0.34) : AVBrandColor.borderSubtle.opacity(0.55),
+                    isHighlighted ? brandPalette.accent.opacity(0.34) : AVBrandColor.borderSubtle.opacity(0.55),
                     lineWidth: 1
                 )
         }
@@ -114,13 +116,15 @@ public struct AVPlanComparisonCard: View {
 }
 
 private struct AVPlanFeatureRow: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     let text: String
 
     var body: some View {
         HStack(alignment: .top, spacing: AVBrandSpacing.sm) {
             Image(systemName: "checkmark.circle.fill")
                 .font(.system(size: 14, weight: .bold))
-                .foregroundStyle(AVBrandColor.accent)
+                .foregroundStyle(brandPalette.accent)
                 .padding(.top, 2)
 
             Text(text)

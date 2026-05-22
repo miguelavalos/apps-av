@@ -2,6 +2,8 @@ import AVBrandFoundation
 import SwiftUI
 
 public struct AVPaywallHeader: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let eyebrow: String
     private let title: String
     private let subtitle: String
@@ -26,7 +28,7 @@ public struct AVPaywallHeader: View {
         VStack(alignment: .leading, spacing: AVBrandSpacing.xs) {
             Text(eyebrow)
                 .font(AVBrandTypography.eyebrow)
-                .foregroundStyle(AVBrandColor.accent)
+                .foregroundStyle(brandPalette.accent)
                 .textCase(.uppercase)
 
             Text(title)
