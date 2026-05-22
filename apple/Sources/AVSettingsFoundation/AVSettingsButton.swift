@@ -69,7 +69,7 @@ public struct AVSettingsButton: View {
         case .primary:
             brandPalette.accent
         case .destructivePrimary:
-            AVBrandColor.destructive
+            brandPalette.destructive
         case .secondary, .destructive:
             AVBrandColor.cardSurface
         }
@@ -84,7 +84,7 @@ public struct AVSettingsButton: View {
         case .secondary:
             AVBrandColor.textPrimary
         case .destructive:
-            AVBrandColor.destructive
+            brandPalette.destructive
         }
     }
 
@@ -95,7 +95,7 @@ public struct AVSettingsButton: View {
         case .secondary:
             AVBrandColor.borderSubtle
         case .destructive:
-            AVBrandColor.destructive.opacity(0.18)
+            brandPalette.destructive.opacity(0.18)
         }
     }
 

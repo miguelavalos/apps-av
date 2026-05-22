@@ -69,6 +69,25 @@ Circle()
 
 The product includes generic tokens for color, surface gradients, typography, spacing, radius, icon sizing, and motion. Use semantic names such as `ink`, `canvas`, `accentBase`, `textPrimary`, and `accentGradient` in Apps AV. Product-specific apps should keep their local theme adapters when they need app-specific names.
 
+Apps can provide product branding without changing base components by injecting an `AVBrandPalette` near the app root:
+
+```swift
+RootView()
+    .avBrandPalette(
+        AVBrandPalette(
+            ink: productInk,
+            accent: productAccent,
+            destructive: productDestructive,
+            canvas: productCanvas,
+            launchSurfaceStart: productLaunchStart,
+            launchSurfaceMid: productLaunchMid,
+            darkSurfaceAlt: productDarkSurface
+        )
+    )
+```
+
+Keep app/domain language, product identifiers, account policy, localized copy, and orchestration outside Apps AV. The palette is only for reusable visual branding tokens.
+
 ### AVAppShellFoundation
 
 `AVAppShellFoundation` provides shared shell scaffolding primitives for Apple apps:

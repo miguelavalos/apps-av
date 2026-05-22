@@ -3,6 +3,7 @@ import SwiftUI
 public struct AVBrandPalette: Equatable, @unchecked Sendable {
     public var ink: Color
     public var accent: Color
+    public var destructive: Color
     public var canvas: Color
     public var launchSurfaceStart: Color
     public var launchSurfaceMid: Color
@@ -11,6 +12,7 @@ public struct AVBrandPalette: Equatable, @unchecked Sendable {
     public init(
         ink: Color = AVBrandColor.ink,
         accent: Color = AVBrandColor.accentBase,
+        destructive: Color = AVBrandColor.destructive,
         canvas: Color = AVBrandColor.canvas,
         launchSurfaceStart: Color = AVBrandColor.launchSurfaceStart,
         launchSurfaceMid: Color = AVBrandColor.launchSurfaceMid,
@@ -18,6 +20,7 @@ public struct AVBrandPalette: Equatable, @unchecked Sendable {
     ) {
         self.ink = ink
         self.accent = accent
+        self.destructive = destructive
         self.canvas = canvas
         self.launchSurfaceStart = launchSurfaceStart
         self.launchSurfaceMid = launchSurfaceMid

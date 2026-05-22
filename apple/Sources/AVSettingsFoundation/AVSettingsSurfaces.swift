@@ -419,6 +419,8 @@ public struct AVSettingsLoadingState: View {
 }
 
 public struct AVSettingsDestructiveActionCard: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let sectionTitle: String
     private let systemImage: String
     private let title: String
@@ -463,14 +465,14 @@ public struct AVSettingsDestructiveActionCard: View {
 
                     Spacer(minLength: 12)
                 }
-                .foregroundStyle(AVBrandColor.destructive)
+                .foregroundStyle(brandPalette.destructive)
                 .padding(16)
                 .background(
                     RoundedRectangle(cornerRadius: 20, style: .continuous)
-                        .fill(AVBrandColor.destructive.opacity(0.07))
+                        .fill(brandPalette.destructive.opacity(0.07))
                         .overlay {
                             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                .stroke(AVBrandColor.destructive.opacity(0.18), lineWidth: 1)
+                                .stroke(brandPalette.destructive.opacity(0.18), lineWidth: 1)
                         }
                 )
             }
