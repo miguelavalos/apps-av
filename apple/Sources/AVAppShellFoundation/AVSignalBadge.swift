@@ -18,6 +18,3 @@ public struct AVSignalBadge: View {
             .background(AVBrandColor.accent.opacity(0.1), in: Capsule())
     }
 }
-
-@available(*, deprecated, renamed: "AVSignalBadge")
-public typealias AVStationSignalBadge = AVSignalBadge
