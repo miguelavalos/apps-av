@@ -27,16 +27,8 @@ public struct AVSplashScreen<Logo: View, Hero: View>: View {
 
     public var body: some View {
         ZStack {
-            LinearGradient(
-                colors: [
-                    Color(red: 0.97, green: 0.94, blue: 0.86),
-                    Color(red: 0.99, green: 0.97, blue: 0.91),
-                    AVBrandColor.neutral50
-                ],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
+            AVBrandSurface.launchBackground
+                .ignoresSafeArea()
 
             AVSplashAmbientBackdrop(expanded: backdropExpanded)
 
