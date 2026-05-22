@@ -88,8 +88,8 @@ The product owns reusable shell layout, footer glass styling, tab affordances, a
 import AVLaunchFoundation
 
 AVSplashScreen(
-    tagline: "Tune the world",
-    status: "Preparing live stations",
+    tagline: "Your product tagline",
+    status: "Preparing your experience",
     logo: { logo },
     hero: { hero }
 )

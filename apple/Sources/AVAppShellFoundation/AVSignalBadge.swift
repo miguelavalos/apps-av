@@ -1,7 +1,7 @@
 import AVBrandFoundation
 import SwiftUI
 
-public struct AVStationSignalBadge: View {
+public struct AVSignalBadge: View {
     private let title: String
 
     public init(title: String) {
@@ -18,3 +18,6 @@ public struct AVStationSignalBadge: View {
             .background(AVBrandColor.accent.opacity(0.1), in: Capsule())
     }
 }
+
+@available(*, deprecated, renamed: "AVSignalBadge")
+public typealias AVStationSignalBadge = AVSignalBadge
