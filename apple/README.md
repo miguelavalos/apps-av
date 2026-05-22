@@ -2,6 +2,51 @@
 
 Swift packages for AV apps on Apple platforms.
 
+## Architecture Boundary
+
+Apps AV is the shared Apple foundation for AVALSYS apps. It should provide the
+structure, design language, reusable UI primitives, and cross-app interaction
+patterns that future iOS apps can adopt without inheriting a specific product
+domain.
+
+Keep this package domain-neutral:
+
+- Do include brand tokens, shell scaffolds, launch primitives, settings surfaces,
+  paywall surfaces, assistant visual primitives, generic player chrome, and
+  semantic haptics.
+- Do not include radio, station, stream, catalog, recommendation, listening
+  analytics, purchase-product IDs, account policies, localized product copy, or
+  app-specific orchestration.
+- Do not add product-specific words to public APIs unless the module itself is
+  intentionally product-specific. Public names should describe their UI role:
+  `primaryTitle`, `footerPlayer`, `signalBadge`, `assistant`, `content`,
+  `status`, and similar generic terms.
+
+Host apps own their domain and adapt it into Apps AV primitives. For example,
+a radio app may render a station through `AVSignalBadge` or
+`AVExpandedFooterPlayerScaffold`, but Apps AV should not know that the title is
+a station, that playback uses streams, or that a badge means live metadata.
+
+### Ownership Matrix
+
+| Layer | Belongs in Apps AV | Belongs in product apps or product shared code |
+| --- | --- | --- |
+| Branding | Base color, spacing, typography, radius, motion, surface tokens | App-specific names, app-specific overrides, product art direction decisions |
+| Shell | Navigation chrome, footer player layout, tab treatment, generic headers/search/buttons | Tab model, routes, screen state, playback state, business rules |
+| Launch | Splash layout and transition state primitives | Startup work, test flags, product logo, tagline, legal copy |
+| Settings | Cards, rows, buttons, sheet/screen scaffolds | Account state, deletion rules, URLs, localized copy, provider configuration |
+| Assistant | Avi/assistant cards, panel chrome, buttons, avatar containers, reaction visuals | Personality model, assets, prompts, recommendations, domain actions |
+| Paywall | Paywall cards, benefit rows, plan layout, upgrade prompt surfaces | Product IDs, entitlements, usage limits, billing flows, legal URLs |
+| Haptics | Semantic feedback events and native platform mapping | When a domain action should trigger feedback |
+
+### Promotion Rule
+
+Add a primitive to Apps AV only when a second product could reuse it without
+renaming the API, changing the mental model, or importing product domain. If a
+component still needs words like station, radio, stream, track catalog, Tune,
+or a product-specific policy to make sense, keep it in the product app or the
+product shared package.
+
 ## Products
 
 ### AVBrandFoundation
