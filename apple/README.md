@@ -127,14 +127,14 @@ AVAppShellBrandHeaderScaffold(
     trailing: { accountButton }
 )
 AVAppShellDetailHeaderScaffold(
-    title: "Recently played",
-    subtitle: "Your latest activity",
-    status: "Library",
-    accessibilityIdentifier: "library.detail.header",
+    title: "Featured item",
+    subtitle: "Current activity",
+    status: "Active",
+    accessibilityIdentifier: "item.detail.header",
     leading: { backButton },
     accessory: { statusBadge }
 )
-AVAppShellSectionHeader(title: "Recently played") {
+AVAppShellSectionHeader(title: "Featured") {
     sectionActions
 }
 AVAppShellSearchField(
@@ -180,9 +180,9 @@ AVSettingsSheetHeader(title: "Local storage", subtitle: "Choose what to clear")
 AVSettingsSectionHeader(title: "Account", subtitle: "Manage your AV account")
 AVSettingsNoticeCard(systemImage: "person.2", title: "Shared account", detail: "This affects all AV apps.")
 AVSettingsStatusCard(systemImage: "checkmark.shield", title: "Ready", detail: "Your account is eligible.")
-AVSettingsDetailCard(title: "Subscription", detail: "Manage your billing before deleting.", linkTitle: "Manage", linkDestination: billingURL)
+AVSettingsDetailCard(title: "Linked service", detail: "Review the connected service before continuing.", linkTitle: "Manage", linkDestination: serviceURL)
 AVSettingsDetailList(items: [
-    AVSettingsDetailListItem(id: "subscription", title: "Active subscription", detail: "Manage billing first.", linkTitle: "Manage", linkDestination: billingURL)
+    AVSettingsDetailListItem(id: "service", title: "Connected service", detail: "Review this before continuing.", linkTitle: "Manage", linkDestination: serviceURL)
 ])
 AVSettingsTextField("DELETE", text: $confirmationText, accessibilityIdentifier: "account.confirmation")
 AVSettingsLoadingState("Loading account")
@@ -254,9 +254,9 @@ AVAviScreenHeader(
 )
 
 AVAviFocusedHeaderScaffold(
-    label: "Now listening",
-    title: "Avi is tuned in",
-    summary: "Reading the current signal",
+    label: "Focused",
+    title: "Avi is ready",
+    summary: "Reading the current context",
     accessibilityValue: "static:focused",
     avatar: { avatar }
 )
@@ -401,7 +401,7 @@ During local development, add the package by path:
 .package(path: "../apps-av/apple")
 ```
 
-For app repositories that live next to this package, use the relative path that matches the app project. For example, from `public/tune-av/apps/ios` the package path is `../../../apps-av/apple`.
+For app repositories that live next to this package, use the relative path that matches the app project, such as `../../../apps-av/apple`.
 
 When publishing a stable release, prefer pinning this package by Git tag.
 
