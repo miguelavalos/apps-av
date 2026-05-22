@@ -1,7 +1,7 @@
 import AVBrandFoundation
 import SwiftUI
 
-public struct AVSignalBadge: View {
+public struct AVCompactStatusBadge: View {
     private let title: String
 
     public init(title: String) {

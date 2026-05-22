@@ -19,11 +19,11 @@ Keep this package domain-neutral:
   app-specific orchestration.
 - Do not add product-specific words to public APIs unless the module itself is
   intentionally product-specific. Public names should describe their UI role:
-  `primaryTitle`, `footerPlayer`, `signalBadge`, `assistant`, `content`,
+  `primaryTitle`, `footerPlayer`, `compactStatusBadge`, `assistant`, `content`,
   `status`, and similar generic terms.
 
 Host apps own their domain and adapt it into Apps AV primitives. For example,
-a radio app may render a station through `AVSignalBadge` or
+a radio app may render a station through `AVCompactStatusBadge` or
 `AVExpandedFooterPlayerScaffold`, but Apps AV should not know that the title is
 a station, that playback uses streams, or that a badge means live metadata.
 
@@ -234,7 +234,7 @@ AVAviScreenHeader(
     avatar: { avatar }
 )
 
-AVAviFullPlayerHeaderScaffold(
+AVAviFocusedHeaderScaffold(
     label: "Now listening",
     title: "Avi is tuned in",
     summary: "Reading the current signal",
@@ -368,9 +368,9 @@ Last audited: 2026-05-22.
 | Area | Decision | Notes |
 | --- | --- | --- |
 | `AVAppShellFoundation` player/footer primitives | Keep in Apps AV | Footer player APIs use `primaryTitle` and `primaryAction`; product apps adapt station or media names before entering Apps AV. |
-| `AVAppShellFoundation` signal/search/shell primitives | Keep in Apps AV | `AVSignalBadge`, search fields, section headers, tabs, and shell scaffolds describe reusable chrome. Host apps own result models, filters, routes, labels, and playback state. |
+| `AVAppShellFoundation` status/search/shell primitives | Keep in Apps AV | `AVCompactStatusBadge`, search fields, section headers, tabs, and shell scaffolds describe reusable chrome. Host apps own result models, filters, routes, labels, and playback state. |
 | `AVLaunchFoundation` splash primitives | Keep in Apps AV | Splash accepts product-provided logo, hero, tagline, and status. Internal backdrop names are neutral; product apps own launch copy, assets, startup work, and test flags. |
-| `AVAviFoundation` assistant primitives | Keep in Apps AV | Avi components are visual assistant primitives: cards, headers, avatar containers, preview controls, action controls, panels, and generic reactions. Product apps own Avi personality, assets, prompts, recommendations, and domain actions. |
+| `AVAviFoundation` assistant primitives | Keep in Apps AV | Avi components are visual assistant primitives: cards, headers, avatar containers, preview controls, suggested item rows, action controls, panels, and generic reactions. Product apps own Avi personality, assets, prompts, recommendations, and domain actions. |
 | `AVHaptics` semantic events | Keep in Apps AV with generic names | Uses app-generic events such as `primaryAction`, `secondaryAction`, `step`, `stopAction`, `affirm`, `undo`, `positiveFeedback`, `negativeFeedback`, and `dismissiveFeedback`. Product apps adapt domain actions before calling Apps AV. |
 | `AVBrandFoundation` tokens | Keep in Apps AV with semantic names | Uses semantic tokens such as `ink`, `canvas`, `accentBase`, and `accentGradient`; Apps AV internals avoid brand-specific or signal-specific token names. |
 

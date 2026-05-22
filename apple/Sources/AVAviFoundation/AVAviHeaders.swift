@@ -75,7 +75,7 @@ public extension AVAviScreenHeader where Avatar == EmptyView {
     }
 }
 
-public struct AVAviFullPlayerHeaderScaffold<Avatar: View>: View {
+public struct AVAviFocusedHeaderScaffold<Avatar: View>: View {
     private let label: String
     private let title: String
     private let summary: String
@@ -88,7 +88,7 @@ public struct AVAviFullPlayerHeaderScaffold<Avatar: View>: View {
         title: String,
         summary: String,
         accessibilityValue: String? = nil,
-        accessibilityIdentifier: String = "avi.fullPlayer.header",
+        accessibilityIdentifier: String = "avi.focused.header",
         @ViewBuilder avatar: () -> Avatar
     ) {
         self.label = label
