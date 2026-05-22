@@ -69,6 +69,16 @@ Circle()
 
 The product includes generic tokens for color, surface gradients, typography, spacing, radius, icon sizing, and motion. Use semantic names such as `ink`, `canvas`, `accentBase`, `textPrimary`, and `accentGradient` in Apps AV. Product-specific apps should keep their local theme adapters when they need app-specific names.
 
+Brand token ownership is intentionally narrow:
+
+| Type | Role |
+| --- | --- |
+| `AVBrandColor` | Default structural colors and semantic defaults used by Apps AV. |
+| `AVBrandPalette` | App-provided product branding overrides such as `ink`, `accent`, `destructive`, launch surfaces, and canvas. |
+| `AVBrandSurface` | Reusable gradients and surfaces, with palette-aware functions when the surface carries app branding. |
+
+Use `AVBrandColor` directly for structural chrome that should remain stable across products. Use `@Environment(\.avBrandPalette)` in reusable components when a future app should be able to override the visual brand without changing Apps AV code.
+
 Apps can provide product branding without changing base components by injecting an `AVBrandPalette` near the app root:
 
 ```swift
@@ -391,7 +401,7 @@ Last audited: 2026-05-22.
 | `AVLaunchFoundation` splash primitives | Keep in Apps AV | Splash accepts product-provided logo, hero, tagline, and status. Internal backdrop names are neutral; product apps own launch copy, assets, startup work, and test flags. |
 | `AVAviFoundation` assistant primitives | Keep in Apps AV | Avi components are visual assistant primitives: cards, headers, avatar containers, preview controls, suggested item rows, action controls, panels, and generic reactions. Product apps own Avi personality, assets, prompts, recommendations, and domain actions. |
 | `AVHaptics` semantic events | Keep in Apps AV with generic names | Uses app-generic events such as `primaryAction`, `secondaryAction`, `step`, `stopAction`, `affirm`, `undo`, `positiveFeedback`, `negativeFeedback`, and `dismissiveFeedback`. Product apps adapt domain actions before calling Apps AV. |
-| `AVBrandFoundation` tokens | Keep in Apps AV with semantic names | Uses semantic tokens such as `ink`, `canvas`, `accentBase`, and `accentGradient`; Apps AV internals avoid brand-specific or signal-specific token names. |
+| `AVBrandFoundation` tokens | Keep in Apps AV with semantic names | `AVBrandColor` owns defaults, `AVBrandPalette` owns app-provided overrides, and `AVBrandSurface` owns reusable surfaces. Apps AV internals avoid brand-specific or signal-specific token names. |
 
 ## Installation
 
