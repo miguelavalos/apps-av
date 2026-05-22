@@ -52,7 +52,7 @@ public struct AVAviCompanionCard<Avatar: View>: View {
             Button(action: action) {
                 Image(systemName: actionSystemImage)
                     .font(.system(size: 15, weight: .black))
-                    .foregroundStyle(AVBrandColor.brandBlack)
+                    .foregroundStyle(AVBrandColor.ink)
                     .frame(width: 42, height: 42)
                     .background(AVBrandColor.accent, in: Circle())
             }

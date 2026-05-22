@@ -60,7 +60,7 @@ public struct AVAuthProviderButton<Icon: View>: View {
     private var backgroundTint: Color {
         switch style {
         case .dark:
-            AVBrandColor.brandGraphite
+            AVBrandColor.ink
         case .light:
             Color.white.opacity(0.72)
         }
@@ -69,9 +69,9 @@ public struct AVAuthProviderButton<Icon: View>: View {
     private var borderTint: Color {
         switch style {
         case .dark:
-            AVBrandColor.brandGraphite.opacity(0.2)
+            AVBrandColor.ink.opacity(0.2)
         case .light:
-            AVBrandColor.brandGraphite.opacity(0.18)
+            AVBrandColor.ink.opacity(0.18)
         }
     }
 
@@ -80,7 +80,7 @@ public struct AVAuthProviderButton<Icon: View>: View {
         case .dark:
             .white
         case .light:
-            AVBrandColor.brandGraphite
+            AVBrandColor.ink
         }
     }
 
@@ -89,7 +89,7 @@ public struct AVAuthProviderButton<Icon: View>: View {
         case .dark:
             .white
         case .light:
-            AVBrandColor.brandGraphite
+            AVBrandColor.ink
         }
     }
 
@@ -98,7 +98,7 @@ public struct AVAuthProviderButton<Icon: View>: View {
         case .dark:
             .white
         case .light:
-            AVBrandColor.brandGraphite
+            AVBrandColor.ink
         }
     }
 }

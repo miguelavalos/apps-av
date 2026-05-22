@@ -21,14 +21,19 @@ public enum AVBrandSurface {
     )
 
     public static let onboardingBackground = LinearGradient(
-        colors: [AVBrandColor.brandBlack, AVBrandColor.darkSurfaceAlt],
+        colors: [AVBrandColor.ink, AVBrandColor.darkSurfaceAlt],
         startPoint: .top,
         endPoint: .bottom
     )
 
-    public static let signalGradient = LinearGradient(
-        colors: [AVBrandColor.brandAccent.opacity(0.96), AVBrandColor.brandWhite.opacity(0.9)],
+    public static let accentGradient = LinearGradient(
+        colors: [AVBrandColor.accentBase.opacity(0.96), AVBrandColor.canvas.opacity(0.9)],
         startPoint: .topLeading,
         endPoint: .bottomTrailing
     )
+}
+
+public extension AVBrandSurface {
+    @available(*, deprecated, renamed: "accentGradient", message: "Use semantic surface tokens instead of signal-specific aliases.")
+    static var signalGradient: LinearGradient { accentGradient }
 }

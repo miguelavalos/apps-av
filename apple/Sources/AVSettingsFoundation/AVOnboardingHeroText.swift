@@ -20,13 +20,13 @@ public struct AVOnboardingHeroText: View {
         VStack(spacing: 8) {
             Text(title)
                 .font(.system(size: 30, weight: .black))
-                .foregroundStyle(AVBrandColor.brandGraphite)
+                .foregroundStyle(AVBrandColor.ink)
                 .multilineTextAlignment(.center)
                 .minimumScaleFactor(0.86)
 
             Text(subtitle)
                 .font(.system(size: 15, weight: .medium))
-                .foregroundStyle(AVBrandColor.brandGraphite.opacity(0.76))
+                .foregroundStyle(AVBrandColor.ink.opacity(0.76))
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
                 .fixedSize(horizontal: false, vertical: true)
