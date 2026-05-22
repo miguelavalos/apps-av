@@ -36,7 +36,7 @@ public struct AVAviActionChip: View {
     }
 }
 
-public struct AVAviSignalStep: View {
+public struct AVAviPreviewStep: View {
     private let index: Int
     private let title: String
 
@@ -69,7 +69,7 @@ public struct AVAviSignalStep: View {
     }
 }
 
-public struct AVAviSignalChip: View {
+public struct AVAviPreviewChip: View {
     private let title: String
     private let systemImage: String
 
