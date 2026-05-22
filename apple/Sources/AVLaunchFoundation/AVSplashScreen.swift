@@ -9,7 +9,7 @@ public struct AVSplashScreen<Logo: View, Hero: View>: View {
     private let logo: () -> Logo
     private let hero: () -> Hero
 
-    @State private var signalExpanded = false
+    @State private var backdropExpanded = false
     @State private var contentVisible = false
     @State private var statusVisible = false
 
@@ -38,7 +38,7 @@ public struct AVSplashScreen<Logo: View, Hero: View>: View {
             )
             .ignoresSafeArea()
 
-            AVSplashSignalBackdrop(expanded: signalExpanded)
+            AVSplashAmbientBackdrop(expanded: backdropExpanded)
 
             VStack(spacing: 0) {
                 logo()
@@ -86,14 +86,14 @@ public struct AVSplashScreen<Logo: View, Hero: View>: View {
 
     private func startAnimations() {
         guard !reduceMotion else {
-            signalExpanded = true
+            backdropExpanded = true
             contentVisible = true
             statusVisible = true
             return
         }
 
         withAnimation(.easeOut(duration: 0.7)) {
-            signalExpanded = true
+            backdropExpanded = true
         }
 
         withAnimation(.spring(response: 0.76, dampingFraction: 0.82).delay(0.1)) {
@@ -106,7 +106,7 @@ public struct AVSplashScreen<Logo: View, Hero: View>: View {
     }
 }
 
-private struct AVSplashSignalBackdrop: View {
+private struct AVSplashAmbientBackdrop: View {
     let expanded: Bool
 
     var body: some View {

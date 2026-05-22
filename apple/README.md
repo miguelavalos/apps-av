@@ -352,6 +352,19 @@ The implementation uses native platform feedback:
 - iOS: `UISelectionFeedbackGenerator`, `UIImpactFeedbackGenerator`, and `UINotificationFeedbackGenerator`
 - macOS: `NSHapticFeedbackManager`
 
+## Domain Audit
+
+Last audited: 2026-05-22.
+
+| Area | Decision | Notes |
+| --- | --- | --- |
+| `AVAppShellFoundation` player/footer primitives | Keep in Apps AV | Footer player APIs now use `primaryTitle` and `primaryAction`; the deprecated `stationTitle` compatibility initializer was removed because product apps should adapt station or media names before entering Apps AV. |
+| `AVAppShellFoundation` signal/search/shell primitives | Keep in Apps AV | `AVSignalBadge`, search fields, section headers, tabs, and shell scaffolds describe reusable chrome. Host apps own result models, filters, routes, labels, and playback state. |
+| `AVLaunchFoundation` splash primitives | Keep in Apps AV | Splash accepts product-provided logo, hero, tagline, and status. Internal backdrop names are neutral; product apps own launch copy, assets, startup work, and test flags. |
+| `AVAviFoundation` assistant primitives | Keep in Apps AV | Avi components are visual assistant primitives: cards, headers, avatar containers, action controls, panels, and generic reactions. Product apps own Avi personality, assets, prompts, recommendations, and domain actions. |
+| `AVHaptics` semantic events | Keep for now | Events such as `playbackToggle`, `queueStep`, `save`, `unsave`, `like`, and `dislike` are common interaction semantics across media and content apps. Revisit only if a future non-media app would need a smaller core plus product extensions. |
+| `AVBrandFoundation` tokens | Observe only | No product IDs or Tune copy were found. Detailed theming and branding decisions are deferred to the branding/theming follow-up. |
+
 ## Installation
 
 During local development, add the package by path:
