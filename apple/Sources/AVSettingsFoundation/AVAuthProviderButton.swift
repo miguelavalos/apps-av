@@ -7,6 +7,8 @@ public struct AVAuthProviderButton<Icon: View>: View {
         case light
     }
 
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let isLoading: Bool
     private let style: Style
@@ -60,7 +62,7 @@ public struct AVAuthProviderButton<Icon: View>: View {
     private var backgroundTint: Color {
         switch style {
         case .dark:
-            AVBrandColor.ink
+            brandPalette.ink
         case .light:
             Color.white.opacity(0.72)
         }
@@ -69,9 +71,9 @@ public struct AVAuthProviderButton<Icon: View>: View {
     private var borderTint: Color {
         switch style {
         case .dark:
-            AVBrandColor.ink.opacity(0.2)
+            brandPalette.ink.opacity(0.2)
         case .light:
-            AVBrandColor.ink.opacity(0.18)
+            brandPalette.ink.opacity(0.18)
         }
     }
 
@@ -80,7 +82,7 @@ public struct AVAuthProviderButton<Icon: View>: View {
         case .dark:
             .white
         case .light:
-            AVBrandColor.ink
+            brandPalette.ink
         }
     }
 
@@ -89,7 +91,7 @@ public struct AVAuthProviderButton<Icon: View>: View {
         case .dark:
             .white
         case .light:
-            AVBrandColor.ink
+            brandPalette.ink
         }
     }
 
@@ -98,7 +100,7 @@ public struct AVAuthProviderButton<Icon: View>: View {
         case .dark:
             .white
         case .light:
-            AVBrandColor.ink
+            brandPalette.ink
         }
     }
 }

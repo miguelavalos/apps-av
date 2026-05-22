@@ -2,6 +2,8 @@ import AVBrandFoundation
 import SwiftUI
 
 public struct AVAppShellDetailHeaderScaffold<Leading: View, Accessory: View>: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let entityName: String?
     private let subtitle: String
@@ -43,7 +45,7 @@ public struct AVAppShellDetailHeaderScaffold<Leading: View, Accessory: View>: Vi
                     if let status {
                         Text(status)
                             .font(.system(size: 11, weight: .black))
-                            .foregroundStyle(AVBrandColor.accent)
+                            .foregroundStyle(brandPalette.accent)
                             .textCase(.uppercase)
                             .lineLimit(1)
                     }

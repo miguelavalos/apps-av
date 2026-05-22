@@ -37,6 +37,8 @@ public struct AVAviActionChip: View {
 }
 
 public struct AVAviPreviewStep: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let index: Int
     private let title: String
 
@@ -49,9 +51,9 @@ public struct AVAviPreviewStep: View {
         HStack(spacing: AVBrandSpacing.sm) {
             Text("\(index)")
                 .font(.system(size: 12, weight: .black))
-                .foregroundStyle(AVBrandColor.accent)
+                .foregroundStyle(brandPalette.accent)
                 .frame(width: 24, height: 24)
-                .background(AVBrandColor.accent.opacity(0.12), in: Circle())
+                .background(brandPalette.accent.opacity(0.12), in: Circle())
 
             Text(title)
                 .font(AVBrandTypography.captionStrong)
@@ -70,6 +72,8 @@ public struct AVAviPreviewStep: View {
 }
 
 public struct AVAviPreviewChip: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let systemImage: String
 
@@ -83,19 +87,21 @@ public struct AVAviPreviewChip: View {
             .font(.system(size: 11, weight: .black))
             .lineLimit(1)
             .minimumScaleFactor(0.78)
-            .foregroundStyle(AVBrandColor.accent)
+            .foregroundStyle(brandPalette.accent)
             .labelStyle(.titleAndIcon)
             .padding(.horizontal, AVBrandSpacing.sm)
             .frame(height: 30)
-            .background(AVBrandColor.accent.opacity(0.1), in: Capsule(style: .continuous))
+            .background(brandPalette.accent.opacity(0.1), in: Capsule(style: .continuous))
             .overlay {
                 Capsule(style: .continuous)
-                    .stroke(AVBrandColor.accent.opacity(0.22), lineWidth: 1)
+                    .stroke(brandPalette.accent.opacity(0.22), lineWidth: 1)
             }
     }
 }
 
 public struct AVAviInfoRow: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let detail: String
     private let systemImage: String
@@ -112,9 +118,9 @@ public struct AVAviInfoRow: View {
         HStack(alignment: .top, spacing: AVBrandSpacing.md) {
             Image(systemName: systemImage)
                 .font(.system(size: 15, weight: .semibold))
-                .foregroundStyle(AVBrandColor.accent)
+                .foregroundStyle(brandPalette.accent)
                 .frame(width: 28, height: 28)
-                .background(AVBrandColor.accent.opacity(0.12), in: Circle())
+                .background(brandPalette.accent.opacity(0.12), in: Circle())
 
             VStack(alignment: .leading, spacing: AVBrandSpacing.xxs) {
                 Text(title)
@@ -133,6 +139,8 @@ public struct AVAviInfoRow: View {
 }
 
 public struct AVAviSuggestedItemRow<Trailing: View>: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let detail: String
     private let playAccessibilityLabel: String
@@ -169,7 +177,7 @@ public struct AVAviSuggestedItemRow<Trailing: View>: View {
                     .font(.system(size: 12, weight: .bold))
                     .foregroundStyle(AVBrandColor.textInverse)
                     .frame(width: 32, height: 32)
-                    .background(AVBrandColor.accent, in: Circle())
+                    .background(brandPalette.accent, in: Circle())
             }
             .buttonStyle(.plain)
             .accessibilityLabel(playAccessibilityLabel)
@@ -201,7 +209,7 @@ public struct AVAviSuggestedItemRow<Trailing: View>: View {
             .accessibilityLabel(detailsAccessibilityLabel)
         }
         .padding(AVBrandSpacing.sm)
-        .background(AVBrandColor.accent.opacity(0.07), in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
+        .background(brandPalette.accent.opacity(0.07), in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
         .accessibilityIdentifier(accessibilityIdentifier)
     }
 }
@@ -259,6 +267,8 @@ public struct AVAviActionButton: View {
 }
 
 public struct AVAviPrimaryActionButton: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let systemImage: String
     private let accessibilityIdentifier: String?
@@ -290,7 +300,7 @@ public struct AVAviPrimaryActionButton: View {
             .foregroundStyle(AVBrandColor.textInverse)
             .frame(maxWidth: .infinity)
             .frame(height: 44)
-            .background(AVBrandColor.accent, in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
+            .background(brandPalette.accent, in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
         }
         .buttonStyle(.plain)
         .accessibilityLabel(title)
@@ -299,6 +309,8 @@ public struct AVAviPrimaryActionButton: View {
 }
 
 public struct AVAviQuickActionButton: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let systemImage: String
     private let isSelected: Bool
@@ -323,13 +335,13 @@ public struct AVAviQuickActionButton: View {
         Button(action: action) {
             Label(title, systemImage: systemImage)
                 .font(.system(size: 14, weight: .black))
-                .foregroundStyle(isSelected ? AVBrandColor.accent : AVBrandColor.textPrimary)
+                .foregroundStyle(isSelected ? brandPalette.accent : AVBrandColor.textPrimary)
                 .frame(maxWidth: .infinity)
                 .frame(height: 44)
                 .background(AVBrandColor.elevatedSurface, in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
                 .overlay {
                     RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous)
-                        .stroke(isSelected ? AVBrandColor.accent.opacity(0.34) : AVBrandColor.borderSubtle, lineWidth: 1)
+                        .stroke(isSelected ? brandPalette.accent.opacity(0.34) : AVBrandColor.borderSubtle, lineWidth: 1)
                 }
         }
         .buttonStyle(.plain)
@@ -338,6 +350,8 @@ public struct AVAviQuickActionButton: View {
 }
 
 public struct AVAviIconActionButton: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let systemImage: String
     private let isSelected: Bool
     private let accessibilityLabel: String
@@ -362,12 +376,12 @@ public struct AVAviIconActionButton: View {
         Button(action: action) {
             Image(systemName: systemImage)
                 .font(.system(size: 16, weight: .black))
-                .foregroundStyle(isSelected ? AVBrandColor.accent : AVBrandColor.textPrimary)
+                .foregroundStyle(isSelected ? brandPalette.accent : AVBrandColor.textPrimary)
                 .frame(width: 44, height: 44)
                 .background(AVBrandColor.elevatedSurface, in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
                 .overlay {
                     RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous)
-                        .stroke(isSelected ? AVBrandColor.accent.opacity(0.34) : AVBrandColor.borderSubtle, lineWidth: 1)
+                        .stroke(isSelected ? brandPalette.accent.opacity(0.34) : AVBrandColor.borderSubtle, lineWidth: 1)
                 }
         }
         .buttonStyle(.plain)
@@ -469,6 +483,8 @@ public enum AVAviPanelOptionButtonStyle {
 }
 
 public struct AVAviPanelOptionButton: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let systemImage: String
     private let role: ButtonRole?
@@ -526,11 +542,13 @@ public struct AVAviPanelOptionButton: View {
     }
 
     private var iconColor: Color {
-        role == .destructive ? .red : AVBrandColor.accent
+        role == .destructive ? .red : brandPalette.accent
     }
 }
 
 public struct AVAviPreviewPrimaryButton: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let systemImage: String
     private let accessibilityIdentifier: String
@@ -570,8 +588,8 @@ public struct AVAviPreviewPrimaryButton: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .frame(height: 52)
             .padding(.horizontal, AVBrandSpacing.lg)
-            .background(AVBrandColor.accent, in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
-            .shadow(color: AVBrandColor.accent.opacity(0.24), radius: 12, y: 7)
+            .background(brandPalette.accent, in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
+            .shadow(color: brandPalette.accent.opacity(0.24), radius: 12, y: 7)
         }
         .buttonStyle(.plain)
         .accessibilityLabel(title)
@@ -580,6 +598,8 @@ public struct AVAviPreviewPrimaryButton: View {
 }
 
 public struct AVAviPreviewCapabilityRow: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let systemImage: String
     private let title: String
     private let detail: String
@@ -594,9 +614,9 @@ public struct AVAviPreviewCapabilityRow: View {
         HStack(alignment: .top, spacing: AVBrandSpacing.md) {
             Image(systemName: systemImage)
                 .font(.system(size: 13, weight: .black))
-                .foregroundStyle(AVBrandColor.accent)
+                .foregroundStyle(brandPalette.accent)
                 .frame(width: 30, height: 30)
-                .background(AVBrandColor.accent.opacity(0.1), in: Circle())
+                .background(brandPalette.accent.opacity(0.1), in: Circle())
 
             VStack(alignment: .leading, spacing: 3) {
                 Text(title)
@@ -617,6 +637,8 @@ public struct AVAviPreviewCapabilityRow: View {
 }
 
 public struct AVAviPreviewSecondaryButton: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let systemImage: String
     private let accessibilityIdentifier: String
@@ -639,9 +661,9 @@ public struct AVAviPreviewSecondaryButton: View {
             VStack(spacing: AVBrandSpacing.xs) {
                 Image(systemName: systemImage)
                     .font(.system(size: 16, weight: .black))
-                    .foregroundStyle(AVBrandColor.accent)
+                    .foregroundStyle(brandPalette.accent)
                     .frame(width: 30, height: 30)
-                    .background(AVBrandColor.accent.opacity(0.1), in: Circle())
+                    .background(brandPalette.accent.opacity(0.1), in: Circle())
 
                 Text(title)
                     .font(.system(size: 13, weight: .black, design: .rounded))

@@ -233,6 +233,8 @@ public struct AVSettingsNoticeCard: View {
 }
 
 public struct AVSettingsStatusCard: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let systemImage: String
     private let title: String
     private let detail: String
@@ -247,7 +249,7 @@ public struct AVSettingsStatusCard: View {
         HStack(alignment: .top, spacing: 12) {
             Image(systemName: systemImage)
                 .font(.system(size: 18, weight: .semibold))
-                .foregroundStyle(AVBrandColor.accent)
+                .foregroundStyle(brandPalette.accent)
                 .frame(width: 24)
 
             VStack(alignment: .leading, spacing: 5) {
@@ -555,6 +557,8 @@ public struct AVSettingsToggleRow: View {
 }
 
 public struct AVSettingsInlineActionRow: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let systemImage: String
     private let title: String
     private let detail: String
@@ -579,7 +583,7 @@ public struct AVSettingsInlineActionRow: View {
         AVSettingsRowLayout(systemImage: systemImage, title: title, detail: detail) {
             Button(actionTitle, action: action)
                 .font(.system(size: 13, weight: .bold))
-                .foregroundStyle(AVBrandColor.accent)
+                .foregroundStyle(brandPalette.accent)
                 .buttonStyle(.plain)
         }
         .padding(16)
@@ -662,6 +666,8 @@ public struct AVSettingsGroupedActionRow: View {
 }
 
 private struct AVSettingsRowLayout<Trailing: View>: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     let systemImage: String
     let title: String
     let detail: String
@@ -671,7 +677,7 @@ private struct AVSettingsRowLayout<Trailing: View>: View {
         HStack(alignment: .top, spacing: 12) {
             Image(systemName: systemImage)
                 .font(.system(size: 16, weight: .semibold))
-                .foregroundStyle(AVBrandColor.accent)
+                .foregroundStyle(brandPalette.accent)
                 .frame(width: 22)
 
             VStack(alignment: .leading, spacing: 4) {

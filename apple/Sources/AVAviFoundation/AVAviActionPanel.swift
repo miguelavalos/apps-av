@@ -147,6 +147,8 @@ public extension AVAviActionPanel where Footer == EmptyView {
 }
 
 public struct AVAviPopoverActionPanel<Content: View>: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let pageLabel: String
     private let showsPagingControls: Bool
@@ -201,7 +203,7 @@ public struct AVAviPopoverActionPanel<Content: View>: View {
         .background(AVBrandColor.elevatedSurface.opacity(0.96), in: RoundedRectangle(cornerRadius: 24, style: .continuous))
         .overlay {
             RoundedRectangle(cornerRadius: 24, style: .continuous)
-                .stroke(AVBrandColor.accent.opacity(0.2), lineWidth: 1)
+                .stroke(brandPalette.accent.opacity(0.2), lineWidth: 1)
         }
         .shadow(color: AVBrandColor.glassShadow, radius: 24, y: 12)
     }
@@ -296,6 +298,8 @@ public struct AVAviPanelCloseButton: View {
 }
 
 public struct AVAviCommandButton: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let systemImage: String
     private let accessibilityIdentifier: String?
@@ -318,9 +322,9 @@ public struct AVAviCommandButton: View {
             HStack(spacing: AVBrandSpacing.md) {
                 Image(systemName: systemImage)
                     .font(.system(size: 13, weight: .black))
-                    .foregroundStyle(AVBrandColor.accent)
+                    .foregroundStyle(brandPalette.accent)
                     .frame(width: 28, height: 28)
-                    .background(AVBrandColor.accent.opacity(0.1), in: Circle())
+                    .background(brandPalette.accent.opacity(0.1), in: Circle())
 
                 Text(title)
                     .font(.system(size: 14, weight: .black))

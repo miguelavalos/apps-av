@@ -2,6 +2,8 @@ import AVBrandFoundation
 import SwiftUI
 
 public struct AVAviFeedbackOptionButton: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let systemImage: String
     private let isSelected: Bool
@@ -26,17 +28,17 @@ public struct AVAviFeedbackOptionButton: View {
         Button(action: action) {
             Image(systemName: systemImage)
                 .font(.system(size: 16, weight: .black))
-                .foregroundStyle(isSelected ? AVBrandColor.ink : AVBrandColor.textPrimary)
+                .foregroundStyle(isSelected ? brandPalette.ink : AVBrandColor.textPrimary)
                 .frame(maxWidth: .infinity)
                 .frame(height: 38)
                 .background(
-                    isSelected ? AVBrandColor.accent : AVBrandColor.elevatedSurface,
+                    isSelected ? brandPalette.accent : AVBrandColor.elevatedSurface,
                     in: RoundedRectangle(cornerRadius: AVBrandRadius.sm, style: .continuous)
                 )
                 .overlay {
                     RoundedRectangle(cornerRadius: AVBrandRadius.sm, style: .continuous)
                         .stroke(
-                            isSelected ? AVBrandColor.accent.opacity(0.62) : AVBrandColor.borderSubtle,
+                            isSelected ? brandPalette.accent.opacity(0.62) : AVBrandColor.borderSubtle,
                             lineWidth: 1
                         )
                 }
@@ -49,6 +51,8 @@ public struct AVAviFeedbackOptionButton: View {
 }
 
 public struct AVAviSelectedFeedbackStatus: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let systemImage: String
     private let accessibilityLabel: String
@@ -67,9 +71,9 @@ public struct AVAviSelectedFeedbackStatus: View {
         HStack(spacing: 10) {
             Image(systemName: systemImage)
                 .font(.system(size: 15, weight: .black))
-                .foregroundStyle(AVBrandColor.ink)
+                .foregroundStyle(brandPalette.ink)
                 .frame(width: 30, height: 30)
-                .background(AVBrandColor.accent, in: Circle())
+                .background(brandPalette.accent, in: Circle())
 
             Text(title)
                 .font(.system(size: 13, weight: .black))
@@ -84,12 +88,12 @@ public struct AVAviSelectedFeedbackStatus: View {
         .frame(maxWidth: .infinity)
         .frame(height: 38)
         .background(
-            AVBrandColor.accent.opacity(0.1),
+            brandPalette.accent.opacity(0.1),
             in: RoundedRectangle(cornerRadius: AVBrandRadius.sm, style: .continuous)
         )
         .overlay {
             RoundedRectangle(cornerRadius: AVBrandRadius.sm, style: .continuous)
-                .stroke(AVBrandColor.accent.opacity(0.22), lineWidth: 1)
+                .stroke(brandPalette.accent.opacity(0.22), lineWidth: 1)
         }
         .accessibilityLabel(accessibilityLabel)
     }
@@ -210,6 +214,8 @@ public struct AVAviFeedbackCompactActionButton: View {
 }
 
 public struct AVAviFeedbackDecisionButton: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let systemImage: String
     private let isSelected: Bool
@@ -237,7 +243,7 @@ public struct AVAviFeedbackDecisionButton: View {
                 .labelStyle(.titleAndIcon)
                 .lineLimit(1)
                 .minimumScaleFactor(0.72)
-                .foregroundStyle(isSelected ? AVBrandColor.ink : AVBrandColor.textPrimary)
+                .foregroundStyle(isSelected ? brandPalette.ink : AVBrandColor.textPrimary)
                 .frame(maxWidth: .infinity)
                 .frame(height: 38)
                 .background {
@@ -245,7 +251,7 @@ public struct AVAviFeedbackDecisionButton: View {
                 }
                 .overlay {
                     RoundedRectangle(cornerRadius: AVBrandRadius.sm, style: .continuous)
-                        .stroke(isSelected ? AVBrandColor.accent.opacity(0.44) : AVBrandColor.borderSubtle, lineWidth: 1)
+                        .stroke(isSelected ? brandPalette.accent.opacity(0.44) : AVBrandColor.borderSubtle, lineWidth: 1)
                 }
         }
         .buttonStyle(.plain)
@@ -257,7 +263,7 @@ public struct AVAviFeedbackDecisionButton: View {
     private var backgroundShape: some View {
         if isSelected {
             RoundedRectangle(cornerRadius: AVBrandRadius.sm, style: .continuous)
-                .fill(AVBrandColor.accent)
+                .fill(brandPalette.accent)
         } else {
             RoundedRectangle(cornerRadius: AVBrandRadius.sm, style: .continuous)
                 .fill(AVBrandSurface.shellBackground)
@@ -266,6 +272,8 @@ public struct AVAviFeedbackDecisionButton: View {
 }
 
 public struct AVAviFeedbackInfoRow: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let subtitle: String
     private let systemImage: String
@@ -287,7 +295,7 @@ public struct AVAviFeedbackInfoRow: View {
         HStack(spacing: 9) {
             Image(systemName: systemImage)
                 .font(.system(size: 12, weight: .black))
-                .foregroundStyle(isAction ? AVBrandColor.ink : AVBrandColor.accent)
+                .foregroundStyle(isAction ? brandPalette.ink : brandPalette.accent)
                 .frame(width: 28, height: 28)
                 .background(iconBackgroundColor, in: Circle())
 
@@ -313,16 +321,16 @@ public struct AVAviFeedbackInfoRow: View {
         .frame(maxWidth: .infinity)
         .frame(height: 38)
         .background(
-            AVBrandColor.accent.opacity(0.08),
+            brandPalette.accent.opacity(0.08),
             in: RoundedRectangle(cornerRadius: AVBrandRadius.sm, style: .continuous)
         )
         .overlay {
             RoundedRectangle(cornerRadius: AVBrandRadius.sm, style: .continuous)
-                .stroke(AVBrandColor.accent.opacity(0.16), lineWidth: 1)
+                .stroke(brandPalette.accent.opacity(0.16), lineWidth: 1)
         }
     }
 
     private var iconBackgroundColor: Color {
-        isAction ? AVBrandColor.ink.opacity(0.12) : AVBrandColor.accent.opacity(0.12)
+        isAction ? brandPalette.ink.opacity(0.12) : brandPalette.accent.opacity(0.12)
     }
 }
