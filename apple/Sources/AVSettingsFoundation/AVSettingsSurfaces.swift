@@ -18,6 +18,30 @@ public struct AVSettingsCardBackground: View {
     }
 }
 
+public struct AVSettingsCard<Content: View>: View {
+    private let spacing: CGFloat
+    private let padding: CGFloat
+    private let content: Content
+
+    public init(
+        spacing: CGFloat = 18,
+        padding: CGFloat = 22,
+        @ViewBuilder content: () -> Content
+    ) {
+        self.spacing = spacing
+        self.padding = padding
+        self.content = content()
+    }
+
+    public var body: some View {
+        VStack(alignment: .leading, spacing: spacing) {
+            content
+        }
+        .padding(padding)
+        .background(AVSettingsCardBackground())
+    }
+}
+
 public struct AVSettingsSectionHeader: View {
     private let title: String
     private let subtitle: String
