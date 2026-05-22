@@ -295,51 +295,6 @@ public struct AVExpandedFooterPlayerScaffold<Artwork: View, Controls: View>: Vie
     }
 }
 
-public extension AVExpandedFooterPlayerScaffold {
-    @available(
-        *,
-        deprecated,
-        message: "Use init(primaryTitle:subtitle:title:isSubtitleHighlighted:primaryTitleAccessibilityIdentifier:artworkAccessibilityLabel:artworkAccessibilityIdentifier:metadataAccessibilityIdentifier:accessibilityLabel:accessibilityHint:accessibilityIdentifier:primaryAction:artworkAction:metadataAction:artwork:controls:) instead."
-    )
-    init(
-        stationTitle: String,
-        subtitle: String,
-        title: String,
-        isSubtitleHighlighted: Bool = false,
-        stationAccessibilityIdentifier: String = "avi.footerPlayer.stationName",
-        artworkAccessibilityLabel: String,
-        artworkAccessibilityIdentifier: String = "avi.footerPlayer.artworkZoom",
-        metadataAccessibilityIdentifier: String = "avi.footerPlayer.textZoom",
-        accessibilityLabel: String,
-        accessibilityHint: String,
-        accessibilityIdentifier: String = "avi.footerPlayer.container",
-        stationAction: @escaping () -> Void,
-        artworkAction: @escaping () -> Void,
-        metadataAction: @escaping () -> Void,
-        @ViewBuilder artwork: () -> Artwork,
-        @ViewBuilder controls: () -> Controls
-    ) {
-        self.init(
-            primaryTitle: stationTitle,
-            subtitle: subtitle,
-            title: title,
-            isSubtitleHighlighted: isSubtitleHighlighted,
-            primaryTitleAccessibilityIdentifier: stationAccessibilityIdentifier,
-            artworkAccessibilityLabel: artworkAccessibilityLabel,
-            artworkAccessibilityIdentifier: artworkAccessibilityIdentifier,
-            metadataAccessibilityIdentifier: metadataAccessibilityIdentifier,
-            accessibilityLabel: accessibilityLabel,
-            accessibilityHint: accessibilityHint,
-            accessibilityIdentifier: accessibilityIdentifier,
-            primaryAction: stationAction,
-            artworkAction: artworkAction,
-            metadataAction: metadataAction,
-            artwork: artwork,
-            controls: controls
-        )
-    }
-}
-
 public struct AVFooterPlayerControlButton<Label: View>: View {
     private let isEnabled: Bool
     private let accessibilityIdentifier: String
