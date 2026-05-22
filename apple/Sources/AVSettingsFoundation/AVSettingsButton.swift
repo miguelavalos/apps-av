@@ -31,6 +31,9 @@ public struct AVSettingsButton: View {
             HStack(spacing: 12) {
                 Text(title)
                     .font(.system(size: 15, weight: .bold))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.78)
+                    .allowsTightening(true)
 
                 if style != .primary && style != .destructivePrimary {
                     Spacer()
@@ -121,6 +124,9 @@ public struct AVSettingsLinkButton: View {
         Link(destination: destination) {
             Label(title, systemImage: systemImage)
                 .font(.system(size: 15, weight: .bold))
+                .lineLimit(1)
+                .minimumScaleFactor(0.78)
+                .allowsTightening(true)
                 .foregroundStyle(AVBrandColor.textPrimary)
                 .frame(maxWidth: .infinity)
                 .frame(height: 48)

@@ -75,6 +75,8 @@ public struct AVAviSelectedFeedbackStatus: View {
                 .font(.system(size: 13, weight: .black))
                 .foregroundStyle(AVBrandColor.textPrimary)
                 .lineLimit(1)
+                .minimumScaleFactor(0.78)
+                .allowsTightening(true)
 
             Spacer(minLength: 0)
         }
@@ -294,11 +296,15 @@ public struct AVAviFeedbackInfoRow: View {
                     .font(.system(size: 12, weight: .black))
                     .foregroundStyle(AVBrandColor.textPrimary)
                     .lineLimit(1)
+                    .minimumScaleFactor(0.78)
+                    .allowsTightening(true)
 
                 Text(subtitle)
                     .font(.system(size: 10, weight: .bold))
                     .foregroundStyle(AVBrandColor.textSecondary)
                     .lineLimit(1)
+                    .minimumScaleFactor(0.78)
+                    .allowsTightening(true)
             }
 
             Spacer(minLength: 0)
