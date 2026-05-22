@@ -2,6 +2,8 @@ import AVBrandFoundation
 import SwiftUI
 
 public struct AVStatusPill: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let isUppercased: Bool
     private let fontSize: CGFloat
@@ -31,14 +33,14 @@ public struct AVStatusPill: View {
     public var body: some View {
         Text(displayTitle)
             .font(.system(size: fontSize, weight: .semibold))
-            .foregroundStyle(AVBrandColor.accent)
+            .foregroundStyle(brandPalette.accent)
             .lineLimit(1)
             .padding(.horizontal, horizontalPadding)
             .padding(.vertical, verticalPadding)
-            .background(AVBrandColor.accent.opacity(fillOpacity), in: Capsule())
+            .background(brandPalette.accent.opacity(fillOpacity), in: Capsule())
             .overlay {
                 Capsule()
-                    .stroke(AVBrandColor.accent.opacity(strokeOpacity), lineWidth: 1)
+                    .stroke(brandPalette.accent.opacity(strokeOpacity), lineWidth: 1)
             }
     }
 

@@ -2,6 +2,8 @@ import AVBrandFoundation
 import SwiftUI
 
 public struct AVAppShellShowMoreButton: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let accessibilityIdentifier: String
     private let action: () -> Void
@@ -27,16 +29,16 @@ public struct AVAppShellShowMoreButton: View {
                     .lineLimit(1)
                     .minimumScaleFactor(0.78)
             }
-            .foregroundStyle(AVBrandColor.accent)
+            .foregroundStyle(brandPalette.accent)
             .frame(maxWidth: .infinity)
             .frame(height: 46)
             .background(
-                AVBrandColor.accent.opacity(0.10),
+                brandPalette.accent.opacity(0.10),
                 in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous)
             )
             .overlay {
                 RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous)
-                    .stroke(AVBrandColor.accent.opacity(0.20), lineWidth: 1)
+                    .stroke(brandPalette.accent.opacity(0.20), lineWidth: 1)
             }
         }
         .buttonStyle(.plain)

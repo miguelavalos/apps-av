@@ -2,6 +2,8 @@ import AVBrandFoundation
 import SwiftUI
 
 public struct AVOnboardingCallToActionSection<Companion: View>: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let primaryTitle: String
     private let secondaryTitle: String
     private let primaryAction: () -> Void
@@ -27,10 +29,10 @@ public struct AVOnboardingCallToActionSection<Companion: View>: View {
             Button(action: primaryAction) {
                 Text(primaryTitle)
                     .font(.system(size: 17, weight: .bold))
-                    .foregroundStyle(AVBrandColor.ink)
+                    .foregroundStyle(brandPalette.ink)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 16)
-                    .background(AVBrandColor.accent, in: Capsule())
+                    .background(brandPalette.accent, in: Capsule())
             }
             .overlay(alignment: .topTrailing) {
                 companion
@@ -38,12 +40,12 @@ public struct AVOnboardingCallToActionSection<Companion: View>: View {
 
             Button(secondaryTitle, action: secondaryAction)
                 .font(.system(size: 13, weight: .bold))
-                .foregroundStyle(AVBrandColor.ink.opacity(0.84))
+                .foregroundStyle(brandPalette.ink.opacity(0.84))
         }
         .background(alignment: .top) {
             RadialGradient(
                 colors: [
-                    AVBrandColor.accent.opacity(0.18),
+                    brandPalette.accent.opacity(0.18),
                     .clear
                 ],
                 center: .top,

@@ -2,6 +2,8 @@ import AVBrandFoundation
 import SwiftUI
 
 public struct AVPaywallOfferCard<Avatar: View, RestoreButton: View>: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let detail: String
     private let primaryButtonTitle: String
@@ -66,13 +68,15 @@ public struct AVPaywallOfferCard<Avatar: View, RestoreButton: View>: View {
         .background(AVBrandColor.cardSurface, in: RoundedRectangle(cornerRadius: AVBrandRadius.card, style: .continuous))
         .overlay {
             RoundedRectangle(cornerRadius: AVBrandRadius.card, style: .continuous)
-                .stroke(AVBrandColor.accent.opacity(0.32), lineWidth: 1.5)
+                .stroke(brandPalette.accent.opacity(0.32), lineWidth: 1.5)
         }
         .shadow(color: AVBrandColor.softShadow.opacity(0.18), radius: 12, y: 6)
     }
 }
 
 public struct AVPaywallPrimaryButton: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let isDisabled: Bool
     private let accessibilityIdentifier: String
@@ -94,13 +98,13 @@ public struct AVPaywallPrimaryButton: View {
         Button(action: action) {
             Text(title)
                 .font(.system(size: 17, weight: .black, design: .rounded))
-                .foregroundStyle(AVBrandColor.ink)
+                .foregroundStyle(brandPalette.ink)
                 .lineLimit(1)
                 .minimumScaleFactor(0.78)
                 .frame(maxWidth: .infinity)
                 .frame(height: 54)
                 .background(
-                    AVBrandColor.accent,
+                    brandPalette.accent,
                     in: RoundedRectangle(cornerRadius: AVBrandRadius.control, style: .continuous)
                 )
         }

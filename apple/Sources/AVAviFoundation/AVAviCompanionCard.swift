@@ -2,6 +2,8 @@ import AVBrandFoundation
 import SwiftUI
 
 public struct AVAviCompanionCard<Avatar: View>: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let detail: String
     private let actionSystemImage: String
@@ -32,7 +34,7 @@ public struct AVAviCompanionCard<Avatar: View>: View {
         HStack(alignment: .center, spacing: AVBrandSpacing.lg) {
             avatar
                 .padding(6)
-                .background(AVBrandColor.accent.opacity(0.12), in: Circle())
+                .background(brandPalette.accent.opacity(0.12), in: Circle())
                 .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: 5) {
@@ -52,9 +54,9 @@ public struct AVAviCompanionCard<Avatar: View>: View {
             Button(action: action) {
                 Image(systemName: actionSystemImage)
                     .font(.system(size: 15, weight: .black))
-                    .foregroundStyle(AVBrandColor.ink)
+                    .foregroundStyle(brandPalette.ink)
                     .frame(width: 42, height: 42)
-                    .background(AVBrandColor.accent, in: Circle())
+                    .background(brandPalette.accent, in: Circle())
             }
             .buttonStyle(.plain)
             .accessibilityLabel(actionAccessibilityLabel)

@@ -2,6 +2,8 @@ import AVBrandFoundation
 import SwiftUI
 
 public struct AVAviFocusedSummaryCard<Artwork: View, Badge: View>: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let subtitle: String
     private let metadata: String?
@@ -48,7 +50,7 @@ public struct AVAviFocusedSummaryCard<Artwork: View, Badge: View>: View {
                     if let metadata {
                         Text(metadata)
                             .font(.system(size: 12, weight: .black))
-                            .foregroundStyle(AVBrandColor.accent)
+                            .foregroundStyle(brandPalette.accent)
                             .lineLimit(1)
                     }
                 }
@@ -81,6 +83,8 @@ public extension AVAviFocusedSummaryCard where Badge == EmptyView {
 }
 
 public struct AVAviStatPill: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let value: String
     private let systemImage: String
@@ -95,7 +99,7 @@ public struct AVAviStatPill: View {
         VStack(alignment: .leading, spacing: 5) {
             Image(systemName: systemImage)
                 .font(.system(size: 11, weight: .black))
-                .foregroundStyle(AVBrandColor.accent)
+                .foregroundStyle(brandPalette.accent)
 
             Text(value)
                 .font(.system(size: 15, weight: .black, design: .rounded))

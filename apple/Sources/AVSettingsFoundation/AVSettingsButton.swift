@@ -2,6 +2,8 @@ import AVBrandFoundation
 import SwiftUI
 
 public struct AVSettingsButton: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     public enum Style {
         case primary
         case secondary
@@ -65,7 +67,7 @@ public struct AVSettingsButton: View {
     private var backgroundTint: Color {
         switch style {
         case .primary:
-            AVBrandColor.accent
+            brandPalette.accent
         case .destructivePrimary:
             AVBrandColor.destructive
         case .secondary, .destructive:
@@ -76,7 +78,7 @@ public struct AVSettingsButton: View {
     private var titleTint: Color {
         switch style {
         case .primary:
-            AVBrandColor.ink
+            brandPalette.ink
         case .destructivePrimary:
             .white
         case .secondary:
@@ -100,7 +102,7 @@ public struct AVSettingsButton: View {
     private var progressTint: Color {
         switch style {
         case .primary:
-            AVBrandColor.ink
+            brandPalette.ink
         case .destructivePrimary:
             .white
         case .secondary, .destructive:
@@ -143,6 +145,8 @@ public struct AVSettingsLinkButton: View {
 }
 
 public struct AVSettingsOptionButton: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let systemImage: String
     private let isSelected: Bool
@@ -165,7 +169,7 @@ public struct AVSettingsOptionButton: View {
             VStack(spacing: AVBrandSpacing.xs) {
                 Image(systemName: systemImage)
                     .font(.system(size: 17, weight: .semibold))
-                    .foregroundStyle(isSelected ? AVBrandColor.accent : AVBrandColor.textSecondary)
+                    .foregroundStyle(isSelected ? brandPalette.accent : AVBrandColor.textSecondary)
 
                 Text(title)
                     .font(.system(size: 13, weight: .semibold, design: .rounded))
@@ -177,12 +181,12 @@ public struct AVSettingsOptionButton: View {
             .padding(.vertical, AVBrandSpacing.md)
             .background(
                 RoundedRectangle(cornerRadius: AVBrandRadius.footerSelection, style: .continuous)
-                    .fill(isSelected ? AVBrandColor.accent.opacity(0.1) : AVBrandColor.mutedSurface)
+                    .fill(isSelected ? brandPalette.accent.opacity(0.1) : AVBrandColor.mutedSurface)
             )
             .overlay {
                 RoundedRectangle(cornerRadius: AVBrandRadius.footerSelection, style: .continuous)
                     .stroke(
-                        isSelected ? AVBrandColor.accent.opacity(0.35) : AVBrandColor.borderSubtle,
+                        isSelected ? brandPalette.accent.opacity(0.35) : AVBrandColor.borderSubtle,
                         lineWidth: 1
                     )
             }

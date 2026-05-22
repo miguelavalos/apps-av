@@ -2,6 +2,8 @@ import AVBrandFoundation
 import SwiftUI
 
 public struct AVAppShellSearchField: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     @Binding private var query: String
     private let prompt: String
     private let clearTitle: String
@@ -34,7 +36,7 @@ public struct AVAppShellSearchField: View {
                     query = ""
                 }
                 .font(.system(size: 13, weight: .semibold))
-                .foregroundStyle(AVBrandColor.accent)
+                .foregroundStyle(brandPalette.accent)
             }
         }
         .padding(.horizontal, 16)
@@ -64,7 +66,7 @@ public struct AVAppShellSearchField: View {
         }
             .font(.system(size: 16, weight: .medium))
             .foregroundStyle(AVBrandColor.textPrimary)
-            .tint(AVBrandColor.accent)
+            .tint(brandPalette.accent)
             .applySearchTextInputBehavior()
             .focused($isFocused)
     }

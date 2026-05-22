@@ -2,6 +2,8 @@ import AVBrandFoundation
 import SwiftUI
 
 public struct AVFeedbackStatusBadge: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let systemImage: String
     private let accessibilityLabel: String
     private let isHighlighted: Bool
@@ -28,7 +30,7 @@ public struct AVFeedbackStatusBadge: View {
     public var body: some View {
         Image(systemName: systemImage)
             .font(.system(size: fontSize ?? size * 0.41, weight: .black))
-            .foregroundStyle(isHighlighted ? AVBrandColor.ink : AVBrandColor.textInverse)
+            .foregroundStyle(isHighlighted ? brandPalette.ink : AVBrandColor.textInverse)
             .frame(width: size, height: size)
             .background(backgroundColor, in: Circle())
             .overlay {
@@ -39,6 +41,6 @@ public struct AVFeedbackStatusBadge: View {
     }
 
     private var backgroundColor: Color {
-        isHighlighted ? AVBrandColor.accent : AVBrandColor.ink.opacity(0.86)
+        isHighlighted ? brandPalette.accent : brandPalette.ink.opacity(0.86)
     }
 }

@@ -2,6 +2,8 @@ import AVBrandFoundation
 import SwiftUI
 
 public struct AVOnboardingHeroText: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let subtitle: String
     private let subtitleMaxWidth: CGFloat
@@ -20,13 +22,13 @@ public struct AVOnboardingHeroText: View {
         VStack(spacing: 8) {
             Text(title)
                 .font(.system(size: 30, weight: .black))
-                .foregroundStyle(AVBrandColor.ink)
+                .foregroundStyle(brandPalette.ink)
                 .multilineTextAlignment(.center)
                 .minimumScaleFactor(0.86)
 
             Text(subtitle)
                 .font(.system(size: 15, weight: .medium))
-                .foregroundStyle(AVBrandColor.ink.opacity(0.76))
+                .foregroundStyle(brandPalette.ink.opacity(0.76))
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
                 .fixedSize(horizontal: false, vertical: true)
