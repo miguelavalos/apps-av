@@ -141,53 +141,53 @@ public extension AVMiniPlayerControlButton where Label == AnyView {
 }
 
 public struct AVExpandedFooterPlayerScaffold<Artwork: View, Controls: View>: View {
-    private let stationTitle: String
+    private let primaryTitle: String
     private let subtitle: String
     private let title: String
     private let isSubtitleHighlighted: Bool
-    private let stationAccessibilityIdentifier: String
+    private let primaryTitleAccessibilityIdentifier: String
     private let artworkAccessibilityLabel: String
     private let artworkAccessibilityIdentifier: String
     private let metadataAccessibilityIdentifier: String
     private let accessibilityLabel: String
     private let accessibilityHint: String
     private let accessibilityIdentifier: String
-    private let stationAction: () -> Void
+    private let primaryAction: () -> Void
     private let artworkAction: () -> Void
     private let metadataAction: () -> Void
     private let artwork: Artwork
     private let controls: Controls
 
     public init(
-        stationTitle: String,
+        primaryTitle: String,
         subtitle: String,
         title: String,
         isSubtitleHighlighted: Bool = false,
-        stationAccessibilityIdentifier: String = "avi.footerPlayer.stationName",
+        primaryTitleAccessibilityIdentifier: String = "avi.footerPlayer.primaryTitle",
         artworkAccessibilityLabel: String,
         artworkAccessibilityIdentifier: String = "avi.footerPlayer.artworkZoom",
         metadataAccessibilityIdentifier: String = "avi.footerPlayer.textZoom",
         accessibilityLabel: String,
         accessibilityHint: String,
         accessibilityIdentifier: String = "avi.footerPlayer.container",
-        stationAction: @escaping () -> Void,
+        primaryAction: @escaping () -> Void,
         artworkAction: @escaping () -> Void,
         metadataAction: @escaping () -> Void,
         @ViewBuilder artwork: () -> Artwork,
         @ViewBuilder controls: () -> Controls
     ) {
-        self.stationTitle = stationTitle
+        self.primaryTitle = primaryTitle
         self.subtitle = subtitle
         self.title = title
         self.isSubtitleHighlighted = isSubtitleHighlighted
-        self.stationAccessibilityIdentifier = stationAccessibilityIdentifier
+        self.primaryTitleAccessibilityIdentifier = primaryTitleAccessibilityIdentifier
         self.artworkAccessibilityLabel = artworkAccessibilityLabel
         self.artworkAccessibilityIdentifier = artworkAccessibilityIdentifier
         self.metadataAccessibilityIdentifier = metadataAccessibilityIdentifier
         self.accessibilityLabel = accessibilityLabel
         self.accessibilityHint = accessibilityHint
         self.accessibilityIdentifier = accessibilityIdentifier
-        self.stationAction = stationAction
+        self.primaryAction = primaryAction
         self.artworkAction = artworkAction
         self.metadataAction = metadataAction
         self.artwork = artwork()
@@ -196,12 +196,12 @@ public struct AVExpandedFooterPlayerScaffold<Artwork: View, Controls: View>: Vie
 
     public var body: some View {
         VStack(spacing: 0) {
-            Button(action: stationAction) {
-                stationNameText
+            Button(action: primaryAction) {
+                primaryTitleText
             }
             .buttonStyle(.plain)
-            .accessibilityLabel(stationTitle)
-            .accessibilityIdentifier(stationAccessibilityIdentifier)
+            .accessibilityLabel(primaryTitle)
+            .accessibilityIdentifier(primaryTitleAccessibilityIdentifier)
             .frame(height: 22)
 
             Spacer()
@@ -281,8 +281,8 @@ public struct AVExpandedFooterPlayerScaffold<Artwork: View, Controls: View>: Vie
         .contentShape(Rectangle())
     }
 
-    private var stationNameText: some View {
-        Text(stationTitle)
+    private var primaryTitleText: some View {
+        Text(primaryTitle)
             .font(.system(size: 13, weight: .black, design: .rounded))
             .foregroundStyle(AVBrandColor.textSecondary)
             .multilineTextAlignment(.center)
@@ -292,6 +292,51 @@ public struct AVExpandedFooterPlayerScaffold<Artwork: View, Controls: View>: Vie
             .frame(height: 18, alignment: .center)
             .frame(maxWidth: .infinity, alignment: .center)
             .contentShape(Rectangle())
+    }
+}
+
+public extension AVExpandedFooterPlayerScaffold {
+    @available(
+        *,
+        deprecated,
+        message: "Use init(primaryTitle:subtitle:title:isSubtitleHighlighted:primaryTitleAccessibilityIdentifier:artworkAccessibilityLabel:artworkAccessibilityIdentifier:metadataAccessibilityIdentifier:accessibilityLabel:accessibilityHint:accessibilityIdentifier:primaryAction:artworkAction:metadataAction:artwork:controls:) instead."
+    )
+    init(
+        stationTitle: String,
+        subtitle: String,
+        title: String,
+        isSubtitleHighlighted: Bool = false,
+        stationAccessibilityIdentifier: String = "avi.footerPlayer.stationName",
+        artworkAccessibilityLabel: String,
+        artworkAccessibilityIdentifier: String = "avi.footerPlayer.artworkZoom",
+        metadataAccessibilityIdentifier: String = "avi.footerPlayer.textZoom",
+        accessibilityLabel: String,
+        accessibilityHint: String,
+        accessibilityIdentifier: String = "avi.footerPlayer.container",
+        stationAction: @escaping () -> Void,
+        artworkAction: @escaping () -> Void,
+        metadataAction: @escaping () -> Void,
+        @ViewBuilder artwork: () -> Artwork,
+        @ViewBuilder controls: () -> Controls
+    ) {
+        self.init(
+            primaryTitle: stationTitle,
+            subtitle: subtitle,
+            title: title,
+            isSubtitleHighlighted: isSubtitleHighlighted,
+            primaryTitleAccessibilityIdentifier: stationAccessibilityIdentifier,
+            artworkAccessibilityLabel: artworkAccessibilityLabel,
+            artworkAccessibilityIdentifier: artworkAccessibilityIdentifier,
+            metadataAccessibilityIdentifier: metadataAccessibilityIdentifier,
+            accessibilityLabel: accessibilityLabel,
+            accessibilityHint: accessibilityHint,
+            accessibilityIdentifier: accessibilityIdentifier,
+            primaryAction: stationAction,
+            artworkAction: artworkAction,
+            metadataAction: metadataAction,
+            artwork: artwork,
+            controls: controls
+        )
     }
 }
 
