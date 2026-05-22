@@ -116,8 +116,13 @@ public struct AVPaywallLegalLinks: View {
     public var body: some View {
         HStack(spacing: AVBrandSpacing.xxl) {
             ForEach(links) { link in
-                Button(link.title, action: link.action)
-                    .accessibilityIdentifier(link.accessibilityIdentifier)
+                Button(action: link.action) {
+                    Text(link.title)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.78)
+                        .allowsTightening(true)
+                }
+                .accessibilityIdentifier(link.accessibilityIdentifier)
             }
         }
         .font(AVBrandTypography.captionStrong)
