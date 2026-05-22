@@ -2,6 +2,8 @@ import AVBrandFoundation
 import SwiftUI
 
 public struct AVAuthOptionsPanelScaffold<Actions: View, Accessory: View>: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
     private let title: String
     private let subtitle: String
     private let legalConsentText: AttributedString
@@ -37,14 +39,14 @@ public struct AVAuthOptionsPanelScaffold<Actions: View, Accessory: View>: View {
     public var body: some View {
         VStack(spacing: 0) {
             RoundedRectangle(cornerRadius: 2, style: .continuous)
-                .fill(AVBrandColor.ink.opacity(0.22))
+                .fill(brandPalette.ink.opacity(0.22))
                 .frame(width: 46, height: 4)
                 .padding(.top, 12)
 
             VStack(spacing: 7) {
                 Text(title)
                     .font(.system(size: 22, weight: .black, design: .serif))
-                    .foregroundStyle(AVBrandColor.ink)
+                    .foregroundStyle(brandPalette.ink)
                     .multilineTextAlignment(.center)
 
                 Text(subtitle)
@@ -64,20 +66,20 @@ public struct AVAuthOptionsPanelScaffold<Actions: View, Accessory: View>: View {
             if let unavailableMessage {
                 Text(unavailableMessage)
                     .font(.system(size: 12, weight: .medium))
-                    .foregroundStyle(AVBrandColor.ink.opacity(0.7))
+                    .foregroundStyle(brandPalette.ink.opacity(0.7))
                     .multilineTextAlignment(.center)
                     .padding(.top, 12)
             }
 
             Button(skipTitle, action: onSkip)
                 .font(.system(size: 13, weight: .bold))
-                .foregroundStyle(AVBrandColor.ink.opacity(0.82))
+                .foregroundStyle(brandPalette.ink.opacity(0.82))
                 .padding(.top, 16)
 
             Text(legalConsentText)
                 .font(.system(size: 12, weight: .medium))
-                .foregroundStyle(AVBrandColor.ink.opacity(0.66))
-                .tint(AVBrandColor.ink.opacity(0.9))
+                .foregroundStyle(brandPalette.ink.opacity(0.66))
+                .tint(brandPalette.ink.opacity(0.9))
                 .multilineTextAlignment(.center)
                 .padding(.top, 14)
         }
@@ -88,7 +90,7 @@ public struct AVAuthOptionsPanelScaffold<Actions: View, Accessory: View>: View {
                 .fill(AVBrandColor.warmPanelSurface.opacity(0.98))
                 .overlay {
                     RoundedRectangle(cornerRadius: 30, style: .continuous)
-                        .stroke(AVBrandColor.ink.opacity(0.12), lineWidth: 1)
+                        .stroke(brandPalette.ink.opacity(0.12), lineWidth: 1)
                 }
                 .shadow(color: .black.opacity(0.28), radius: 24, y: 14)
         )
