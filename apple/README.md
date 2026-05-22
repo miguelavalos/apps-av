@@ -347,6 +347,7 @@ import AVHaptics
 AVHaptics.perform(.affirm)
 AVHaptics.perform(.impactLight)
 AVHaptics.perform(.primaryAction)
+AVHaptics.perform(.dismissiveFeedback)
 AVHaptics.perform(.warning)
 ```
 
@@ -370,7 +371,7 @@ Last audited: 2026-05-22.
 | `AVAppShellFoundation` signal/search/shell primitives | Keep in Apps AV | `AVSignalBadge`, search fields, section headers, tabs, and shell scaffolds describe reusable chrome. Host apps own result models, filters, routes, labels, and playback state. |
 | `AVLaunchFoundation` splash primitives | Keep in Apps AV | Splash accepts product-provided logo, hero, tagline, and status. Internal backdrop names are neutral; product apps own launch copy, assets, startup work, and test flags. |
 | `AVAviFoundation` assistant primitives | Keep in Apps AV | Avi components are visual assistant primitives: cards, headers, avatar containers, action controls, panels, and generic reactions. Product apps own Avi personality, assets, prompts, recommendations, and domain actions. |
-| `AVHaptics` semantic events | Keep in Apps AV with generic names | Added `primaryAction`, `secondaryAction`, `step`, `stopAction`, `affirm`, `undo`, `positiveFeedback`, and `negativeFeedback`. Deprecated media-oriented names remain for compatibility while product apps adapt domain actions before calling Apps AV. |
+| `AVHaptics` semantic events | Keep in Apps AV with generic names | Added `primaryAction`, `secondaryAction`, `step`, `stopAction`, `affirm`, `undo`, `positiveFeedback`, `negativeFeedback`, and `dismissiveFeedback`. Deprecated media-oriented and product-specific names remain for compatibility while product apps adapt domain actions before calling Apps AV. |
 | `AVBrandFoundation` tokens | Keep in Apps AV with semantic names | Added semantic aliases (`ink`, `canvas`, `accentBase`, `accentGradient`) and migrated Apps AV internals away from brand-specific or signal-specific token names. Deprecated compatibility aliases remain for existing product adapters. |
 
 ## Installation

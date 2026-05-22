@@ -28,6 +28,7 @@ public enum AVHapticEvent: Sendable {
     case undo
     case positiveFeedback
     case negativeFeedback
+    case dismissiveFeedback
     @available(*, deprecated, renamed: "affirm", message: "Use app-generic haptic events in Apps AV.")
     case save
     @available(*, deprecated, renamed: "undo", message: "Use app-generic haptic events in Apps AV.")
@@ -36,6 +37,7 @@ public enum AVHapticEvent: Sendable {
     case like
     @available(*, deprecated, renamed: "negativeFeedback", message: "Use app-generic haptic events in Apps AV.")
     case dislike
+    @available(*, deprecated, renamed: "dismissiveFeedback", message: "Use app-generic haptic events in Apps AV.")
     case notForMe
     case clear
     case warning
@@ -60,7 +62,7 @@ public enum AVHaptics {
 private extension AVHaptics {
     static func performIOS(_ event: AVHapticEvent) {
         switch event {
-        case .selection, .navigation, .modeChange, .openPanel, .closePanel, .notForMe, .clear:
+        case .selection, .navigation, .modeChange, .openPanel, .closePanel, .dismissiveFeedback, .notForMe, .clear:
             let generator = UISelectionFeedbackGenerator()
             generator.prepare()
             generator.selectionChanged()
@@ -86,7 +88,7 @@ private extension AVHaptics {
 private extension AVHaptics {
     static func performMacOS(_ event: AVHapticEvent) {
         switch event {
-        case .selection, .navigation, .modeChange, .openPanel, .closePanel, .notForMe, .clear:
+        case .selection, .navigation, .modeChange, .openPanel, .closePanel, .dismissiveFeedback, .notForMe, .clear:
             NSHapticFeedbackManager.defaultPerformer.perform(.alignment, performanceTime: .default)
         case .impactLight, .primaryAction, .secondaryAction, .step, .loadMore, .stopAction, .affirm, .undo, .positiveFeedback, .negativeFeedback, .playbackToggle, .queueStep, .stopPlayback, .save, .unsave, .like, .dislike, .warning, .blocked:
             NSHapticFeedbackManager.defaultPerformer.perform(.generic, performanceTime: .default)
