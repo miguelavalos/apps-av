@@ -5,7 +5,7 @@ public enum AVAviActionReaction: Equatable {
     case negative
     case selection
     case clear
-    case save
+    case affirm
 }
 
 public extension View {
@@ -64,7 +64,7 @@ private struct AVAviActionReactionValues {
 private extension AVAviActionReaction {
     var sensoryFeedback: SensoryFeedback {
         switch self {
-        case .positive, .save:
+        case .positive, .affirm:
             return .success
         case .negative:
             return .warning
@@ -77,7 +77,7 @@ private extension AVAviActionReaction {
         switch (self, phase) {
         case (_, .resting), (_, .settle):
             return .identity
-        case (.positive, .active), (.save, .active):
+        case (.positive, .active), (.affirm, .active):
             return AVAviActionReactionValues(scale: 1.18, verticalOffset: -2, angle: .degrees(-7))
         case (.negative, .active):
             return AVAviActionReactionValues(scale: 1.1, verticalOffset: 1, angle: .degrees(8))
