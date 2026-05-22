@@ -93,6 +93,39 @@ public struct AVAviSelectedFeedbackStatus: View {
     }
 }
 
+public struct AVAviFeedbackClearButton: View {
+    private let accessibilityLabel: String
+    private let accessibilityIdentifier: String
+    private let action: () -> Void
+
+    public init(
+        accessibilityLabel: String,
+        accessibilityIdentifier: String,
+        action: @escaping () -> Void
+    ) {
+        self.accessibilityLabel = accessibilityLabel
+        self.accessibilityIdentifier = accessibilityIdentifier
+        self.action = action
+    }
+
+    public var body: some View {
+        Button(action: action) {
+            Image(systemName: "xmark")
+                .font(.system(size: 12, weight: .black))
+                .foregroundStyle(AVBrandColor.textSecondary)
+                .frame(width: 38, height: 38)
+                .background(AVBrandSurface.shellBackground, in: Circle())
+                .overlay {
+                    Circle()
+                        .stroke(AVBrandColor.borderSubtle, lineWidth: 1)
+                }
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(accessibilityLabel)
+        .accessibilityIdentifier(accessibilityIdentifier)
+    }
+}
+
 public struct AVAviCompactFeedbackButton: View {
     private let systemImage: String
     private let accessibilityLabel: String
