@@ -298,6 +298,81 @@ public struct AVAviPrimaryActionButton: View {
     }
 }
 
+public struct AVAviQuickActionButton: View {
+    private let title: String
+    private let systemImage: String
+    private let isSelected: Bool
+    private let accessibilityIdentifier: String?
+    private let action: () -> Void
+
+    public init(
+        title: String,
+        systemImage: String,
+        isSelected: Bool = false,
+        accessibilityIdentifier: String? = nil,
+        action: @escaping () -> Void
+    ) {
+        self.title = title
+        self.systemImage = systemImage
+        self.isSelected = isSelected
+        self.accessibilityIdentifier = accessibilityIdentifier
+        self.action = action
+    }
+
+    public var body: some View {
+        Button(action: action) {
+            Label(title, systemImage: systemImage)
+                .font(.system(size: 14, weight: .black))
+                .foregroundStyle(isSelected ? AVBrandColor.accent : AVBrandColor.textPrimary)
+                .frame(maxWidth: .infinity)
+                .frame(height: 44)
+                .background(AVBrandColor.elevatedSurface, in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
+                .overlay {
+                    RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous)
+                        .stroke(isSelected ? AVBrandColor.accent.opacity(0.34) : AVBrandColor.borderSubtle, lineWidth: 1)
+                }
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifierIfPresent(accessibilityIdentifier)
+    }
+}
+
+public struct AVAviIconActionButton: View {
+    private let systemImage: String
+    private let accessibilityLabel: String
+    private let accessibilityIdentifier: String?
+    private let action: () -> Void
+
+    public init(
+        systemImage: String,
+        accessibilityLabel: String,
+        accessibilityIdentifier: String? = nil,
+        action: @escaping () -> Void
+    ) {
+        self.systemImage = systemImage
+        self.accessibilityLabel = accessibilityLabel
+        self.accessibilityIdentifier = accessibilityIdentifier
+        self.action = action
+    }
+
+    public var body: some View {
+        Button(action: action) {
+            Image(systemName: systemImage)
+                .font(.system(size: 16, weight: .black))
+                .foregroundStyle(AVBrandColor.textPrimary)
+                .frame(width: 44, height: 44)
+                .background(AVBrandColor.elevatedSurface, in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
+                .overlay {
+                    RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous)
+                        .stroke(AVBrandColor.borderSubtle, lineWidth: 1)
+                }
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(accessibilityLabel)
+        .accessibilityIdentifierIfPresent(accessibilityIdentifier)
+    }
+}
+
 public struct AVAviPromptButton: View {
     private let title: String
     private let systemImage: String
