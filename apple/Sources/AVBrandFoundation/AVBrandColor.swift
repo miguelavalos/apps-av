@@ -98,17 +98,3 @@ public enum AVBrandColor {
         #endif
     }
 }
-
-public extension AVBrandColor {
-    @available(*, deprecated, renamed: "ink", message: "Use semantic color tokens instead of brand-specific aliases.")
-    static var brandBlack: Color { ink }
-
-    @available(*, deprecated, renamed: "accentBase", message: "Use semantic color tokens instead of brand-specific aliases.")
-    static var brandAccent: Color { accentBase }
-
-    @available(*, deprecated, renamed: "ink", message: "Use semantic color tokens instead of brand-specific aliases.")
-    static var brandGraphite: Color { ink }
-
-    @available(*, deprecated, renamed: "canvas", message: "Use semantic color tokens instead of brand-specific aliases.")
-    static var brandWhite: Color { canvas }
-}

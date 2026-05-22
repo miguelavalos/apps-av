@@ -32,8 +32,3 @@ public enum AVBrandSurface {
         endPoint: .bottomTrailing
     )
 }
-
-public extension AVBrandSurface {
-    @available(*, deprecated, renamed: "accentGradient", message: "Use semantic surface tokens instead of signal-specific aliases.")
-    static var signalGradient: LinearGradient { accentGradient }
-}
