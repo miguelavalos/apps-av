@@ -26,7 +26,7 @@ public struct AVAviFeedbackOptionButton: View {
         Button(action: action) {
             Image(systemName: systemImage)
                 .font(.system(size: 16, weight: .black))
-                .foregroundStyle(isSelected ? AVBrandColor.brandBlack : AVBrandColor.textPrimary)
+                .foregroundStyle(isSelected ? AVBrandColor.ink : AVBrandColor.textPrimary)
                 .frame(maxWidth: .infinity)
                 .frame(height: 38)
                 .background(
@@ -67,7 +67,7 @@ public struct AVAviSelectedFeedbackStatus: View {
         HStack(spacing: 10) {
             Image(systemName: systemImage)
                 .font(.system(size: 15, weight: .black))
-                .foregroundStyle(AVBrandColor.brandBlack)
+                .foregroundStyle(AVBrandColor.ink)
                 .frame(width: 30, height: 30)
                 .background(AVBrandColor.accent, in: Circle())
 
@@ -237,7 +237,7 @@ public struct AVAviFeedbackDecisionButton: View {
                 .labelStyle(.titleAndIcon)
                 .lineLimit(1)
                 .minimumScaleFactor(0.72)
-                .foregroundStyle(isSelected ? AVBrandColor.brandBlack : AVBrandColor.textPrimary)
+                .foregroundStyle(isSelected ? AVBrandColor.ink : AVBrandColor.textPrimary)
                 .frame(maxWidth: .infinity)
                 .frame(height: 38)
                 .background {
@@ -287,7 +287,7 @@ public struct AVAviFeedbackInfoRow: View {
         HStack(spacing: 9) {
             Image(systemName: systemImage)
                 .font(.system(size: 12, weight: .black))
-                .foregroundStyle(isAction ? AVBrandColor.brandBlack : AVBrandColor.accent)
+                .foregroundStyle(isAction ? AVBrandColor.ink : AVBrandColor.accent)
                 .frame(width: 28, height: 28)
                 .background(iconBackgroundColor, in: Circle())
 
@@ -323,6 +323,6 @@ public struct AVAviFeedbackInfoRow: View {
     }
 
     private var iconBackgroundColor: Color {
-        isAction ? AVBrandColor.brandBlack.opacity(0.12) : AVBrandColor.accent.opacity(0.12)
+        isAction ? AVBrandColor.ink.opacity(0.12) : AVBrandColor.accent.opacity(0.12)
     }
 }

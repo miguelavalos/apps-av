@@ -27,7 +27,7 @@ public struct AVOnboardingCallToActionSection<Companion: View>: View {
             Button(action: primaryAction) {
                 Text(primaryTitle)
                     .font(.system(size: 17, weight: .bold))
-                    .foregroundStyle(AVBrandColor.brandBlack)
+                    .foregroundStyle(AVBrandColor.ink)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 16)
                     .background(AVBrandColor.accent, in: Capsule())
@@ -38,7 +38,7 @@ public struct AVOnboardingCallToActionSection<Companion: View>: View {
 
             Button(secondaryTitle, action: secondaryAction)
                 .font(.system(size: 13, weight: .bold))
-                .foregroundStyle(AVBrandColor.brandGraphite.opacity(0.84))
+                .foregroundStyle(AVBrandColor.ink.opacity(0.84))
         }
         .background(alignment: .top) {
             RadialGradient(

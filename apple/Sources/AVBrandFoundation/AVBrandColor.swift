@@ -9,10 +9,9 @@ typealias AVBrandPlatformColor = NSColor
 #endif
 
 public enum AVBrandColor {
-    public static let brandBlack = Color(red: 58 / 255, green: 58 / 255, blue: 54 / 255)
-    public static let brandAccent = Color(red: 109 / 255, green: 190 / 255, blue: 69 / 255)
-    public static let brandGraphite = Color(red: 58 / 255, green: 58 / 255, blue: 54 / 255)
-    public static let brandWhite = Color.white
+    public static let ink = Color(red: 58 / 255, green: 58 / 255, blue: 54 / 255)
+    public static let accentBase = Color(red: 109 / 255, green: 190 / 255, blue: 69 / 255)
+    public static let canvas = Color.white
 
     public static let neutral50 = Color(red: 247 / 255, green: 249 / 255, blue: 248 / 255)
     public static let neutral100 = Color(red: 238 / 255, green: 242 / 255, blue: 239 / 255)
@@ -20,7 +19,7 @@ public enum AVBrandColor {
     public static let neutral600 = Color(red: 95 / 255, green: 104 / 255, blue: 98 / 255)
     public static let neutral800 = Color(red: 26 / 255, green: 29 / 255, blue: 27 / 255)
 
-    public static let accent = brandAccent
+    public static let accent = accentBase
     public static let destructive = Color(red: 0.84, green: 0.16, blue: 0.22)
     public static let textPrimary = dynamicColor(
         light: AVBrandPlatformColor(red: 58 / 255, green: 58 / 255, blue: 54 / 255, alpha: 1),
@@ -30,7 +29,7 @@ public enum AVBrandColor {
         light: AVBrandPlatformColor(red: 95 / 255, green: 104 / 255, blue: 98 / 255, alpha: 1),
         dark: AVBrandPlatformColor(red: 161 / 255, green: 170 / 255, blue: 165 / 255, alpha: 1)
     )
-    public static let textInverse = brandWhite
+    public static let textInverse = canvas
 
     public static let cardSurface = dynamicColor(
         light: AVBrandPlatformColor(red: 251 / 255, green: 252 / 255, blue: 251 / 255, alpha: 1),
@@ -48,7 +47,7 @@ public enum AVBrandColor {
         light: AVBrandPlatformColor(red: 149 / 255, green: 159 / 255, blue: 152 / 255, alpha: 1),
         dark: AVBrandPlatformColor(red: 108 / 255, green: 116 / 255, blue: 111 / 255, alpha: 1)
     )
-    public static let darkSurface = brandBlack
+    public static let darkSurface = ink
     public static let darkSurfaceAlt = neutral800
     public static let footerGlass = dynamicColor(
         light: AVBrandPlatformColor.white.withAlphaComponent(0.86),
@@ -98,4 +97,18 @@ public enum AVBrandColor {
         })
         #endif
     }
+}
+
+public extension AVBrandColor {
+    @available(*, deprecated, renamed: "ink", message: "Use semantic color tokens instead of brand-specific aliases.")
+    static var brandBlack: Color { ink }
+
+    @available(*, deprecated, renamed: "accentBase", message: "Use semantic color tokens instead of brand-specific aliases.")
+    static var brandAccent: Color { accentBase }
+
+    @available(*, deprecated, renamed: "ink", message: "Use semantic color tokens instead of brand-specific aliases.")
+    static var brandGraphite: Color { ink }
+
+    @available(*, deprecated, renamed: "canvas", message: "Use semantic color tokens instead of brand-specific aliases.")
+    static var brandWhite: Color { canvas }
 }

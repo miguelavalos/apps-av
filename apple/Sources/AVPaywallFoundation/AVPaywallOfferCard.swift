@@ -94,7 +94,7 @@ public struct AVPaywallPrimaryButton: View {
         Button(action: action) {
             Text(title)
                 .font(.system(size: 17, weight: .black, design: .rounded))
-                .foregroundStyle(AVBrandColor.brandBlack)
+                .foregroundStyle(AVBrandColor.ink)
                 .lineLimit(1)
                 .minimumScaleFactor(0.78)
                 .frame(maxWidth: .infinity)

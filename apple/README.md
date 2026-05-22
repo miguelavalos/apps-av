@@ -62,9 +62,12 @@ Text("Avi")
     .padding(AVBrandSpacing.lg)
     .background(AVBrandColor.cardSurface)
     .clipShape(RoundedRectangle(cornerRadius: AVBrandRadius.card))
+
+Circle()
+    .fill(AVBrandSurface.accentGradient)
 ```
 
-The product includes generic tokens for color, surface gradients, typography, spacing, radius, icon sizing, and motion. Product-specific apps should keep their local theme adapters when they need app-specific names.
+The product includes generic tokens for color, surface gradients, typography, spacing, radius, icon sizing, and motion. Use semantic names such as `ink`, `canvas`, `accentBase`, `textPrimary`, and `accentGradient` in Apps AV. Product-specific apps should keep their local theme adapters when they need app-specific names.
 
 ### AVAppShellFoundation
 
@@ -363,7 +366,7 @@ Last audited: 2026-05-22.
 | `AVLaunchFoundation` splash primitives | Keep in Apps AV | Splash accepts product-provided logo, hero, tagline, and status. Internal backdrop names are neutral; product apps own launch copy, assets, startup work, and test flags. |
 | `AVAviFoundation` assistant primitives | Keep in Apps AV | Avi components are visual assistant primitives: cards, headers, avatar containers, action controls, panels, and generic reactions. Product apps own Avi personality, assets, prompts, recommendations, and domain actions. |
 | `AVHaptics` semantic events | Keep for now | Events such as `playbackToggle`, `queueStep`, `save`, `unsave`, `like`, and `dislike` are common interaction semantics across media and content apps. Revisit only if a future non-media app would need a smaller core plus product extensions. |
-| `AVBrandFoundation` tokens | Observe only | No product IDs or Tune copy were found. Detailed theming and branding decisions are deferred to the branding/theming follow-up. |
+| `AVBrandFoundation` tokens | Keep in Apps AV with semantic names | Added semantic aliases (`ink`, `canvas`, `accentBase`, `accentGradient`) and migrated Apps AV internals away from brand-specific or signal-specific token names. Deprecated compatibility aliases remain for existing product adapters. |
 
 ## Installation
 

@@ -28,7 +28,7 @@ public struct AVFeedbackStatusBadge: View {
     public var body: some View {
         Image(systemName: systemImage)
             .font(.system(size: fontSize ?? size * 0.41, weight: .black))
-            .foregroundStyle(isHighlighted ? AVBrandColor.brandBlack : AVBrandColor.textInverse)
+            .foregroundStyle(isHighlighted ? AVBrandColor.ink : AVBrandColor.textInverse)
             .frame(width: size, height: size)
             .background(backgroundColor, in: Circle())
             .overlay {
@@ -39,6 +39,6 @@ public struct AVFeedbackStatusBadge: View {
     }
 
     private var backgroundColor: Color {
-        isHighlighted ? AVBrandColor.accent : AVBrandColor.brandGraphite.opacity(0.86)
+        isHighlighted ? AVBrandColor.accent : AVBrandColor.ink.opacity(0.86)
     }
 }

@@ -58,7 +58,7 @@ public struct AVSplashScreen<Logo: View, Hero: View>: View {
                 VStack(spacing: 10) {
                     Text(tagline)
                         .font(.system(size: 25, weight: .black, design: .rounded))
-                        .foregroundStyle(AVBrandColor.brandGraphite)
+                        .foregroundStyle(AVBrandColor.ink)
                         .multilineTextAlignment(.center)
 
                     HStack(spacing: 8) {
@@ -68,7 +68,7 @@ public struct AVSplashScreen<Logo: View, Hero: View>: View {
 
                         Text(status)
                             .font(.system(size: 14, weight: .semibold))
-                            .foregroundStyle(AVBrandColor.brandGraphite.opacity(0.72))
+                            .foregroundStyle(AVBrandColor.ink.opacity(0.72))
                     }
                     .opacity(statusVisible ? 1 : 0)
                     .offset(y: statusVisible ? 0 : 8)
@@ -137,7 +137,7 @@ private struct AVSplashAmbientBackdrop: View {
 
             ForEach(Array([0.0, 1.0, 2.0, 3.0].enumerated()), id: \.offset) { index, _ in
                 Circle()
-                    .fill(index == 1 ? AVBrandColor.accent.opacity(0.24) : AVBrandColor.brandGraphite.opacity(0.08))
+                    .fill(index == 1 ? AVBrandColor.accent.opacity(0.24) : AVBrandColor.ink.opacity(0.08))
                     .frame(width: index == 1 ? 7 : 4, height: index == 1 ? 7 : 4)
                     .offset(x: CGFloat(index * 52 - 92), y: CGFloat(index % 2 == 0 ? 132 : -138))
                     .opacity(expanded ? 1 : 0.2)

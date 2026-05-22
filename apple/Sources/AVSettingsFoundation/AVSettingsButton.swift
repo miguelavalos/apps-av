@@ -76,7 +76,7 @@ public struct AVSettingsButton: View {
     private var titleTint: Color {
         switch style {
         case .primary:
-            AVBrandColor.brandBlack
+            AVBrandColor.ink
         case .destructivePrimary:
             .white
         case .secondary:
@@ -100,7 +100,7 @@ public struct AVSettingsButton: View {
     private var progressTint: Color {
         switch style {
         case .primary:
-            AVBrandColor.brandBlack
+            AVBrandColor.ink
         case .destructivePrimary:
             .white
         case .secondary, .destructive:
