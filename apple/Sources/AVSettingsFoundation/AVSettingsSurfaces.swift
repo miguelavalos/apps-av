@@ -38,6 +38,7 @@ public struct AVSettingsCard<Content: View>: View {
             content
         }
         .padding(padding)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background(AVSettingsCardBackground())
     }
 }
@@ -524,6 +525,7 @@ public struct AVSettingsActionRow: View {
                     .padding(.top, 4)
             }
             .padding(16)
+            .frame(maxWidth: .infinity, alignment: .leading)
             .background(AVSettingsRowBackground())
         }
         .buttonStyle(.plain)
@@ -554,6 +556,7 @@ public struct AVSettingsToggleRow: View {
                 .labelsHidden()
         }
         .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background(AVSettingsRowBackground())
     }
 }
@@ -589,6 +592,7 @@ public struct AVSettingsInlineActionRow: View {
                 .buttonStyle(.plain)
         }
         .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background(AVSettingsRowBackground())
     }
 }
@@ -692,9 +696,11 @@ private struct AVSettingsRowLayout<Trailing: View>: View {
                     .foregroundStyle(AVBrandColor.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
 
             trailing()
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
