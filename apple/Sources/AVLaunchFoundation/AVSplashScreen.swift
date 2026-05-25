@@ -15,6 +15,19 @@ public struct AVSplashScreen<Logo: View, Hero: View>: View {
     @State private var statusVisible = false
 
     public init(
+        content: AVSplashContent,
+        @ViewBuilder logo: @escaping () -> Logo,
+        @ViewBuilder hero: @escaping () -> Hero
+    ) {
+        self.init(
+            tagline: content.tagline,
+            status: content.status,
+            logo: logo,
+            hero: hero
+        )
+    }
+
+    public init(
         tagline: String,
         status: String,
         @ViewBuilder logo: @escaping () -> Logo,

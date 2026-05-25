@@ -50,6 +50,37 @@ public struct AVAppShellScaffold<ID: Hashable, Content: View, FooterPlayer: View
         self.assistantIcon = assistantIcon
     }
 
+    public init(
+        selectedTabID: ID,
+        tabs: [AVAppShellTab<ID>],
+        assistantID: ID,
+        assistantAccessibilityLabel: String,
+        assistantAccessibilityIdentifier: String,
+        hasAssistantActiveContext: Bool,
+        footerConfiguration: AVAppShellFooterConfiguration,
+        onSelectTab: @escaping (ID) -> Void,
+        onSelectAssistant: @escaping () -> Void,
+        @ViewBuilder content: @escaping () -> Content,
+        @ViewBuilder footerPlayer: @escaping () -> FooterPlayer,
+        @ViewBuilder assistantIcon: @escaping (_ isSelected: Bool) -> AssistantIcon
+    ) {
+        self.init(
+            selectedTabID: selectedTabID,
+            tabs: tabs,
+            assistantID: assistantID,
+            assistantAccessibilityLabel: assistantAccessibilityLabel,
+            assistantAccessibilityIdentifier: assistantAccessibilityIdentifier,
+            hasAssistantActiveContext: hasAssistantActiveContext,
+            footerBackdropHeight: footerConfiguration.backdropHeight,
+            footerPlayerTabSpacing: footerConfiguration.playerTabSpacing,
+            onSelectTab: onSelectTab,
+            onSelectAssistant: onSelectAssistant,
+            content: content,
+            footerPlayer: footerPlayer,
+            assistantIcon: assistantIcon
+        )
+    }
+
     public var body: some View {
         ZStack {
             AVBrandSurface.shellBackground.ignoresSafeArea()
@@ -65,16 +96,22 @@ public struct AVAppShellScaffold<ID: Hashable, Content: View, FooterPlayer: View
     private var footer: some View {
         ZStack(alignment: .bottom) {
             LinearGradient(
-                colors: [
-                    AVBrandColor.footerBackdrop.opacity(0),
-                    AVBrandColor.footerBackdrop.opacity(0.94),
-                    AVBrandColor.footerBackdrop
+                stops: [
+                    .init(color: AVBrandColor.footerBackdrop.opacity(0), location: 0),
+                    .init(color: AVBrandColor.footerBackdrop.opacity(0.96), location: 0.42),
+                    .init(color: AVBrandColor.footerBackdrop, location: 1)
                 ],
                 startPoint: .top,
                 endPoint: .bottom
             )
             .frame(height: footerBackdropHeight)
             .allowsHitTesting(false)
+
+            Rectangle()
+                .fill(AVBrandColor.footerBackdrop)
+                .frame(height: 104)
+                .frame(maxHeight: .infinity, alignment: .bottom)
+                .allowsHitTesting(false)
 
             VStack(spacing: footerPlayerTabSpacing) {
                 footerPlayer()
@@ -107,6 +144,8 @@ public struct AVAppShellScaffold<ID: Hashable, Content: View, FooterPlayer: View
                     }
                     .shadow(color: AVBrandColor.glassShadow, radius: 18, y: 10)
 
+                    Spacer(minLength: 12)
+
                     AVAppShellAssistantButton(
                         isSelected: selectedTabID == assistantID,
                         hasActiveContext: hasAssistantActiveContext,
@@ -118,7 +157,7 @@ public struct AVAppShellScaffold<ID: Hashable, Content: View, FooterPlayer: View
                     )
                     .shadow(color: AVBrandColor.glassShadow, radius: 18, y: 10)
                 }
-                .frame(maxWidth: 430)
+                .frame(maxWidth: .infinity)
             }
             .padding(.horizontal, 18)
             .padding(.bottom, -8)

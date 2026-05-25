@@ -5,16 +5,16 @@ public struct AVOnboardingCallToActionSection<Companion: View>: View {
     @Environment(\.avBrandPalette) private var brandPalette
 
     private let primaryTitle: String
-    private let secondaryTitle: String
+    private let secondaryTitle: String?
     private let primaryAction: () -> Void
-    private let secondaryAction: () -> Void
+    private let secondaryAction: (() -> Void)?
     private let companion: Companion
 
     public init(
         primaryTitle: String,
-        secondaryTitle: String,
+        secondaryTitle: String?,
         primaryAction: @escaping () -> Void,
-        secondaryAction: @escaping () -> Void,
+        secondaryAction: (() -> Void)?,
         @ViewBuilder companion: () -> Companion
     ) {
         self.primaryTitle = primaryTitle
@@ -38,9 +38,11 @@ public struct AVOnboardingCallToActionSection<Companion: View>: View {
                 companion
             }
 
-            Button(secondaryTitle, action: secondaryAction)
-                .font(.system(size: 13, weight: .bold))
-                .foregroundStyle(brandPalette.ink.opacity(0.84))
+            if let secondaryTitle, let secondaryAction {
+                Button(secondaryTitle, action: secondaryAction)
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundStyle(brandPalette.ink.opacity(0.84))
+            }
         }
         .background(alignment: .top) {
             RadialGradient(
@@ -61,15 +63,28 @@ public struct AVOnboardingCallToActionSection<Companion: View>: View {
 public extension AVOnboardingCallToActionSection where Companion == EmptyView {
     init(
         primaryTitle: String,
-        secondaryTitle: String,
+        secondaryTitle: String?,
         primaryAction: @escaping () -> Void,
-        secondaryAction: @escaping () -> Void
+        secondaryAction: (() -> Void)?
     ) {
         self.init(
             primaryTitle: primaryTitle,
             secondaryTitle: secondaryTitle,
             primaryAction: primaryAction,
             secondaryAction: secondaryAction,
+            companion: { EmptyView() }
+        )
+    }
+
+    init(
+        primaryTitle: String,
+        primaryAction: @escaping () -> Void
+    ) {
+        self.init(
+            primaryTitle: primaryTitle,
+            secondaryTitle: nil,
+            primaryAction: primaryAction,
+            secondaryAction: nil,
             companion: { EmptyView() }
         )
     }

@@ -1,0 +1,44 @@
+import SwiftUI
+
+public struct AVAppShellScrollableScreenScaffold<Background: View, Content: View>: View {
+    private let alignment: HorizontalAlignment
+    private let spacing: CGFloat
+    private let horizontalPadding: CGFloat
+    private let topPadding: CGFloat
+    private let bottomPadding: CGFloat
+    private let background: Background
+    private let content: Content
+
+    public init(
+        alignment: HorizontalAlignment = .center,
+        spacing: CGFloat = 18,
+        horizontalPadding: CGFloat = AVAppShellScreenMetric.horizontalPadding,
+        topPadding: CGFloat = AVAppShellScreenMetric.topPadding,
+        bottomPadding: CGFloat = AVAppShellScreenMetric.bottomContentPadding,
+        @ViewBuilder background: () -> Background,
+        @ViewBuilder content: () -> Content
+    ) {
+        self.alignment = alignment
+        self.spacing = spacing
+        self.horizontalPadding = horizontalPadding
+        self.topPadding = topPadding
+        self.bottomPadding = bottomPadding
+        self.background = background()
+        self.content = content()
+    }
+
+    public var body: some View {
+        ScrollView {
+            VStack(alignment: alignment, spacing: spacing) {
+                content
+            }
+            .avShellScreenContentPadding(
+                horizontal: horizontalPadding,
+                top: topPadding,
+                bottom: bottomPadding
+            )
+        }
+        .avShellScreenScrollBehavior()
+        .background(background.ignoresSafeArea())
+    }
+}

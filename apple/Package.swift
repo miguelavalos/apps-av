@@ -57,7 +57,7 @@ let package = Package(
         ),
         .target(
             name: "AVSettingsFoundation",
-            dependencies: ["AVBrandFoundation"]
+            dependencies: ["AVAppShellFoundation", "AVAviFoundation", "AVBrandFoundation", "AVLaunchFoundation"]
         ),
         .target(name: "AVBrandFoundation"),
         .target(name: "AVHaptics")

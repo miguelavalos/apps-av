@@ -8,9 +8,9 @@ public struct AVAuthOptionsPanelScaffold<Actions: View, Accessory: View>: View {
     private let subtitle: String
     private let legalConsentText: AttributedString
     private let unavailableMessage: String?
-    private let skipTitle: String
+    private let skipTitle: String?
     private let actionsAreDisabled: Bool
-    private let onSkip: () -> Void
+    private let onSkip: (() -> Void)?
     private let actions: Actions
     private let accessory: Accessory
 
@@ -19,9 +19,9 @@ public struct AVAuthOptionsPanelScaffold<Actions: View, Accessory: View>: View {
         subtitle: String,
         legalConsentText: AttributedString,
         unavailableMessage: String? = nil,
-        skipTitle: String,
+        skipTitle: String? = nil,
         actionsAreDisabled: Bool = false,
-        onSkip: @escaping () -> Void,
+        onSkip: (() -> Void)? = nil,
         @ViewBuilder actions: () -> Actions,
         @ViewBuilder accessory: () -> Accessory
     ) {
@@ -71,10 +71,12 @@ public struct AVAuthOptionsPanelScaffold<Actions: View, Accessory: View>: View {
                     .padding(.top, 12)
             }
 
-            Button(skipTitle, action: onSkip)
-                .font(.system(size: 13, weight: .bold))
-                .foregroundStyle(brandPalette.ink.opacity(0.82))
-                .padding(.top, 16)
+            if let skipTitle, let onSkip {
+                Button(skipTitle, action: onSkip)
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundStyle(brandPalette.ink.opacity(0.82))
+                    .padding(.top, 16)
+            }
 
             Text(legalConsentText)
                 .font(.system(size: 12, weight: .medium))
@@ -106,9 +108,9 @@ public extension AVAuthOptionsPanelScaffold where Accessory == EmptyView {
         subtitle: String,
         legalConsentText: AttributedString,
         unavailableMessage: String? = nil,
-        skipTitle: String,
+        skipTitle: String? = nil,
         actionsAreDisabled: Bool = false,
-        onSkip: @escaping () -> Void,
+        onSkip: (() -> Void)? = nil,
         @ViewBuilder actions: () -> Actions
     ) {
         self.init(

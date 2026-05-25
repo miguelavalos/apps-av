@@ -105,9 +105,9 @@ public struct AVAviInfoRow: View {
     private let title: String
     private let detail: String
     private let systemImage: String
-    private let accessibilityIdentifier: String
+    private let accessibilityIdentifier: String?
 
-    public init(title: String, detail: String, systemImage: String, accessibilityIdentifier: String) {
+    public init(title: String, detail: String, systemImage: String, accessibilityIdentifier: String? = nil) {
         self.title = title
         self.detail = detail
         self.systemImage = systemImage
@@ -134,7 +134,52 @@ public struct AVAviInfoRow: View {
             }
         }
         .accessibilityElement(children: .combine)
-        .accessibilityIdentifier(accessibilityIdentifier)
+        .accessibilityIdentifierIfPresent(accessibilityIdentifier)
+    }
+}
+
+public struct AVAviActionInfoRow: View {
+    private let title: String
+    private let detail: String
+    private let systemImage: String
+    private let buttonTitle: String
+    private let infoAccessibilityIdentifier: String?
+    private let actionAccessibilityIdentifier: String?
+    private let action: () -> Void
+
+    public init(
+        title: String,
+        detail: String,
+        systemImage: String,
+        buttonTitle: String,
+        infoAccessibilityIdentifier: String? = nil,
+        actionAccessibilityIdentifier: String? = nil,
+        action: @escaping () -> Void
+    ) {
+        self.title = title
+        self.detail = detail
+        self.systemImage = systemImage
+        self.buttonTitle = buttonTitle
+        self.infoAccessibilityIdentifier = infoAccessibilityIdentifier
+        self.actionAccessibilityIdentifier = actionAccessibilityIdentifier
+        self.action = action
+    }
+
+    public var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            AVAviInfoRow(
+                title: title,
+                detail: detail,
+                systemImage: systemImage,
+                accessibilityIdentifier: infoAccessibilityIdentifier
+            )
+            AVAviPrimaryActionButton(
+                title: buttonTitle,
+                systemImage: systemImage,
+                accessibilityIdentifier: actionAccessibilityIdentifier,
+                action: action
+            )
+        }
     }
 }
 

@@ -30,6 +30,26 @@ public struct AVAviCompanionCard<Avatar: View>: View {
         self.avatar = avatar()
     }
 
+    public init(
+        identity: AVAppIdentity,
+        detail: String,
+        actionSystemImage: String = "sparkles",
+        actionAccessibilityLabel: String,
+        accessibilityIdentifier: String? = nil,
+        action: @escaping () -> Void,
+        @ViewBuilder avatar: () -> Avatar
+    ) {
+        self.init(
+            title: identity.assistantName,
+            detail: detail,
+            actionSystemImage: actionSystemImage,
+            actionAccessibilityLabel: actionAccessibilityLabel,
+            accessibilityIdentifier: accessibilityIdentifier,
+            action: action,
+            avatar: avatar
+        )
+    }
+
     public var body: some View {
         HStack(alignment: .center, spacing: AVBrandSpacing.lg) {
             avatar

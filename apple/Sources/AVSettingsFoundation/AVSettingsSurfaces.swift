@@ -43,6 +43,35 @@ public struct AVSettingsCard<Content: View>: View {
     }
 }
 
+public struct AVSettingsSectionCard<Content: View>: View {
+    private let title: String
+    private let subtitle: String
+    private let spacing: CGFloat
+    private let padding: CGFloat
+    private let content: Content
+
+    public init(
+        title: String,
+        subtitle: String,
+        spacing: CGFloat = 18,
+        padding: CGFloat = 22,
+        @ViewBuilder content: () -> Content
+    ) {
+        self.title = title
+        self.subtitle = subtitle
+        self.spacing = spacing
+        self.padding = padding
+        self.content = content()
+    }
+
+    public var body: some View {
+        AVSettingsCard(spacing: spacing, padding: padding) {
+            AVSettingsSectionHeader(title: title, subtitle: subtitle)
+            content
+        }
+    }
+}
+
 public struct AVSettingsSectionHeader: View {
     private let title: String
     private let subtitle: String

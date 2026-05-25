@@ -24,6 +24,22 @@ public struct AVAviScreenHeader<Avatar: View>: View {
         self.avatar = avatar()
     }
 
+    public init(
+        identity: AVAppIdentity,
+        summary: String,
+        status: String? = nil,
+        accessibilityIdentifier: String,
+        @ViewBuilder avatar: () -> Avatar
+    ) {
+        self.init(
+            title: identity.assistantName,
+            summary: summary,
+            status: status,
+            accessibilityIdentifier: accessibilityIdentifier,
+            avatar: avatar
+        )
+    }
+
     public var body: some View {
         HStack(alignment: .top, spacing: AVBrandSpacing.md) {
             avatar
@@ -36,12 +52,14 @@ public struct AVAviScreenHeader<Avatar: View>: View {
                     .minimumScaleFactor(0.68)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                HStack(spacing: 7) {
+                VStack(alignment: .leading, spacing: 7) {
                     Text(summary)
                         .font(AVBrandTypography.captionStrong)
                         .foregroundStyle(AVBrandColor.textSecondary)
                         .lineLimit(2)
                         .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .layoutPriority(1)
 
                     if let status {
                         Text(status)
@@ -50,9 +68,8 @@ public struct AVAviScreenHeader<Avatar: View>: View {
                             .padding(.horizontal, AVBrandSpacing.xs)
                             .padding(.vertical, 5)
                             .background(brandPalette.accent.opacity(0.11), in: Capsule(style: .continuous))
+                            .fixedSize()
                     }
-
-                    Spacer(minLength: 0)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)

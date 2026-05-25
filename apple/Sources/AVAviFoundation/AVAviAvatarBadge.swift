@@ -74,3 +74,42 @@ public struct AVAviAvatarBadge<Avatar: View>: View {
         }
     }
 }
+
+public struct AVAviAssetAvatarBadge: View {
+    private let assetName: String
+    private let imageSize: CGFloat
+    private let badgeSize: CGFloat
+    private let padding: CGFloat
+    private let backgroundStyle: AVAviAvatarBadgeBackground
+    private let strokeStyle: AVAviAvatarBadgeStroke
+
+    public init(
+        assetName: String,
+        imageSize: CGFloat = 22,
+        badgeSize: CGFloat = 36,
+        padding: CGFloat = 0,
+        backgroundStyle: AVAviAvatarBadgeBackground = .muted,
+        strokeStyle: AVAviAvatarBadgeStroke = .subtle
+    ) {
+        self.assetName = assetName
+        self.imageSize = imageSize
+        self.badgeSize = badgeSize
+        self.padding = padding
+        self.backgroundStyle = backgroundStyle
+        self.strokeStyle = strokeStyle
+    }
+
+    public var body: some View {
+        AVAviAvatarBadge(
+            imageSize: imageSize,
+            badgeSize: badgeSize,
+            padding: padding,
+            backgroundStyle: backgroundStyle,
+            strokeStyle: strokeStyle
+        ) {
+            Image(assetName)
+                .resizable()
+                .scaledToFit()
+        }
+    }
+}
