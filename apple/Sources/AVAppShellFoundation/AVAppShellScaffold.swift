@@ -116,7 +116,7 @@ public struct AVAppShellScaffold<ID: Hashable, Content: View, FooterPlayer: View
             VStack(spacing: footerPlayerTabSpacing) {
                 footerPlayer()
 
-                HStack(spacing: 18) {
+                HStack(spacing: 14) {
                     HStack {
                         ForEach(tabs) { tab in
                             AVAppShellFooterTabButton(
@@ -144,7 +144,7 @@ public struct AVAppShellScaffold<ID: Hashable, Content: View, FooterPlayer: View
                     }
                     .shadow(color: AVBrandColor.glassShadow, radius: 18, y: 10)
 
-                    Spacer(minLength: 12)
+                    Spacer(minLength: 10)
 
                     AVAppShellAssistantButton(
                         isSelected: selectedTabID == assistantID,
@@ -159,8 +159,8 @@ public struct AVAppShellScaffold<ID: Hashable, Content: View, FooterPlayer: View
                 }
                 .frame(maxWidth: .infinity)
             }
-            .padding(.horizontal, 18)
-            .padding(.bottom, -8)
+            .padding(.horizontal, 16)
+            .padding(.bottom, 22)
         }
         .ignoresSafeArea(edges: .bottom)
     }
@@ -194,7 +194,7 @@ private struct AVAppShellFooterTabButton: View {
                     .symbolRenderingMode(.monochrome)
             }
             .foregroundStyle(isSelected ? accentColor : AVBrandColor.textSecondary)
-            .frame(width: 64, height: 46)
+            .frame(width: 56, height: 46)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
