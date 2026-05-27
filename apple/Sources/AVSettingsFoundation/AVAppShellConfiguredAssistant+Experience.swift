@@ -5,13 +5,15 @@ public extension AVAppShellConfiguredAssistant {
         experience: AVCommonAppExperience,
         id: String = "avi",
         accessibilityIdentifier: String,
-        fallbackAssetName: String = "AviFooterIcon"
+        fallbackAssetName: String = "AviFooterIcon",
+        activeContextSystemImage: String = "waveform"
     ) {
         self.init(
             id: id,
             name: experience.identity.assistantName,
             accessibilityIdentifier: accessibilityIdentifier,
-            assetName: experience.visualAssets?.footerAssistantName ?? fallbackAssetName
+            assetName: experience.visualAssets?.footerAssistantName ?? fallbackAssetName,
+            activeContextSystemImage: activeContextSystemImage
         )
     }
 }

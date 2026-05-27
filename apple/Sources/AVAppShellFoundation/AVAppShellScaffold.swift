@@ -10,6 +10,7 @@ public struct AVAppShellScaffold<ID: Hashable, Content: View, FooterPlayer: View
     private let assistantAccessibilityLabel: String
     private let assistantAccessibilityIdentifier: String
     private let hasAssistantActiveContext: Bool
+    private let assistantActiveContextSystemImage: String
     private let footerBackdropHeight: CGFloat
     private let footerPlayerTabSpacing: CGFloat
     private let onSelectTab: (ID) -> Void
@@ -27,6 +28,7 @@ public struct AVAppShellScaffold<ID: Hashable, Content: View, FooterPlayer: View
         assistantAccessibilityLabel: String,
         assistantAccessibilityIdentifier: String,
         hasAssistantActiveContext: Bool,
+        assistantActiveContextSystemImage: String = "waveform",
         footerBackdropHeight: CGFloat,
         footerPlayerTabSpacing: CGFloat,
         onSelectTab: @escaping (ID) -> Void,
@@ -41,6 +43,7 @@ public struct AVAppShellScaffold<ID: Hashable, Content: View, FooterPlayer: View
         self.assistantAccessibilityLabel = assistantAccessibilityLabel
         self.assistantAccessibilityIdentifier = assistantAccessibilityIdentifier
         self.hasAssistantActiveContext = hasAssistantActiveContext
+        self.assistantActiveContextSystemImage = assistantActiveContextSystemImage
         self.footerBackdropHeight = footerBackdropHeight
         self.footerPlayerTabSpacing = footerPlayerTabSpacing
         self.onSelectTab = onSelectTab
@@ -57,6 +60,7 @@ public struct AVAppShellScaffold<ID: Hashable, Content: View, FooterPlayer: View
         assistantAccessibilityLabel: String,
         assistantAccessibilityIdentifier: String,
         hasAssistantActiveContext: Bool,
+        assistantActiveContextSystemImage: String = "waveform",
         footerConfiguration: AVAppShellFooterConfiguration,
         onSelectTab: @escaping (ID) -> Void,
         onSelectAssistant: @escaping () -> Void,
@@ -71,6 +75,7 @@ public struct AVAppShellScaffold<ID: Hashable, Content: View, FooterPlayer: View
             assistantAccessibilityLabel: assistantAccessibilityLabel,
             assistantAccessibilityIdentifier: assistantAccessibilityIdentifier,
             hasAssistantActiveContext: hasAssistantActiveContext,
+            assistantActiveContextSystemImage: assistantActiveContextSystemImage,
             footerBackdropHeight: footerConfiguration.backdropHeight,
             footerPlayerTabSpacing: footerConfiguration.playerTabSpacing,
             onSelectTab: onSelectTab,
@@ -149,6 +154,7 @@ public struct AVAppShellScaffold<ID: Hashable, Content: View, FooterPlayer: View
                     AVAppShellAssistantButton(
                         isSelected: selectedTabID == assistantID,
                         hasActiveContext: hasAssistantActiveContext,
+                        activeContextSystemImage: assistantActiveContextSystemImage,
                         accentColor: brandPalette.accent,
                         accessibilityLabel: assistantAccessibilityLabel,
                         accessibilityIdentifier: assistantAccessibilityIdentifier,
@@ -211,6 +217,7 @@ private struct AVAppShellFooterTabButton: View {
 private struct AVAppShellAssistantButton<Icon: View>: View {
     let isSelected: Bool
     let hasActiveContext: Bool
+    let activeContextSystemImage: String
     let accentColor: Color
     let accessibilityLabel: String
     let accessibilityIdentifier: String
@@ -246,7 +253,7 @@ private struct AVAppShellAssistantButton<Icon: View>: View {
                     .shadow(color: accentColor.opacity(isSelected ? 0.24 : 0), radius: 6, y: 2)
 
                 if hasActiveContext && !isSelected {
-                    Image(systemName: "waveform")
+                    Image(systemName: activeContextSystemImage)
                         .font(.system(size: 9, weight: .black))
                         .foregroundStyle(accentColor)
                         .frame(width: 20, height: 20)

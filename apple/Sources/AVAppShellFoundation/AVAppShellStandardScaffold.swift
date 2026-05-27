@@ -22,6 +22,7 @@ public struct AVAppShellStandardScaffold<ID: Hashable, Content: View, FooterPlay
     private let assistantAccessibilityIdentifier: String
     private let assistantAssetName: String
     private let hasAssistantActiveContext: Bool
+    private let assistantActiveContextSystemImage: String
     private let footerConfiguration: AVAppShellFooterConfiguration
     private let onSelectTab: (ID) -> Void
     private let onSelectAssistant: () -> Void
@@ -36,6 +37,7 @@ public struct AVAppShellStandardScaffold<ID: Hashable, Content: View, FooterPlay
         assistantAccessibilityIdentifier: String,
         assistantAssetName: String,
         hasAssistantActiveContext: Bool = false,
+        assistantActiveContextSystemImage: String = "waveform",
         footerConfiguration: AVAppShellFooterConfiguration = .contentOnly,
         onSelectTab: @escaping (ID) -> Void,
         onSelectAssistant: @escaping () -> Void,
@@ -49,6 +51,7 @@ public struct AVAppShellStandardScaffold<ID: Hashable, Content: View, FooterPlay
         self.assistantAccessibilityIdentifier = assistantAccessibilityIdentifier
         self.assistantAssetName = assistantAssetName
         self.hasAssistantActiveContext = hasAssistantActiveContext
+        self.assistantActiveContextSystemImage = assistantActiveContextSystemImage
         self.footerConfiguration = footerConfiguration
         self.onSelectTab = onSelectTab
         self.onSelectAssistant = onSelectAssistant
@@ -64,6 +67,7 @@ public struct AVAppShellStandardScaffold<ID: Hashable, Content: View, FooterPlay
             assistantAccessibilityLabel: assistantName,
             assistantAccessibilityIdentifier: assistantAccessibilityIdentifier,
             hasAssistantActiveContext: hasAssistantActiveContext,
+            assistantActiveContextSystemImage: assistantActiveContextSystemImage,
             footerConfiguration: footerConfiguration,
             onSelectTab: onSelectTab,
             onSelectAssistant: onSelectAssistant,

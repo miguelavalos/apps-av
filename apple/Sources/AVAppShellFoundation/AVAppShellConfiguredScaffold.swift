@@ -5,17 +5,20 @@ public struct AVAppShellConfiguredAssistant: Sendable {
     public var name: String
     public var accessibilityIdentifier: String
     public var assetName: String
+    public var activeContextSystemImage: String
 
     public init(
         id: String = "avi",
         name: String,
         accessibilityIdentifier: String,
-        assetName: String
+        assetName: String,
+        activeContextSystemImage: String = "waveform"
     ) {
         self.id = id
         self.name = name
         self.accessibilityIdentifier = accessibilityIdentifier
         self.assetName = assetName
+        self.activeContextSystemImage = activeContextSystemImage
     }
 }
 
@@ -64,6 +67,7 @@ public struct AVAppShellConfiguredScaffold<ID: Hashable, Content: View, FooterPl
             assistantAccessibilityIdentifier: assistant.accessibilityIdentifier,
             assistantAssetName: assistant.assetName,
             hasAssistantActiveContext: hasAssistantActiveContext,
+            assistantActiveContextSystemImage: assistant.activeContextSystemImage,
             footerConfiguration: footerConfiguration,
             onSelectTab: onSelectTab,
             onSelectAssistant: onSelectAssistant,
