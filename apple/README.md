@@ -14,6 +14,8 @@ Keep this package domain-neutral:
 - Do include brand tokens, shell scaffolds, launch primitives, settings surfaces,
   paywall surfaces, assistant visual primitives, generic player chrome, and
   semantic haptics.
+- Do include reusable local-device media analysis primitives when the output is
+  domain-neutral, privacy-preserving, and useful across more than one AV app.
 - Do not include radio, station, stream, catalog, recommendation, listening
   analytics, purchase-product IDs, account policies, localized product copy, or
   app-specific orchestration.
@@ -37,6 +39,7 @@ a station, that playback uses streams, or that a badge means live metadata.
 | Settings | Cards, rows, buttons, sheet/screen scaffolds | Account state, deletion rules, URLs, localized copy, provider configuration |
 | Assistant | Avi/assistant cards, panel chrome, buttons, avatar containers, reaction visuals | Personality model, assets, prompts, recommendations, domain actions |
 | Paywall | Paywall cards, benefit rows, plan layout, upgrade prompt surfaces | Product IDs, entitlements, usage limits, billing flows, legal URLs |
+| Media analysis | Generic on-device metadata/vision signals such as orientation, likely screenshots, face count, scene role, and quality hints | Product-specific style/theme decisions, pricing, uploads, story generation, and copy |
 | Haptics | Semantic feedback events and native platform mapping | When a domain action should trigger feedback |
 
 ### Promotion Rule
@@ -151,6 +154,24 @@ For a new app, start with the same structure used by Tune AV and Moments AV:
 22. Promote reusable UI only after it can serve both Tune AV and the new app
     without product naming.
 23. Build Apps AV, Tune AV, and the new app after shared API changes.
+
+### Local Media Analysis
+
+`AVMediaAnalysisFoundation` is the reusable local-device analysis module for AV
+apps. It intentionally returns small, generic signals rather than product
+decisions:
+
+- media kind, pixel size, and orientation;
+- likely screenshot detection;
+- face count and whether people are present;
+- broad scene role: people, group, scenery, detail, video, screenshot, or
+  unknown;
+- lightweight brightness, sharpness, and quality scores.
+
+Product apps decide what those signals mean. Moments AV currently uses them to
+preselect theme/music defaults after media import. Future AV apps can reuse the
+same module for cheap local triage, quality hints, gallery summaries, or
+assistant context without sending media to backend AI.
 
 ### Common Surface Verification
 

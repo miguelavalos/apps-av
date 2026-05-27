@@ -36,9 +36,14 @@ let package = Package(
         .library(
             name: "AVPaywallFoundation",
             targets: ["AVPaywallFoundation"]
+        ),
+        .library(
+            name: "AVMediaAnalysisFoundation",
+            targets: ["AVMediaAnalysisFoundation"]
         )
     ],
     targets: [
+        .target(name: "AVMediaAnalysisFoundation"),
         .target(
             name: "AVPaywallFoundation",
             dependencies: ["AVBrandFoundation"]
