@@ -10,6 +10,16 @@ Platform-specific libraries live in dedicated folders:
 
 Future platform folders can be added as needed, for example `android/`, `kotlin/`, or `web/`.
 
+## Product App Patterns
+
+New Apple product apps should follow the shared Apps AV bootstrap and
+integration guide:
+
+- [Apps AV Apple Product App Patterns](docs/apple-product-app-patterns.md)
+
+That guide explains how public Apple clients should consume `apps-av/apple` and
+`account-av` consistently while keeping product-specific workflows in each app.
+
 ## Apple
 
 The Apple Swift package lives in `apple/`.

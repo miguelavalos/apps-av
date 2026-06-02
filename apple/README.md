@@ -2,6 +2,9 @@
 
 Swift packages for AV apps on Apple platforms.
 
+For the public product-app bootstrap and integration checklist, see
+[Apps AV Apple Product App Patterns](../docs/apple-product-app-patterns.md).
+
 ## Architecture Boundary
 
 Apps AV is the shared Apple foundation for AVALSYS apps. It should provide the
