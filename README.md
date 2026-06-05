@@ -4,6 +4,10 @@ Shared libraries for AV apps.
 
 `apps-av` contains cross-app building blocks for AV products such as Tune AV, Moments AV, Series AV, and future apps. Keep product-specific behavior in each app; use this repo for primitives that should behave consistently across products.
 
+Before validating signed native workflows, read [AGENTS.md](AGENTS.md). Shared
+client primitives must stay product-neutral, and signed runtime evidence belongs
+to the private AVALSYS runbooks.
+
 Platform-specific libraries live in dedicated folders:
 
 - `apple/`: Swift packages for Apple platforms
