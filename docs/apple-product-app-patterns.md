@@ -94,7 +94,7 @@ The app-facing account layer should speak in provider-neutral terms:
 @MainActor
 protocol AVAccountService {
     var isAvailable: Bool { get }
-    var currentUser: AccountAVUser? { get }
+    var providerSessionUser: AccountAVUser? { get }
 
     func getToken() async throws -> String?
     func signInWithApple() async throws
@@ -130,11 +130,21 @@ authOptionsArePresented = false
 
 The account controller should:
 
-- read `currentUser`;
+- read `providerSessionUser` as provider session evidence only;
 - if nil, call `getToken()`;
-- read `currentUser` again;
-- resolve app access, credits, purchases, or sync state;
+- read `providerSessionUser` again;
+- call the platform API `/v1/me` with the provider token;
+- publish and cache only the returned internal Apps AV user id;
+- resolve app access, credits, purchases, or sync state from that internal user;
 - clear local signed-in state on sign-out.
+
+If `/v1/me` fails, do not publish the provider subject as the product user.
+
+Purchase SDKs such as RevenueCat must also use the internal Apps AV user id as
+their app/customer user id. Product apps can keep product-specific purchase
+services for subscriptions, credits, or other catalogs, but the customer id
+selection rule is shared: use the resolved internal user id, never
+`providerSessionUser.id`.
 
 Do not call Clerk directly from product UI.
 
