@@ -10,6 +10,10 @@ let package = Package(
     ],
     products: [
         .library(
+            name: "AVDiagnosticsFoundation",
+            targets: ["AVDiagnosticsFoundation"]
+        ),
+        .library(
             name: "AVHaptics",
             targets: ["AVHaptics"]
         ),
@@ -42,7 +46,16 @@ let package = Package(
             targets: ["AVMediaAnalysisFoundation"]
         )
     ],
+    dependencies: [
+        .package(url: "https://github.com/getsentry/sentry-cocoa.git", from: "8.0.0")
+    ],
     targets: [
+        .target(
+            name: "AVDiagnosticsFoundation",
+            dependencies: [
+                .product(name: "Sentry", package: "sentry-cocoa")
+            ]
+        ),
         .target(name: "AVMediaAnalysisFoundation"),
         .target(
             name: "AVPaywallFoundation",
