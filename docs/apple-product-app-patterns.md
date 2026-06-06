@@ -35,6 +35,21 @@ or a different mental model, promote it into `apps-av/apple`. If it still needs
 words such as station, render, episode, memory, gallery, or playback policy to
 make sense, keep it in the product app.
 
+## Documentation Scope Rule
+
+Document shared Apple-product lessons in this guide or another shared Apps AV
+public guide when the guidance is safe to publish. Document product-specific
+behavior in that product repo's docs folder.
+
+For example, account session behavior, app shell patterns, public config
+hygiene, local file availability vocabulary, and release evidence shape are
+shared. Station catalog behavior belongs to Tune AV, finished memory-video
+Gallery behavior belongs to Moments AV, and account self-service behavior
+belongs to Account AV.
+
+Private provider, pricing, retention operations, credentials, admin workflows,
+and release evidence values stay in the private AVALSYS suite.
+
 ## Required Apple Packages
 
 Product apps should use these packages before writing local equivalents:
@@ -205,6 +220,23 @@ xcodebuild build -project apps/ios/ProductAV.xcodeproj \
 
 Do not validate sign-in, account state, purchases, uploads, generation, deletion,
 or other keychain/provider flows with unsigned simulator builds.
+
+## Remote State And Local Files
+
+Apple product apps should not hide account-owned product records just because a
+device-local file is missing.
+
+Use this split across apps:
+
+- remote/account state: durable app records, purchases, credits, workflow
+  status, and client-safe metadata recovered after sign-in;
+- local availability: files, Photos assets, caches, and downloads present on
+  the current device.
+
+The UI should say whether content is saved on this device, missing locally,
+available to download, unavailable to download, or metadata-only. Playback,
+sharing, editing, and generation actions that need local files must validate
+local availability first.
 
 ## Verification Checklist
 
