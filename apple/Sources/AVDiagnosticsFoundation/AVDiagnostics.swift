@@ -106,6 +106,15 @@ public enum AVDiagnostics {
 
     public static func capture(error: Error, context: AVDiagnosticsContext) {
         #if canImport(Sentry)
+        if context.shouldKeepAsBreadcrumb {
+            addBreadcrumb(AVDiagnosticsBreadcrumb(
+                category: context.feature,
+                message: context.code ?? context.feature,
+                data: context.data.merging(["error_code": context.code ?? "unknown"]) { current, _ in current }
+            ))
+            return
+        }
+
         SentrySDK.capture(error: error) { scope in
             scope.setTag(value: sanitizedValue(context.feature), key: "feature")
             if let code = context.code {
@@ -166,5 +175,12 @@ public enum AVDiagnostics {
         let trimmedValue = value.trimmingCharacters(in: .whitespacesAndNewlines)
         guard trimmedValue.count > maxValueLength else { return trimmedValue }
         return String(trimmedValue.prefix(maxValueLength))
+    }
+}
+
+extension AVDiagnosticsContext {
+    var shouldKeepAsBreadcrumb: Bool {
+        guard let code else { return false }
+        return code.range(of: #"^request_failed_4\d\d$"#, options: .regularExpression) != nil
     }
 }

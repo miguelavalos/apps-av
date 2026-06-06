@@ -78,6 +78,10 @@ let package = Package(
             dependencies: ["AVAppShellFoundation", "AVAviFoundation", "AVBrandFoundation", "AVLaunchFoundation"]
         ),
         .target(name: "AVBrandFoundation"),
-        .target(name: "AVHaptics")
+        .target(name: "AVHaptics"),
+        .testTarget(
+            name: "AVDiagnosticsFoundationTests",
+            dependencies: ["AVDiagnosticsFoundation"]
+        )
     ]
 )
