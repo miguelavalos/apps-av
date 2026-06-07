@@ -100,6 +100,54 @@ Start every new Apple product app with this shape:
 12. Add public-safe docs for install, config hygiene, release checks, and public
     repo safety.
 
+## Branding And First Run
+
+Every Apps AV product app should have product-specific branding while preserving
+the shared suite grammar.
+
+Use this first-run sequence for iOS product apps:
+
+```text
+native launch logo + icon -> product splash with Avi -> onboarding
+```
+
+The native launch frame is a short identity frame. It should show the full
+product logo, including product icon or mark, wordmark, and `AV`, centered on
+the shared launch background. If plist-based `UILaunchScreen` image lookup is
+unreliable during a copied-app migration, use an explicit
+`LaunchScreen.storyboard` and verify the installed app contains the compiled
+storyboard plus the referenced image resource.
+
+The product splash is not the native launch logo. It should use product-specific
+artwork and place Avi in a useful assistant role for that app. For example, a
+music app can show Avi listening; a video or image app can show Avi preparing or
+guiding creation. Avi should not be placed in the app icon unless a product
+brand review explicitly approves that exception.
+
+Onboarding may reuse the splash concept, but when Avi appears near the primary
+call-to-action, the onboarding artwork should usually omit Avi so the screen
+does not duplicate the assistant. The splash and onboarding art should integrate
+with the shared paper/background treatment, without obvious rectangular canvas
+edges or mismatched background colors.
+
+Keep these roles separate:
+
+- app icon: product feature and suite identity at small sizes;
+- product mark: symbol used inside logo lockups and marketing surfaces;
+- full logo: native launch, splash, web, and large marketing surfaces;
+- wordmark: compact headers where repeating the icon would add visual noise;
+- splash art: product concept with Avi as assistant;
+- onboarding art: first-run product concept that supports the auth/actions
+  layout.
+
+Do not copy another app's visual assets into a new product as final branding.
+Use existing apps as visual references, then approve product-specific assets in
+the product's private brand-system handoff before replacing runtime assets.
+
+Before accepting a first-run implementation, check a clean simulator install and
+watch all three stages. A static screenshot of onboarding is not enough to
+verify launch and splash behavior.
+
 ## Account AV Contract
 
 Product apps must treat Clerk as an implementation detail behind `AccountAV`.
@@ -253,6 +301,10 @@ Before calling a product app aligned with Apps AV, verify:
 - Settings and Account do not select Home in footer chrome;
 - Settings common controls are Language then Appearance;
 - shared shell/settings/account/paywall/Avi primitives are used where available;
+- native launch, splash, and onboarding appear in the expected first-run order;
+- launch uses the product logo and icon, not a copied app asset;
+- app icon, header wordmark, launch logo, splash art, and onboarding art are
+  product-specific and visually reviewed;
 - public docs and git state contain no generated local config or secrets.
 
 Private provider setup, backend architecture, billing authority, release
