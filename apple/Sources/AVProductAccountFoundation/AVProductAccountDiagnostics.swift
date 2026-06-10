@@ -2,6 +2,8 @@ import Foundation
 
 public enum AVProductAccountDiagnosticEvent: Equatable, Sendable {
     case restoreStarted
+    case providerSessionActive
+    case providerSignedOut
     case providerSessionUnavailable
     case providerTokenUnavailable
     case productUserResolutionStarted
@@ -13,13 +15,13 @@ public enum AVProductAccountDiagnosticEvent: Equatable, Sendable {
 }
 
 public protocol AVProductAccountDiagnostics: Sendable {
-    func recordAccountEvent(_ event: AVProductAccountDiagnosticEvent)
+    func recordAccountEvent(_ event: AVProductAccountDiagnosticEvent) async
 }
 
 public struct AVNoopProductAccountDiagnostics: AVProductAccountDiagnostics {
     public init() {}
 
-    public func recordAccountEvent(_ event: AVProductAccountDiagnosticEvent) {
+    public func recordAccountEvent(_ event: AVProductAccountDiagnosticEvent) async {
         _ = event
     }
 }
