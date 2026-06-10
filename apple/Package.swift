@@ -44,6 +44,10 @@ let package = Package(
         .library(
             name: "AVMediaAnalysisFoundation",
             targets: ["AVMediaAnalysisFoundation"]
+        ),
+        .library(
+            name: "AVProductAccountFoundation",
+            targets: ["AVProductAccountFoundation"]
         )
     ],
     dependencies: [
@@ -79,9 +83,14 @@ let package = Package(
         ),
         .target(name: "AVBrandFoundation"),
         .target(name: "AVHaptics"),
+        .target(name: "AVProductAccountFoundation"),
         .testTarget(
             name: "AVDiagnosticsFoundationTests",
             dependencies: ["AVDiagnosticsFoundation"]
+        ),
+        .testTarget(
+            name: "AVProductAccountFoundationTests",
+            dependencies: ["AVProductAccountFoundation"]
         )
     ]
 )
