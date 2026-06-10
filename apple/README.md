@@ -12,6 +12,10 @@ structure, design language, reusable UI primitives, and cross-app interaction
 patterns that future iOS apps can adopt without inheriting a specific product
 domain.
 
+For the shared Account AV / Apps AV product-account boundary, restore/logout
+semantics, `/v1/me` identity rule, and common sign-in presenter contract, see
+[ADR 0001: Product Account Architecture](docs/adr/0001-product-account-architecture.md).
+
 Keep this package domain-neutral:
 
 - Do include brand tokens, shell scaffolds, launch primitives, settings surfaces,
