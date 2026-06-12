@@ -50,6 +50,29 @@ belongs to Account AV.
 Private provider, pricing, retention operations, credentials, admin workflows,
 and release evidence values stay in the private AVALSYS suite.
 
+## Third-Party Visual Content
+
+Product apps must classify third-party visuals before showing them in public
+Apple builds:
+
+- Avalsys-owned, generated, synthetic, initials, and placeholder visuals are
+  the safe default.
+- Factual text metadata can be shown neutrally when it does not imply an
+  unauthorized catalog or endorsement.
+- TV/movie posters can be used as title-reference artwork when provider terms,
+  attribution, and release evidence support that use.
+- Company, platform, provider, station, app, favicon, and service logos are
+  blocked unless permission or brand guidelines explicitly allow the exact use.
+- Provider availability badges, `Watch on` links, trailers, embedded provider
+  pages, and platform-branded actions require documented terms/evidence.
+- App Store screenshots are stricter than in-app UI. Third-party posters or
+  artwork need screenshot-specific approval before appearing in marketing
+  assets.
+
+Tune AV's station-logo rejection is not a blanket ban on Series AV-style
+TV/movie posters. It is a warning not to use logos or brand imagery just because
+a public API exposes them.
+
 ## Required Apple Packages
 
 Product apps should use these packages before writing local equivalents:
