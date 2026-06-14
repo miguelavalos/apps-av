@@ -292,6 +292,29 @@ xcodebuild build -project apps/ios/ProductAV.xcodeproj \
 Do not validate sign-in, account state, purchases, uploads, generation, deletion,
 or other keychain/provider flows with unsigned simulator builds.
 
+## macOS Clerk Keychain Service Rule
+
+macOS and Catalyst apps that use Clerk through Account AV must treat the
+Keychain service name as release-critical configuration.
+
+Required behavior:
+
+- configure Clerk with both an explicit `keychainConfig.service` and
+  `keychainConfig.accessGroup`;
+- include the matching `keychain-access-groups` entitlement in signed macOS
+  archives;
+- verify the resolved service, access group, and signed entitlement in archive
+  preflight before TestFlight/App Store upload;
+- never reuse a service name that was already used by a bad or legacy macOS
+  build if that service has created login-keychain items on tester machines.
+
+Clerk's macOS keychain storage can use a data-protection keychain primary store
+with a legacy fallback when an access group is configured. Reusing an old
+service name can make that fallback read old login-keychain items and trigger
+system Keychain password prompts, even when the new archive has the correct
+access group entitlement. If this happens, move the macOS product to a new
+stable service name and make the archive checker reject the legacy service.
+
 ## Remote State And Local Files
 
 Apple product apps should not hide account-owned product records just because a
