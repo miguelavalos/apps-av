@@ -1,5 +1,17 @@
 # Apps AV Agent Rules
 
+Before work that touches signed runtime, backend-owned identity, billing,
+deletion, deployment, TestFlight/App Store, Convex, Cloudflare remote state, or
+cross-app workflow behavior, run the private workspace preflight first:
+
+```bash
+bash ../../private/avalsys-suite/scripts/agent-preflight.sh --app apps-av --intent <intent>
+```
+
+Read `../../private/avalsys-suite/docs/agents/workspace-guardrails.md` and every doc
+printed by the preflight before executing commands. If the private repo is
+unavailable, stop instead of guessing.
+
 Apps AV contains shared client primitives for AV product apps. It should define
 reusable UI, launch, settings, paywall, haptics, branding, and platform
 contracts, not product-specific ownership, credit, render, subscription, or
