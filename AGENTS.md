@@ -24,6 +24,7 @@ invent a local runtime flow from this public repo.
 
 - `private/avalsys-suite/docs/platform/native-preview-dev-validation-guide.md`
 - `private/avalsys-suite/docs/platform/native-account-identity-contract.md`
+- `private/avalsys-suite/docs/platform/account-av-ios-testflight-contract.md`
 - `private/avalsys-suite/docs/agents/plan-step.md` when the user says
   `usa plan-step` or asks for step-by-step plan execution.
 - `private/avalsys-suite/docs/agents/plan-goal.md` when the user says
@@ -39,6 +40,8 @@ Mandatory rules:
   secret resolution;
 - keep private URLs, service identifiers, approval status, and operations
   evidence out of this public repo;
+- shared public Apple product docs must describe the Account AV iOS keychain
+  contract without exposing private config values;
 - do not add product-specific workflow branches to shared UI primitives;
 - keep Account AV provider session identity separate from internal Apps AV user
   identity.

@@ -192,7 +192,11 @@ protocol AVAccountService {
 Configure once at app launch:
 
 ```swift
-AccountAVClerk.configureIfPossible(publishableKey: AppConfig.avAccountKey)
+AccountAVClerk.configureIfPossible(
+    publishableKey: AppConfig.avAccountKey,
+    keychainService: BundleConfig.nonEmptyStringValue(for: "ACCOUNTAV_KEYCHAIN_SERVICE"),
+    keychainAccessGroup: BundleConfig.nonEmptyStringValue(for: "ACCOUNTAV_KEYCHAIN_ACCESS_GROUP")
+)
 ```
 
 Use `ClerkAccountAVService` inside the product account wrapper:
@@ -200,10 +204,26 @@ Use `ClerkAccountAVService` inside the product account wrapper:
 ```swift
 private let accountService = ClerkAccountAVService(
     publishableKeyProvider: { AppConfig.avAccountKey },
+    keychainServiceProvider: { BundleConfig.nonEmptyStringValue(for: "ACCOUNTAV_KEYCHAIN_SERVICE") },
+    keychainAccessGroupProvider: { BundleConfig.nonEmptyStringValue(for: "ACCOUNTAV_KEYCHAIN_ACCESS_GROUP") },
     fallbackDisplayName: L10n.string("account.displayName.user"),
     loggerSubsystem: "com.avalsys.productav"
 )
 ```
+
+iOS apps using Account AV must expose these keys through `Info.plist` and
+effective build settings:
+
+- `ACCOUNTAV_PUBLISHABLE_KEY`
+- `ACCOUNTAV_KEYCHAIN_SERVICE`
+- `ACCOUNTAV_KEYCHAIN_ACCESS_GROUP`
+
+Release builds must set `ACCOUNTAV_KEYCHAIN_ACCESS_GROUP` to
+`935PM55U6R.<production-bundle-id>`. Debug/dev builds must set it to
+`935PM55U6R.<debug-bundle-id>`. The signed entitlements file must include
+`keychain-access-groups` with `$(AppIdentifierPrefix)$(PRODUCT_BUNDLE_IDENTIFIER)`.
+The runtime config checker must fail before TestFlight if the effective access
+group does not match the selected bundle/environment.
 
 After OAuth returns, sync from the account provider before updating app state:
 
