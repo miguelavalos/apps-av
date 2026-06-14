@@ -3,6 +3,7 @@ import SwiftUI
 
 public struct AVOnboardingHeroText: View {
     @Environment(\.avBrandPalette) private var brandPalette
+    @Environment(\.colorScheme) private var colorScheme
 
     private let title: String
     private let subtitle: String
@@ -22,13 +23,13 @@ public struct AVOnboardingHeroText: View {
         VStack(spacing: 8) {
             Text(title)
                 .font(.system(size: 30, weight: .black))
-                .foregroundStyle(brandPalette.ink)
+                .foregroundStyle(titleColor)
                 .multilineTextAlignment(.center)
                 .minimumScaleFactor(0.86)
 
             Text(subtitle)
                 .font(.system(size: 15, weight: .medium))
-                .foregroundStyle(brandPalette.ink.opacity(0.76))
+                .foregroundStyle(subtitleColor)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
                 .fixedSize(horizontal: false, vertical: true)
@@ -36,5 +37,13 @@ public struct AVOnboardingHeroText: View {
         }
         .padding(.horizontal, 42)
         .accessibilityElement(children: .contain)
+    }
+
+    private var titleColor: Color {
+        colorScheme == .dark ? AVBrandColor.textPrimary : brandPalette.ink
+    }
+
+    private var subtitleColor: Color {
+        colorScheme == .dark ? AVBrandColor.textSecondary : brandPalette.ink.opacity(0.76)
     }
 }

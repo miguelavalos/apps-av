@@ -19,6 +19,7 @@ public struct AVAuthOnboardingScreen<Brand: View, HeroArtwork: View, CTACompanio
     private let ctaCompanion: CTACompanion
     private let authPanel: AuthPanel
 
+    @Environment(\.colorScheme) private var colorScheme
     @GestureState private var authOptionsDragOffset: CGFloat = 0
 
     public init(
@@ -87,16 +88,12 @@ public struct AVAuthOnboardingScreen<Brand: View, HeroArtwork: View, CTACompanio
     public var body: some View {
         GeometryReader { proxy in
             ZStack {
-                AVBrandColor.canvas.ignoresSafeArea()
+                baseCanvas.ignoresSafeArea()
 
                 onboardingBackdrop
                     .overlay {
                         LinearGradient(
-                            colors: [
-                                AVBrandColor.neutral50.opacity(0.16),
-                                AVBrandColor.neutral50.opacity(authOptionsArePresented ? 0.54 : 0.28),
-                                AVBrandColor.neutral50.opacity(authOptionsArePresented ? 0.94 : 0.86)
-                            ],
+                            colors: overlayColors,
                             startPoint: .top,
                             endPoint: .bottom
                         )
@@ -130,7 +127,7 @@ public struct AVAuthOnboardingScreen<Brand: View, HeroArtwork: View, CTACompanio
                                 .allowsHitTesting(false)
                         }
                         .padding(.horizontal, 24)
-                        .padding(.bottom, max(16, proxy.safeAreaInsets.bottom + 6))
+                        .padding(.bottom, max(52, proxy.safeAreaInsets.bottom + 44))
                         .transition(.move(edge: .bottom).combined(with: .opacity))
                     }
                 }
@@ -150,7 +147,7 @@ public struct AVAuthOnboardingScreen<Brand: View, HeroArtwork: View, CTACompanio
         GeometryReader { proxy in
             ZStack {
                 LinearGradient(
-                    colors: [backgroundStart, backgroundMid, backgroundEnd],
+                    colors: backdropGradientColors,
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
@@ -172,17 +169,18 @@ public struct AVAuthOnboardingScreen<Brand: View, HeroArtwork: View, CTACompanio
                         )
                     }
                     .opacity(0.82)
-                    .saturation(0.92)
+                    .saturation(colorScheme == .dark ? 0.78 : 0.92)
+                    .brightness(colorScheme == .dark ? -0.18 : 0)
 
                 VStack {
                     Spacer()
 
                     AVOnboardingCurvedWave()
-                        .stroke(AVBrandColor.accent.opacity(0.1), lineWidth: 2)
+                        .stroke(AVBrandColor.accent.opacity(colorScheme == .dark ? 0.18 : 0.1), lineWidth: 2)
                         .frame(height: 180)
 
                     AVOnboardingCurvedWave(offset: 50)
-                        .stroke(Color.white.opacity(0.08), lineWidth: 1.5)
+                        .stroke(Color.white.opacity(colorScheme == .dark ? 0.12 : 0.08), lineWidth: 1.5)
                         .frame(height: 210)
                         .offset(y: -24)
                 }
@@ -207,6 +205,38 @@ public struct AVAuthOnboardingScreen<Brand: View, HeroArtwork: View, CTACompanio
                     authOptionsArePresented = false
                 }
             }
+    }
+
+    private var baseCanvas: Color {
+        colorScheme == .dark ? AVBrandColor.footerBackdrop : AVBrandColor.canvas
+    }
+
+    private var backdropGradientColors: [Color] {
+        if colorScheme == .dark {
+            [
+                AVBrandColor.footerBackdrop,
+                AVBrandColor.darkSurfaceAlt,
+                AVBrandColor.cardSurface
+            ]
+        } else {
+            [backgroundStart, backgroundMid, backgroundEnd]
+        }
+    }
+
+    private var overlayColors: [Color] {
+        if colorScheme == .dark {
+            [
+                AVBrandColor.footerBackdrop.opacity(0.18),
+                AVBrandColor.footerBackdrop.opacity(authOptionsArePresented ? 0.54 : 0.34),
+                AVBrandColor.footerBackdrop.opacity(authOptionsArePresented ? 0.96 : 0.88)
+            ]
+        } else {
+            [
+                AVBrandColor.neutral50.opacity(0.16),
+                AVBrandColor.neutral50.opacity(authOptionsArePresented ? 0.54 : 0.28),
+                AVBrandColor.neutral50.opacity(authOptionsArePresented ? 0.94 : 0.86)
+            ]
+        }
     }
 }
 

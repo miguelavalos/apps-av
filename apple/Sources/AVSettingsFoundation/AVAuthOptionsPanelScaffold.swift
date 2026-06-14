@@ -3,6 +3,7 @@ import SwiftUI
 
 public struct AVAuthOptionsPanelScaffold<Actions: View, Accessory: View>: View {
     @Environment(\.avBrandPalette) private var brandPalette
+    @Environment(\.colorScheme) private var colorScheme
 
     private let title: String
     private let subtitle: String
@@ -39,19 +40,19 @@ public struct AVAuthOptionsPanelScaffold<Actions: View, Accessory: View>: View {
     public var body: some View {
         VStack(spacing: 0) {
             RoundedRectangle(cornerRadius: 2, style: .continuous)
-                .fill(brandPalette.ink.opacity(0.22))
+                .fill(handleColor)
                 .frame(width: 46, height: 4)
                 .padding(.top, 12)
 
             VStack(spacing: 7) {
                 Text(title)
                     .font(.system(size: 22, weight: .black, design: .serif))
-                    .foregroundStyle(brandPalette.ink)
+                    .foregroundStyle(titleColor)
                     .multilineTextAlignment(.center)
 
                 Text(subtitle)
                     .font(.system(size: 13, weight: .medium))
-                    .foregroundStyle(AVBrandColor.neutral600)
+                    .foregroundStyle(subtitleColor)
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -66,7 +67,7 @@ public struct AVAuthOptionsPanelScaffold<Actions: View, Accessory: View>: View {
             if let unavailableMessage {
                 Text(unavailableMessage)
                     .font(.system(size: 12, weight: .medium))
-                    .foregroundStyle(brandPalette.ink.opacity(0.7))
+                    .foregroundStyle(titleColor.opacity(0.7))
                     .multilineTextAlignment(.center)
                     .padding(.top, 12)
             }
@@ -74,14 +75,14 @@ public struct AVAuthOptionsPanelScaffold<Actions: View, Accessory: View>: View {
             if let skipTitle, let onSkip {
                 Button(skipTitle, action: onSkip)
                     .font(.system(size: 13, weight: .bold))
-                    .foregroundStyle(brandPalette.ink.opacity(0.82))
+                    .foregroundStyle(titleColor.opacity(0.82))
                     .padding(.top, 16)
             }
 
             Text(legalConsentText)
                 .font(.system(size: 12, weight: .medium))
-                .foregroundStyle(brandPalette.ink.opacity(0.66))
-                .tint(brandPalette.ink.opacity(0.9))
+                .foregroundStyle(titleColor.opacity(0.66))
+                .tint(titleColor.opacity(0.9))
                 .multilineTextAlignment(.center)
                 .padding(.top, 14)
         }
@@ -89,16 +90,36 @@ public struct AVAuthOptionsPanelScaffold<Actions: View, Accessory: View>: View {
         .padding(.bottom, 32)
         .background(
             RoundedRectangle(cornerRadius: 30, style: .continuous)
-                .fill(AVBrandColor.warmPanelSurface.opacity(0.98))
+                .fill(panelSurface)
                 .overlay {
                     RoundedRectangle(cornerRadius: 30, style: .continuous)
-                        .stroke(brandPalette.ink.opacity(0.12), lineWidth: 1)
+                        .stroke(panelStroke, lineWidth: 1)
                 }
                 .shadow(color: .black.opacity(0.28), radius: 24, y: 14)
         )
         .overlay(alignment: .topTrailing) {
             accessory
         }
+    }
+
+    private var titleColor: Color {
+        colorScheme == .dark ? AVBrandColor.textPrimary : brandPalette.ink
+    }
+
+    private var subtitleColor: Color {
+        colorScheme == .dark ? AVBrandColor.textSecondary : AVBrandColor.neutral600
+    }
+
+    private var handleColor: Color {
+        titleColor.opacity(colorScheme == .dark ? 0.28 : 0.22)
+    }
+
+    private var panelSurface: Color {
+        colorScheme == .dark ? AVBrandColor.elevatedSurface : AVBrandColor.warmPanelSurface.opacity(0.98)
+    }
+
+    private var panelStroke: Color {
+        colorScheme == .dark ? AVBrandColor.glassStroke : brandPalette.ink.opacity(0.12)
     }
 }
 

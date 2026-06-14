@@ -70,6 +70,25 @@ public struct AVDiagnosticsUserContext: Sendable {
 }
 
 public enum AVDiagnostics {
+    private final class ProviderState: @unchecked Sendable {
+        private let lock = NSLock()
+        private var started = false
+
+        func setStarted(_ value: Bool) {
+            lock.withLock {
+                started = value
+            }
+        }
+
+        func isStarted() -> Bool {
+            lock.withLock {
+                started
+            }
+        }
+    }
+
+    private static let providerState = ProviderState()
+
     private static let forbiddenKeyFragments = [
         "token",
         "authorization",
@@ -90,7 +109,10 @@ public enum AVDiagnostics {
     private static let maxValueLength = 160
 
     public static func configure(_ configuration: AVDiagnosticsConfiguration) {
-        guard configuration.shouldStartProvider else { return }
+        guard configuration.shouldStartProvider else {
+            providerState.setStarted(false)
+            return
+        }
 
         #if canImport(Sentry)
         SentrySDK.start { options in
@@ -101,11 +123,14 @@ public enum AVDiagnostics {
                 options.releaseName = releaseName
             }
         }
+        providerState.setStarted(true)
         #endif
     }
 
     public static func capture(error: Error, context: AVDiagnosticsContext) {
         #if canImport(Sentry)
+        guard providerState.isStarted() else { return }
+
         if context.shouldKeepAsBreadcrumb {
             addBreadcrumb(AVDiagnosticsBreadcrumb(
                 category: context.feature,
@@ -130,6 +155,8 @@ public enum AVDiagnostics {
 
     public static func addBreadcrumb(_ breadcrumb: AVDiagnosticsBreadcrumb) {
         #if canImport(Sentry)
+        guard providerState.isStarted() else { return }
+
         let sentryBreadcrumb = Breadcrumb()
         sentryBreadcrumb.category = sanitizedValue(breadcrumb.category)
         sentryBreadcrumb.message = sanitizedValue(breadcrumb.message)
@@ -141,6 +168,8 @@ public enum AVDiagnostics {
 
     public static func setUserContext(_ userContext: AVDiagnosticsUserContext?) {
         #if canImport(Sentry)
+        guard providerState.isStarted() else { return }
+
         SentrySDK.configureScope { scope in
             guard let userContext, !userContext.id.isEmpty else {
                 scope.setUser(nil)
