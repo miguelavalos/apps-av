@@ -225,6 +225,11 @@ Release builds must set `ACCOUNTAV_KEYCHAIN_ACCESS_GROUP` to
 The runtime config checker must fail before TestFlight if the effective access
 group does not match the selected bundle/environment.
 
+Series AV currently uses `scripts/verify-ios-runtime-config.sh production` for
+the same Release/prod gate. New product apps should prefer the Tune AV-style
+`scripts/check-ios-runtime-config.sh --env prod --configuration Release` shape
+unless they already have an equivalent checker.
+
 After OAuth returns, sync from the account provider before updating app state:
 
 ```swift
@@ -238,6 +243,11 @@ The account controller should:
 
 - read `providerSessionUser` as provider session evidence only;
 - if nil, call `getToken()`;
+- treat a missing token or failed internal Apps AV user resolution as guest or
+  temporarily unavailable instead of publishing the provider subject;
+- keep signed-in onboarding tests realistic: active provider session, non-empty
+  token, and internal Apps AV user resolution must all be present before the UI
+  suppresses guest onboarding.
 - read `providerSessionUser` again;
 - call the platform API `/v1/me` with the provider token;
 - publish and cache only the returned internal Apps AV user id;
