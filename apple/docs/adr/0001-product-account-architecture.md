@@ -18,8 +18,11 @@ Apple client package used by product apps. The architecture boundary is:
 - Apps AV Apple owns the shared product-account client architecture.
 - Product apps adapt product-specific behavior into that shared architecture.
 
-The apps are pre-user enough that no legacy compatibility branch is required.
-Dead duplicated auth/account code should be removed as products migrate.
+Moments AV and Animate AV are pre-user enough that no legacy compatibility
+branch is required. Tune AV is already live in the App Store, so product
+backend compatibility must be preserved separately while auth/account code
+migrates to the shared architecture. Dead duplicated auth/account code should
+be removed as products migrate.
 
 ## Decision
 
@@ -165,13 +168,15 @@ deep-link behavior, and image-generation feature gating behind adapters. Public
 v1 remains video-only. Image generation remains admin/test-only: normal users
 must not see image entrypoints, while backend enforcement remains required.
 
-Series AV and Photo AV are outside this migration plan.
+Series AV is outside this migration plan.
 
 ## Legacy And Cleanup Rule
 
-Because these products do not need compatibility for existing user migrations,
-the refactor should remove obsolete local auth/account code as each app adopts
-the shared architecture.
+Because the shared auth/account migration does not require preserving obsolete
+local auth architecture, the refactor should remove obsolete local auth/account
+code as each app adopts the shared architecture. Product backend compatibility
+is handled by each app's backend contract; Tune AV must keep App Store
+compatibility while shipped clients still require it.
 
 Do not keep:
 

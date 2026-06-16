@@ -7,7 +7,7 @@ backend internals, or release operations.
 
 Use this guide when bootstrapping or refactoring iOS, iPadOS, macOS, Catalyst,
 or future Apple-platform clients for Apps AV products such as Tune AV,
-Moments AV, Series AV, Photo AV, and new products.
+Moments AV, Series AV, Animate AV, and new products.
 
 ## Goal
 
