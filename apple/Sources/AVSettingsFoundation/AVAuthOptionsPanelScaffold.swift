@@ -84,10 +84,11 @@ public struct AVAuthOptionsPanelScaffold<Actions: View, Accessory: View>: View {
                 .foregroundStyle(titleColor.opacity(0.66))
                 .tint(titleColor.opacity(0.9))
                 .multilineTextAlignment(.center)
-                .padding(.top, 14)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, 12)
         }
         .padding(.horizontal, 24)
-        .padding(.bottom, 32)
+        .padding(.bottom, 24)
         .background(
             RoundedRectangle(cornerRadius: 30, style: .continuous)
                 .fill(panelSurface)

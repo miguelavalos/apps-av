@@ -40,5 +40,15 @@ public struct AVAppShellScrollableScreenScaffold<Background: View, Content: View
         }
         .avShellScreenScrollBehavior()
         .background(background.ignoresSafeArea())
+        .overlay(alignment: .top) {
+            GeometryReader { proxy in
+                background
+                    .frame(height: proxy.safeAreaInsets.top + 12)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                    .ignoresSafeArea(edges: .top)
+                    .allowsHitTesting(false)
+            }
+            .allowsHitTesting(false)
+        }
     }
 }

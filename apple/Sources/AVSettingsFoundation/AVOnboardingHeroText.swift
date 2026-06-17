@@ -31,7 +31,7 @@ public struct AVOnboardingHeroText: View {
                 .font(.system(size: 15, weight: .medium))
                 .foregroundStyle(subtitleColor)
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
+                .lineLimit(3)
                 .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: subtitleMaxWidth)
         }

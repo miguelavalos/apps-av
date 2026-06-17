@@ -281,6 +281,11 @@ Use shared shell primitives for common chrome:
 For macOS, prefer sidebar or toolbar navigation when appropriate, but preserve
 the same semantic destinations and reuse the same settings/account content.
 
+Scrollable iOS screens that run under full-screen app chrome must mask content
+at the top safe area so cards, posters, and row text do not visibly pass under
+the status bar or Dynamic Island while scrolling. Validate this in both light
+and dark appearance on a simulator with the product footer visible.
+
 ## Settings And Account
 
 Common settings stay in this order across apps:
@@ -299,6 +304,10 @@ Account screens should:
 - route account deletion through the shared Account AV path;
 - keep product Pro, credits, usage limits, and subscription state in product
   sections below shared account state.
+
+Onboarding and auth panels must allow localized legal text and long subtitles
+to wrap vertically. Avoid fixed-height text containers for terms/privacy copy,
+and validate Spanish plus at least one longer locale in dark mode.
 
 ## Config And Public Repo Hygiene
 
