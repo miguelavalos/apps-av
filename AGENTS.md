@@ -12,6 +12,12 @@ Read `../../private/avalsys-suite/docs/agents/workspace-guardrails.md` and every
 printed by the preflight before executing commands. If the private repo is
 unavailable, stop instead of guessing.
 
+For local iOS/macOS builds, also follow
+`../../private/avalsys-suite/docs/agents/native-cache-hygiene.md`: use
+repo-local purpose-named `-derivedDataPath` directories and remove repo-local
+`.DerivedData*`/`.derived-data*` caches after the task when no build is using
+them.
+
 Apps AV contains shared client primitives for AV product apps. It should define
 reusable UI, launch, settings, paywall, haptics, branding, and platform
 contracts, not product-specific ownership, credit, render, subscription, or
