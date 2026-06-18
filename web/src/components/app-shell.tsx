@@ -8,6 +8,7 @@ export interface AppShellProps {
   navLinks: AppsAvProductLink[];
   accountArea?: ReactNode;
   children: ReactNode;
+  currentPath?: string;
   footerLabels?: AvAppFooterLabels;
   labels?: AppShellLabels;
 }
@@ -20,7 +21,7 @@ export interface AppShellLabels {
   primaryNavigation?: string;
 }
 
-export function AppShell({ product, navLinks, accountArea, children, footerLabels, labels }: AppShellProps) {
+export function AppShell({ product, navLinks, accountArea, children, currentPath, footerLabels, labels }: AppShellProps) {
   const homeHref = navLinks[0]?.href ?? "/";
 
   return (
@@ -39,14 +40,19 @@ export function AppShell({ product, navLinks, accountArea, children, footerLabel
           </a>
           <nav className="hidden items-center gap-1 md:flex" aria-label={labels?.primaryNavigation ?? "Primary navigation"}>
             {navLinks.map((link) => (
-              <a key={link.href} className="rounded-full px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground" href={link.href}>
+              <a
+                key={link.href}
+                aria-current={isActiveAppShellLink(link.href, currentPath) ? "page" : undefined}
+                className={isActiveAppShellLink(link.href, currentPath) ? "rounded-full bg-muted px-3 py-2 text-sm font-semibold text-foreground" : "rounded-full px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground"}
+                href={link.href}
+              >
                 {link.label}
               </a>
             ))}
           </nav>
           <div className="flex items-center gap-3">
             {accountArea}
-            <MobileDrawerNav label={labels?.mobileNavigation} links={navLinks} triggerLabel={labels?.openNavigation} />
+            <MobileDrawerNav currentPath={currentPath} label={labels?.mobileNavigation} links={navLinks} triggerLabel={labels?.openNavigation} />
           </div>
         </div>
       </header>
@@ -70,4 +76,15 @@ export function AppShell({ product, navLinks, accountArea, children, footerLabel
       <AvAppFooter labels={footerLabels} product={product} />
     </div>
   );
+}
+
+export function isActiveAppShellLink(href: string, currentPath?: string) {
+  if (!currentPath) {
+    return false;
+  }
+  const [hrefPath = "/"] = href.split("?", 1);
+  if (hrefPath === "/") {
+    return currentPath === "/";
+  }
+  return currentPath === hrefPath || currentPath.startsWith(`${hrefPath}/`);
 }
