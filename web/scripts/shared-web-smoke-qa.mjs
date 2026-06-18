@@ -31,6 +31,14 @@ export async function runSharedWebSmokeQa(config) {
         );
       }
 
+      if (normalizedConfig.signInRoutes.includes(route)) {
+        check(
+          failures,
+          normalized.includes(expected.signInRouteCopy ?? expected.signInCopy),
+          `${routeLabel} renders localized sign-in copy`
+        );
+      }
+
       if (normalizedConfig.protectedRoutes.includes(route)) {
         check(
           failures,
@@ -75,8 +83,10 @@ function normalizeConfig(config) {
   const locales = config.locales ?? defaultLocales;
   const routes = config.routes ?? ["/"];
   const publicRoute = config.publicRoute ?? "/";
-  const protectedRoutes = config.protectedRoutes ?? routes.filter((route) => route !== publicRoute);
+  const publicRoutes = config.publicRoutes ?? [publicRoute, ...(config.signInRoutes ?? [])];
+  const protectedRoutes = config.protectedRoutes ?? routes.filter((route) => !publicRoutes.includes(route));
   const ownRoutePrefixes = config.ownRoutePrefixes ?? routes;
+  const signInRoutes = config.signInRoutes ?? [];
 
   return {
     baseUrl,
@@ -89,6 +99,8 @@ function normalizeConfig(config) {
     productIdentity: config.productIdentity,
     protectedRoutes,
     publicRoute,
+    publicRoutes,
+    signInRoutes,
     routes
   };
 }
