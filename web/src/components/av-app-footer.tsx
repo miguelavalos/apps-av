@@ -33,7 +33,7 @@ export function AvAppFooter({ className, labels, product }: AvAppFooterProps) {
           {links.map((link) => (
             <a
               key={link.href}
-              className="rounded-sm outline-none transition hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
+              className="rounded-sm outline-none transition hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary focus-visible:ring-[3px] focus-visible:ring-primary/40"
               href={link.href}
               rel={link.external ? "noreferrer" : undefined}
               target={link.external ? "_blank" : undefined}
@@ -46,7 +46,7 @@ export function AvAppFooter({ className, labels, product }: AvAppFooterProps) {
           {appsAvLocales.map((locale) => (
             <button
               key={locale}
-              className={cn("cursor-pointer rounded-sm outline-none transition hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:ring-[3px] focus-visible:ring-ring/50", locale === activeLocale ? "font-semibold text-foreground" : "")}
+              className={cn("cursor-pointer rounded-sm outline-none transition hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary focus-visible:ring-[3px] focus-visible:ring-primary/40", locale === activeLocale ? "font-semibold text-foreground" : "")}
               type="button"
               onClick={() => setAppsAvLocale(locale)}
             >
