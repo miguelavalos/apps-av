@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { appsAvLocaleChangeEvent, appsAvLocaleCookieName, appsAvLocales, type AppsAvLocale } from "../config/product-config";
 
 export function useAppsAvLocale() {
-  const [locale, setLocaleState] = useState<AppsAvLocale>(() => getAppsAvLocale());
+  const [locale, setLocaleState] = useState<AppsAvLocale>("en");
 
   useEffect(() => {
     const handleLocaleChange = (event: Event) => {
