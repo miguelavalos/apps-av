@@ -7,4 +7,5 @@ export * from "./components/legal-link-list";
 export * from "./components/mobile-drawer-nav";
 export * from "./config/product-config";
 export * from "./lib/cn";
+export * from "./lib/locale";
 export * from "./providers/apps-av-web-provider";

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import type { AppsAvProductConfig, AppsAvProductLink } from "../config/product-config";
-import { AvAppFooter } from "./av-app-footer";
+import { AvAppFooter, type AvAppFooterLabels } from "./av-app-footer";
 import { MobileDrawerNav } from "./mobile-drawer-nav";
 
 export interface AppShellProps {
@@ -8,9 +8,10 @@ export interface AppShellProps {
   navLinks: AppsAvProductLink[];
   accountArea?: ReactNode;
   children: ReactNode;
+  footerLabels?: AvAppFooterLabels;
 }
 
-export function AppShell({ product, navLinks, accountArea, children }: AppShellProps) {
+export function AppShell({ product, navLinks, accountArea, children, footerLabels }: AppShellProps) {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-10 border-b bg-background/88 backdrop-blur">
@@ -55,7 +56,7 @@ export function AppShell({ product, navLinks, accountArea, children }: AppShellP
           <span>{product.assistant.name}</span>
         </a>
       ) : null}
-      <AvAppFooter product={product} />
+      <AvAppFooter labels={footerLabels} product={product} />
     </div>
   );
 }

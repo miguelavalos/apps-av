@@ -18,6 +18,8 @@ export const appsAvLocaleNames: Record<AppsAvLocale, string> = {
 
 export const appsAvLocaleCookieName = "preferred_locale";
 
+export const appsAvLocaleChangeEvent = "apps-av-locale-change";
+
 export interface AppsAvProductAssistant {
   href: string;
   imageSrc?: string;

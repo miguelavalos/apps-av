@@ -1,30 +1,29 @@
-import { useEffect, useState } from "react";
 import {
-  appsAvLocaleCookieName,
   appsAvLocaleNames,
   appsAvLocales,
-  type AppsAvLocale,
   type AppsAvProductConfig,
   type AppsAvProductLink
 } from "../config/product-config";
 import { cn } from "../lib/cn";
+import { setAppsAvLocale, useAppsAvLocale } from "../lib/locale";
+
+export interface AvAppFooterLabels {
+  deleteAccount?: string;
+  language?: string;
+  privacy?: string;
+  support?: string;
+  terms?: string;
+}
 
 export interface AvAppFooterProps {
   className?: string;
+  labels?: AvAppFooterLabels;
   product: AppsAvProductConfig;
 }
 
-export function AvAppFooter({ className, product }: AvAppFooterProps) {
-  const [activeLocale, setActiveLocale] = useState<AppsAvLocale>("en");
-  const links = getFooterLinks(product);
-
-  useEffect(() => {
-    const savedLocale = readLocaleCookie();
-    if (savedLocale) {
-      setActiveLocale(savedLocale);
-      document.documentElement.lang = savedLocale;
-    }
-  }, []);
+export function AvAppFooter({ className, labels, product }: AvAppFooterProps) {
+  const activeLocale = useAppsAvLocale();
+  const links = getFooterLinks(product, labels);
 
   return (
     <footer className={cn("border-t border-border/35 bg-background/82 px-4 py-3 text-xs text-muted-foreground backdrop-blur", className)}>
@@ -42,13 +41,13 @@ export function AvAppFooter({ className, product }: AvAppFooterProps) {
             </a>
           ))}
         </div>
-        <nav className="flex flex-wrap items-center gap-x-2 gap-y-1" aria-label="Language">
+        <nav className="flex flex-wrap items-center gap-x-2 gap-y-1" aria-label={labels?.language ?? "Language"}>
           {appsAvLocales.map((locale) => (
             <button
               key={locale}
               className={cn("transition hover:text-foreground", locale === activeLocale ? "font-semibold text-foreground" : "")}
               type="button"
-              onClick={() => selectLocale(locale, setActiveLocale)}
+              onClick={() => setAppsAvLocale(locale)}
             >
               {appsAvLocaleNames[locale]}
             </button>
@@ -59,21 +58,15 @@ export function AvAppFooter({ className, product }: AvAppFooterProps) {
   );
 }
 
-function getFooterLinks(product: AppsAvProductConfig) {
-  return [product.links.support, product.links.privacy, product.links.terms, product.links.deleteAccount].filter(Boolean) as AppsAvProductLink[];
+function getFooterLinks(product: AppsAvProductConfig, labels?: AvAppFooterLabels) {
+  return [
+    withLabel(product.links.support, labels?.support),
+    withLabel(product.links.privacy, labels?.privacy),
+    withLabel(product.links.terms, labels?.terms),
+    withLabel(product.links.deleteAccount, labels?.deleteAccount)
+  ].filter(Boolean) as AppsAvProductLink[];
 }
 
-function selectLocale(locale: AppsAvLocale, setActiveLocale: (locale: AppsAvLocale) => void) {
-  document.cookie = `${appsAvLocaleCookieName}=${locale}; path=/; max-age=31536000; SameSite=Lax`;
-  document.documentElement.lang = locale;
-  setActiveLocale(locale);
-}
-
-function readLocaleCookie() {
-  const cookie = document.cookie
-    .split("; ")
-    .find((entry) => entry.startsWith(`${appsAvLocaleCookieName}=`))
-    ?.split("=")[1];
-
-  return appsAvLocales.includes(cookie as AppsAvLocale) ? (cookie as AppsAvLocale) : undefined;
+function withLabel(link: AppsAvProductLink | undefined, label: string | undefined) {
+  return link && label ? { ...link, label } : link;
 }
