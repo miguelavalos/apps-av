@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { appsAvLocaleChangeEvent, appsAvLocaleCookieName, appsAvLocales, type AppsAvLocale } from "../config/product-config";
 
 export function useAppsAvLocale() {
-  const [locale, setLocaleState] = useState<AppsAvLocale>(() => getAppsAvLocale());
+  const [locale, setLocaleState] = useState<AppsAvLocale>("en");
 
   useEffect(() => {
     const handleLocaleChange = (event: Event) => {
@@ -13,7 +13,9 @@ export function useAppsAvLocale() {
     };
 
     window.addEventListener(appsAvLocaleChangeEvent, handleLocaleChange);
-    setLocaleState(getAppsAvLocale());
+    const locale = getAppsAvLocale();
+    applyAppsAvLocale(locale);
+    setLocaleState(locale);
 
     return () => window.removeEventListener(appsAvLocaleChangeEvent, handleLocaleChange);
   }, []);
@@ -22,9 +24,13 @@ export function useAppsAvLocale() {
 }
 
 export function setAppsAvLocale(locale: AppsAvLocale) {
+  applyAppsAvLocale(locale);
+  window.dispatchEvent(new CustomEvent(appsAvLocaleChangeEvent, { detail: locale }));
+}
+
+function applyAppsAvLocale(locale: AppsAvLocale) {
   document.cookie = `${appsAvLocaleCookieName}=${locale}; path=/; max-age=31536000; SameSite=Lax`;
   document.documentElement.lang = locale;
-  window.dispatchEvent(new CustomEvent(appsAvLocaleChangeEvent, { detail: locale }));
 }
 
 export function getAppsAvLocale() {
@@ -33,11 +39,7 @@ export function getAppsAvLocale() {
   }
 
   const requestedLocale = getRequestedLocale();
-
-  if (requestedLocale) {
-    setAppsAvLocale(requestedLocale);
-    return requestedLocale;
-  }
+  if (requestedLocale) return requestedLocale;
 
   const cookie = document.cookie
     .split("; ")
