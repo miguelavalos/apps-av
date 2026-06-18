@@ -13,6 +13,7 @@ export interface AppShellProps {
 }
 
 export interface AppShellLabels {
+  assistant?: string;
   home?: string;
   mobileNavigation?: string;
   openNavigation?: string;
@@ -52,7 +53,7 @@ export function AppShell({ product, navLinks, accountArea, children, footerLabel
         <a
           className="fixed bottom-5 right-4 z-20 flex items-center gap-2 rounded-full border bg-background/92 px-3 py-2 text-sm font-semibold shadow-lg shadow-black/10 backdrop-blur transition hover:-translate-y-0.5 hover:bg-background"
           href={product.assistant.href}
-          aria-label={product.assistant.label}
+          aria-label={labels?.assistant ?? product.assistant.label}
         >
           {product.assistant.imageSrc ? (
             <img
