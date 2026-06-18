@@ -18,4 +18,6 @@ Apps AV commercial web was checked as part of the AV web visual audit.
 - Desktop and mobile browser QA passed.
 - Localized commercial headlines were polished.
 - Footer links to AV-owned surfaces preserve language.
+- The shared app shell logo now uses the localized Home nav link when a product
+  app provides one, so app-owned logo navigation preserves the active language.
 - Build and preview smoke checks passed during the audit.
