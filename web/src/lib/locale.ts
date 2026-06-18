@@ -1,8 +1,14 @@
-import { useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { appsAvLocaleChangeEvent, appsAvLocaleCookieName, appsAvLocales, type AppsAvLocale } from "../config/product-config";
 
+export const AppsAvLocaleContext = createContext<AppsAvLocale>("en");
+
 export function useAppsAvLocale() {
-  const [locale, setLocaleState] = useState<AppsAvLocale>("en");
+  return useContext(AppsAvLocaleContext);
+}
+
+export function useManagedAppsAvLocale(initialLocale: AppsAvLocale = "en") {
+  const [locale, setLocaleState] = useState<AppsAvLocale>(initialLocale);
 
   useEffect(() => {
     const handleLocaleChange = (event: Event) => {
@@ -13,12 +19,12 @@ export function useAppsAvLocale() {
     };
 
     window.addEventListener(appsAvLocaleChangeEvent, handleLocaleChange);
-    const locale = getAppsAvLocale();
+    const locale = getAppsAvLocale(initialLocale);
     applyAppsAvLocale(locale);
     setLocaleState(locale);
 
     return () => window.removeEventListener(appsAvLocaleChangeEvent, handleLocaleChange);
-  }, []);
+  }, [initialLocale]);
 
   return locale;
 }
@@ -33,9 +39,9 @@ function applyAppsAvLocale(locale: AppsAvLocale) {
   document.documentElement.lang = locale;
 }
 
-export function getAppsAvLocale() {
+export function getAppsAvLocale(fallbackLocale: AppsAvLocale = "en") {
   if (typeof document === "undefined") {
-    return "en";
+    return fallbackLocale;
   }
 
   const requestedLocale = getRequestedLocale();
@@ -46,7 +52,13 @@ export function getAppsAvLocale() {
     .find((entry) => entry.startsWith(`${appsAvLocaleCookieName}=`))
     ?.split("=")[1];
 
-  return appsAvLocales.includes(cookie as AppsAvLocale) ? (cookie as AppsAvLocale) : "en";
+  return appsAvLocales.includes(cookie as AppsAvLocale) ? (cookie as AppsAvLocale) : fallbackLocale;
+}
+
+export function getAppsAvLocaleFromSearch(search: string | undefined) {
+  if (!search) return "en";
+  const locale = new URLSearchParams(search).get("lang");
+  return appsAvLocales.includes(locale as AppsAvLocale) ? (locale as AppsAvLocale) : "en";
 }
 
 function getRequestedLocale() {
