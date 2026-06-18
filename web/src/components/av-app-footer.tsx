@@ -30,7 +30,6 @@ export function AvAppFooter({ className, product }: AvAppFooterProps) {
     <footer className={cn("border-t border-border/35 bg-background/82 px-4 py-3 text-xs text-muted-foreground backdrop-blur", className)}>
       <div className="mx-auto flex max-w-6xl flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-          <span>© {new Date().getFullYear()} Avalsyst</span>
           {links.map((link) => (
             <a
               key={link.href}
