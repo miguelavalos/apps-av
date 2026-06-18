@@ -1,4 +1,5 @@
 export * from "./components/app-shell";
+export * from "./components/account-settings-sections";
 export * from "./components/auth-skeleton";
 export * from "./components/av-app-footer";
 export * from "./components/empty-state";
@@ -9,4 +10,5 @@ export * from "./components/settings-profile";
 export * from "./config/product-config";
 export * from "./lib/cn";
 export * from "./lib/locale";
+export * from "./lib/theme-preference";
 export * from "./providers/apps-av-web-provider";
