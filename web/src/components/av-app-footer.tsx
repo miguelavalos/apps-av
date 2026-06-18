@@ -45,7 +45,7 @@ export function AvAppFooter({ className, labels, product }: AvAppFooterProps) {
           {appsAvLocales.map((locale) => (
             <button
               key={locale}
-              className={cn("transition hover:text-foreground", locale === activeLocale ? "font-semibold text-foreground" : "")}
+              className={cn("cursor-pointer transition hover:text-foreground", locale === activeLocale ? "font-semibold text-foreground" : "")}
               type="button"
               onClick={() => setAppsAvLocale(locale)}
             >
