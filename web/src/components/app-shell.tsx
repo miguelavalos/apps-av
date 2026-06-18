@@ -9,14 +9,22 @@ export interface AppShellProps {
   accountArea?: ReactNode;
   children: ReactNode;
   footerLabels?: AvAppFooterLabels;
+  labels?: AppShellLabels;
 }
 
-export function AppShell({ product, navLinks, accountArea, children, footerLabels }: AppShellProps) {
+export interface AppShellLabels {
+  home?: string;
+  mobileNavigation?: string;
+  openNavigation?: string;
+  primaryNavigation?: string;
+}
+
+export function AppShell({ product, navLinks, accountArea, children, footerLabels, labels }: AppShellProps) {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-10 border-b bg-background/88 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-          <a className="flex min-w-0 items-center gap-3" href="/" aria-label={`${product.name} home`}>
+          <a className="flex min-w-0 items-center gap-3" href="/" aria-label={labels?.home ?? `${product.name} home`}>
             {product.logoSrc ? (
               <img alt="" className="h-9 w-auto max-w-36 object-contain" src={product.logoSrc} />
             ) : (
@@ -26,7 +34,7 @@ export function AppShell({ product, navLinks, accountArea, children, footerLabel
               </>
             )}
           </a>
-          <nav className="hidden items-center gap-1 md:flex" aria-label="Primary navigation">
+          <nav className="hidden items-center gap-1 md:flex" aria-label={labels?.primaryNavigation ?? "Primary navigation"}>
             {navLinks.map((link) => (
               <a key={link.href} className="rounded-full px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground" href={link.href}>
                 {link.label}
@@ -35,7 +43,7 @@ export function AppShell({ product, navLinks, accountArea, children, footerLabel
           </nav>
           <div className="flex items-center gap-3">
             {accountArea}
-            <MobileDrawerNav links={navLinks} />
+            <MobileDrawerNav label={labels?.mobileNavigation} links={navLinks} triggerLabel={labels?.openNavigation} />
           </div>
         </div>
       </header>

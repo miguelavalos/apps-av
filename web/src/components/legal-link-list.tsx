@@ -1,12 +1,13 @@
 import type { AppsAvProductLink } from "../config/product-config";
 
 export interface LegalLinkListProps {
+  ariaLabel?: string;
   links: AppsAvProductLink[];
 }
 
-export function LegalLinkList({ links }: LegalLinkListProps) {
+export function LegalLinkList({ ariaLabel = "Legal and support links", links }: LegalLinkListProps) {
   return (
-    <nav aria-label="Legal and support links" className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
+    <nav aria-label={ariaLabel} className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
       {links.map((link) => (
         <a
           key={link.href}
