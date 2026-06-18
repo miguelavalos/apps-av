@@ -29,11 +29,11 @@ export function AvAppFooter({ className, labels, product }: AvAppFooterProps) {
   return (
     <footer className={cn("border-t border-border/35 bg-background/82 px-4 py-3 text-xs text-muted-foreground backdrop-blur", className)}>
       <div className="mx-auto flex max-w-6xl flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+        <div className="flex flex-wrap items-center gap-1">
           {links.map((link) => (
             <a
               key={link.href}
-              className="rounded-sm outline-none transition hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary focus-visible:ring-2 focus-visible:ring-primary/45"
+              className="inline-flex min-h-10 items-center rounded-sm px-2 outline-none transition hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary focus-visible:ring-2 focus-visible:ring-primary/45"
               href={link.href}
               rel={link.external ? "noreferrer" : undefined}
               target={link.external ? "_blank" : undefined}
@@ -42,11 +42,11 @@ export function AvAppFooter({ className, labels, product }: AvAppFooterProps) {
             </a>
           ))}
         </div>
-        <nav className="flex flex-wrap items-center gap-x-2 gap-y-1" aria-label={labels?.language ?? "Language"}>
+        <nav className="flex flex-wrap items-center gap-1" aria-label={labels?.language ?? "Language"}>
           {appsAvLocales.map((locale) => (
             <button
               key={locale}
-              className={cn("cursor-pointer rounded-sm outline-none transition hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary focus-visible:ring-2 focus-visible:ring-primary/45", locale === activeLocale ? "font-semibold text-foreground" : "")}
+              className={cn("inline-flex min-h-10 cursor-pointer items-center rounded-sm px-2 outline-none transition hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary focus-visible:ring-2 focus-visible:ring-primary/45", locale === activeLocale ? "font-semibold text-foreground" : "")}
               type="button"
               onClick={() => setAppsAvLocale(locale)}
             >
