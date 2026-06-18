@@ -82,7 +82,7 @@ export function isActiveAppShellLink(href: string, currentPath?: string) {
   if (!currentPath) {
     return false;
   }
-  const [hrefPath = "/"] = href.split("?", 1);
+  const hrefPath = href.includes("?") ? href.slice(0, href.indexOf("?")) : href;
   if (hrefPath === "/") {
     return currentPath === "/";
   }
