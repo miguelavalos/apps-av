@@ -21,11 +21,13 @@ export interface AppShellLabels {
 }
 
 export function AppShell({ product, navLinks, accountArea, children, footerLabels, labels }: AppShellProps) {
+  const homeHref = navLinks[0]?.href ?? "/";
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-10 border-b bg-background/88 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-          <a className="flex min-w-0 items-center gap-3" href="/" aria-label={labels?.home ?? `${product.name} home`}>
+          <a className="flex min-w-0 items-center gap-3" href={homeHref} aria-label={labels?.home ?? `${product.name} home`}>
             {product.logoSrc ? (
               <img alt="" className="h-9 w-auto max-w-36 object-contain" src={product.logoSrc} />
             ) : (
