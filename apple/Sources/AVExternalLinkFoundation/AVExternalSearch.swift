@@ -2,8 +2,15 @@ import Foundation
 
 public enum AVExternalSearchEngine: String, CaseIterable, Identifiable, Sendable {
     case google
-    case duckDuckGo = "duckduckgo"
     case bing
+    case yahoo
+    case duckDuckGo = "duckduckgo"
+    case yandex
+    case baidu
+    case brave
+    case ecosia
+    case startpage
+    case qwant
 
     public var id: String { rawValue }
 
@@ -33,10 +40,24 @@ public enum AVExternalSearchURL {
         switch engine {
         case .google:
             return url(base: "https://www.google.com/search", queryItemName: "q", query: normalizedQuery)
-        case .duckDuckGo:
-            return url(base: "https://duckduckgo.com/", queryItemName: "q", query: normalizedQuery)
         case .bing:
             return url(base: "https://www.bing.com/search", queryItemName: "q", query: normalizedQuery)
+        case .yahoo:
+            return url(base: "https://search.yahoo.com/search", queryItemName: "p", query: normalizedQuery)
+        case .duckDuckGo:
+            return url(base: "https://duckduckgo.com/", queryItemName: "q", query: normalizedQuery)
+        case .yandex:
+            return url(base: "https://yandex.com/search/", queryItemName: "text", query: normalizedQuery)
+        case .baidu:
+            return url(base: "https://www.baidu.com/s", queryItemName: "wd", query: normalizedQuery)
+        case .brave:
+            return url(base: "https://search.brave.com/search", queryItemName: "q", query: normalizedQuery)
+        case .ecosia:
+            return url(base: "https://www.ecosia.org/search", queryItemName: "q", query: normalizedQuery)
+        case .startpage:
+            return url(base: "https://www.startpage.com/sp/search", queryItemName: "query", query: normalizedQuery)
+        case .qwant:
+            return url(base: "https://www.qwant.com/", queryItemName: "q", query: normalizedQuery)
         }
     }
 

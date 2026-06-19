@@ -1,4 +1,15 @@
-export const appsAvExternalSearchEngines = ["google", "duckduckgo", "bing"] as const;
+export const appsAvExternalSearchEngines = [
+  "google",
+  "bing",
+  "yahoo",
+  "duckduckgo",
+  "yandex",
+  "baidu",
+  "brave",
+  "ecosia",
+  "startpage",
+  "qwant",
+] as const;
 
 export type AppsAvExternalSearchEngine = (typeof appsAvExternalSearchEngines)[number];
 
@@ -8,8 +19,9 @@ export type AppsAvExternalSearchUrlOptions = {
 };
 
 export function normalizeAppsAvExternalSearchEngine(engine: AppsAvExternalSearchEngine | string | null | undefined): AppsAvExternalSearchEngine {
-  if (engine === "duckduckgo" || engine === "bing") {
-    return engine;
+  const candidate = engine as AppsAvExternalSearchEngine | undefined;
+  if (candidate && appsAvExternalSearchEngines.includes(candidate)) {
+    return candidate;
   }
   return "google";
 }
@@ -23,12 +35,26 @@ export function appsAvExternalSearchUrl({ engine, query }: AppsAvExternalSearchU
   const selectedEngine = normalizeAppsAvExternalSearchEngine(engine);
   const encodedQuery = encodeURIComponent(normalizedQuery);
   switch (selectedEngine) {
+    case "baidu":
+      return `https://www.baidu.com/s?wd=${encodedQuery}`;
     case "bing":
       return `https://www.bing.com/search?q=${encodedQuery}`;
+    case "brave":
+      return `https://search.brave.com/search?q=${encodedQuery}`;
     case "duckduckgo":
       return `https://duckduckgo.com/?q=${encodedQuery}`;
+    case "ecosia":
+      return `https://www.ecosia.org/search?q=${encodedQuery}`;
     case "google":
       return `https://www.google.com/search?q=${encodedQuery}`;
+    case "qwant":
+      return `https://www.qwant.com/?q=${encodedQuery}`;
+    case "startpage":
+      return `https://www.startpage.com/sp/search?query=${encodedQuery}`;
+    case "yahoo":
+      return `https://search.yahoo.com/search?p=${encodedQuery}`;
+    case "yandex":
+      return `https://yandex.com/search/?text=${encodedQuery}`;
   }
 }
 
