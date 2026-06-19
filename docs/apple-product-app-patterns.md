@@ -85,6 +85,8 @@ Product apps should use these packages before writing local equivalents:
 - `AVLaunchFoundation`: shared splash and launch-transition primitives.
 - `AVSettingsFoundation`: settings, account, help/legal, destructive action,
   auth/onboarding, rows, cards, and profile surfaces.
+- `AVExternalLinkFoundation`: shared external search engines, external web-open
+  modes, URL builders, and default resolution for app-owned link preferences.
 - `AVAviFoundation`: shared Avi/assistant visual primitives.
 - `AVPaywallFoundation`: paywall, plan, upgrade prompt, and benefit surfaces.
 - `AVHaptics`: semantic haptics for common app events.
@@ -94,6 +96,24 @@ Product apps should use these packages before writing local equivalents:
 Do not reimplement Clerk buttons, Account screens, footer selection, settings
 cards, onboarding panels, paywall cards, or Avi chrome in a product app unless
 the shared package is missing a required extension point.
+
+## External Links And Search
+
+Product apps should use the shared external-link helpers instead of maintaining
+parallel search-engine lists or URL builders.
+
+- Apple clients use `AVExternalLinkFoundation` for
+  `AVExternalSearchEngine`, `AVExternalWebOpenMode`, and
+  `AVExternalSearchURL`.
+- Web clients use `@avalsys/apps-av-web` for
+  `appsAvExternalSearchEngines`, `normalizeAppsAvExternalSearchEngine`,
+  `appsAvExternalSearchUrl`, and `appsAvImdbSearchUrl`.
+- The suite default search engine is Google. Product apps may expose a local
+  user preference over the shared engine list when external public-info,
+  lyrics, title, station, or catalog lookups are part of the product flow.
+- The suite default web-open mode on Apple clients is in-app. Product apps may
+  expose an in-app versus system-browser preference when the app has embedded
+  web presentation.
 
 ## Bootstrap Checklist
 
