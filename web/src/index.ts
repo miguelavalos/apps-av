@@ -11,6 +11,7 @@ export * from "./components/settings-profile";
 export * from "./components/compact-sync-status";
 export * from "./config/product-config";
 export * from "./lib/cn";
+export * from "./lib/external-search";
 export * from "./lib/locale";
 export * from "./lib/localized-links";
 export * from "./lib/theme-preference";
