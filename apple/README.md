@@ -281,7 +281,7 @@ enum ProductAppExperience {
             headerLogoName: "ProductHeaderWordmark",
             splashLogoName: "ProductSplashLogo",
             splashHeroName: "ProductSplashHero",
-            onboardingBrandName: "ProductAuthWordmark",
+            onboardingBrandName: "ProductOnboardingWordmark",
             onboardingHeroName: "ProductOnboardingHero",
             onboardingCTACompanionName: "ProductAviOnboardingCTA",
             onboardingAuthPanelCompanionName: "ProductAviLoginSheetPeek",
@@ -414,6 +414,12 @@ AVAppShellStandardScaffold(
 new apps. It reads logo and Avi companion assets from
 `AVCommonAppExperience.visualAssets`, while the product keeps provider actions,
 legal copy, login/guest policy, and product hero artwork local:
+
+Use a dedicated onboarding wordmark asset when the product wordmark has
+light/dark variants. The onboarding surface should normally keep the light
+product wordmark in dark mode so the first-run brand treatment remains
+consistent over the dimmed hero artwork. Header chrome can still use its normal
+light/dark wordmark pair.
 
 ```swift
 AVAuthConfiguredOnboardingScreen(
