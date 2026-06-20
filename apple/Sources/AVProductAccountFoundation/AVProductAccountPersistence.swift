@@ -25,3 +25,27 @@ public actor AVInMemoryProductAccountPersistence: AVProductAccountPersistence {
         storedUser = nil
     }
 }
+
+public struct AVUserDefaultsProductAccountPersistence: AVProductAccountPersistence, @unchecked Sendable {
+    private let userDefaults: UserDefaults
+    private let key: String
+
+    public init(userDefaults: UserDefaults = .standard, key: String) {
+        self.userDefaults = userDefaults
+        self.key = key
+    }
+
+    public func loadLastKnownUser() async -> AVProductAccountUser? {
+        guard let data = userDefaults.data(forKey: key) else { return nil }
+        return try? JSONDecoder().decode(AVProductAccountUser.self, from: data)
+    }
+
+    public func saveLastKnownUser(_ user: AVProductAccountUser) async throws {
+        let data = try JSONEncoder().encode(user)
+        userDefaults.set(data, forKey: key)
+    }
+
+    public func clearLastKnownUser() async throws {
+        userDefaults.removeObject(forKey: key)
+    }
+}
