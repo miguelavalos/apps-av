@@ -314,7 +314,30 @@ Common settings stay in this order across apps:
 2. Appearance
 
 Put product-only settings in a separate product preferences card after common
-settings.
+settings. Product apps must not insert product-only controls between Language
+and Appearance.
+
+Use this card order for Settings:
+
+1. App preferences: language, appearance, and only truly common app controls.
+2. Product preferences: product-specific behavior, plus external web/search
+   controls when those links are part of the product workflow.
+3. On this device: local-only data, storage, local history, downloads, drafts,
+   or device policy.
+4. Help and legal: open-source/project links, support, privacy, terms, and the
+   account deletion entry point.
+
+Use this card order for Account:
+
+1. Account summary: local/guest state, signed-in identity, email when present,
+   and access/plan summary.
+2. Product access: Pro, credits, usage limits, billing handoff, restore, or
+   subscription details.
+3. Cloud sync or account continuity, only when the current access mode can use
+   it. If sync is product-specific, keep product-specific states such as
+   pending, conflict, retry, keep-device, or last activity instead of forcing
+   another app's state model.
+4. Account safety, shown only when an account is connected.
 
 Account screens should:
 
@@ -324,6 +347,41 @@ Account screens should:
 - route account deletion through the shared Account AV path;
 - keep product Pro, credits, usage limits, and subscription state in product
   sections below shared account state.
+
+Help and legal should use the shared settings section component when available.
+The visible order should stay project/source, support, privacy, terms, delete
+account. Product apps with native account deletion should open the native guarded
+flow for the delete-account row and keep the public delete-account URL as the
+fallback/support route.
+
+Local storage management should match the product data model. Apps with several
+local categories can expose granular cleanup; apps with one local collection
+should keep a single guarded destructive action. Local deletion copy must say
+that Account AV account data is separate unless the action really calls account
+deletion.
+
+External links should follow the Tune AV/Series AV pattern:
+
+- provide an in-app versus system browser setting when the product opens public
+  information, source, help, or search links;
+- provide the common search engine list when the product has external public
+  search/source links;
+- localize the link settings in every shipped locale.
+
+Paywalls and product access cards should keep the primary action disabled while
+purchase, restore, or subscription reconciliation is in progress. Show a
+specific status such as "refreshing access" rather than leaving a stale purchase
+CTA enabled.
+
+Localization rules for these shared surfaces:
+
+- all Settings, Account, Help/Legal, Cloud sync, local storage, Pro/paywall, and
+  account deletion copy must live in `Localizable.strings`;
+- every shipped locale must include the same keys as English;
+- avoid mixed-language labels such as untranslated "sync", "cloud", "guest",
+  or "free" inside localized copy unless the term is intentionally product
+  branding;
+- run `plutil -lint` for all shipped `.lproj/Localizable.strings`.
 
 Onboarding and auth panels must allow localized legal text and long subtitles
 to wrap vertically. Avoid fixed-height text containers for terms/privacy copy,
@@ -405,6 +463,16 @@ Before calling a product app aligned with Apps AV, verify:
 - sign-out clears local account/access/credit/subscription state;
 - Settings and Account do not select Home in footer chrome;
 - Settings common controls are Language then Appearance;
+- Settings order is App preferences, product preferences, On this device,
+  Help and legal;
+- Account order is account summary, product access, cloud/account continuity
+  when available, Account safety;
+- Help and legal keeps project/source, support, privacy, terms, delete account;
+- local storage copy distinguishes device-local deletion from Account AV account
+  deletion;
+- account deletion uses the Account AV guarded/native flow or the shared Account
+  AV delete route;
+- paywalls disable purchase CTAs while access is being refreshed;
 - shared shell/settings/account/paywall/Avi primitives are used where available;
 - native launch, splash, and onboarding appear in the expected first-run order;
 - launch uses the product logo and icon, not a copied app asset;
