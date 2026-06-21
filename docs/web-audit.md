@@ -1,6 +1,6 @@
 # Apps AV Web Audit
 
-Status: current as of 2026-06-18.
+Status: current as of 2026-06-21.
 
 Apps AV commercial web was checked as part of the AV web visual audit.
 Series AV is now the first production reference for the shared Apps AV web
@@ -39,4 +39,10 @@ package.
   after product web deploy, check Account AV and product API CORS from the
   production app origin before diagnosing browser `Failed to fetch` as a
   frontend issue.
+- Series AV, Tune AV, Animate AV, and Moments AV now share the app-shell Avi
+  pattern: Avi is exposed through product config in top chrome/mobile nav, and
+  product app chrome does not render Clerk `UserButton` or provider avatars.
+- Destructive product actions now have localized confirmation precedents across
+  the audited apps: Series library deletion, Tune music discovery removal,
+  Animate downloaded video/job deletion, and Moments workspace deletion.
 - Build and preview smoke checks passed during the audit.

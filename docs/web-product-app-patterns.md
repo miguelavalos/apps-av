@@ -100,6 +100,33 @@ This mirrors the Apple app pattern where Avi is part of the configured app
 experience and appears as contextual content when useful, without covering
 primary actions or scroll content.
 
+## Destructive Actions Pattern
+
+Product web apps must treat deletion, archive removal, local data clearing, and
+remote workflow cancellation as sensitive actions.
+
+Use this pattern across product apps:
+
+1. Keep the action label and confirmation copy in the product's localized text
+   module.
+2. Confirm before mutating browser storage, product API state, backend workflow
+   state, or account-owned product data.
+3. Make the confirmation copy specific about scope: local browser copy, active
+   workflow, downloaded file, library entry, or backend-owned media/artifacts.
+4. Do not use a generic `Delete?` prompt when source media, generated artifacts,
+   credits, sync state, or backend jobs are involved.
+5. Add a focused source-guard or unit test beside the route/component when a
+   destructive action is introduced.
+
+Current product precedents:
+
+- Series AV confirms library entry deletion from detail and library rows.
+- Tune AV confirms music discovery removal and local data clearing.
+- Animate AV confirms downloaded video clearing, local job clearing, and active
+  job deletion.
+- Moments AV confirms Moment workspace deletion before requesting source media
+  and generated artifact deletion.
+
 ## Product Screen Primitives
 
 Use these shared primitives before creating product-local UI:
