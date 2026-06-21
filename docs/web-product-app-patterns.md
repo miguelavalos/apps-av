@@ -86,11 +86,15 @@ overlay.
 Use this web pattern across product apps:
 
 1. Product configs expose `assistant` when the app has an Avi route.
-2. `AppShell` renders the assistant in the top chrome on desktop.
+2. `AppShell` renders the assistant as the right-side top chrome action on
+   desktop.
 3. Mobile places the assistant in the top navigation drawer.
 4. Product pages can add a contextual assistant card when Avi is part of the
    current workflow.
 5. Do not add product-local fixed bottom assistant buttons.
+6. Do not render Clerk `UserButton`, provider avatars, or account avatars in
+   product app chrome. Account access belongs in the normal navigation and
+   account/settings routes; Clerk remains an Account AV implementation detail.
 
 This mirrors the Apple app pattern where Avi is part of the configured app
 experience and appears as contextual content when useful, without covering
