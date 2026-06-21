@@ -41,5 +41,6 @@ export interface AppsAvProductConfig {
     terms?: AppsAvProductLink;
     deleteAccount?: AppsAvProductLink;
     suite?: AppsAvProductLink;
+    website?: AppsAvProductLink;
   };
 }

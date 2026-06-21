@@ -14,6 +14,7 @@ export interface AvAppFooterLabels {
   privacy?: string;
   support?: string;
   terms?: string;
+  website?: string;
 }
 
 export interface AvAppFooterProps {
@@ -62,6 +63,7 @@ export function AvAppFooter({ className, labels, product }: AvAppFooterProps) {
 function getFooterLinks(product: AppsAvProductConfig, labels: AvAppFooterLabels | undefined, locale: AppsAvLocale) {
   return [
     withLocalizedLink(product.links.support, labels?.support, locale),
+    withLocalizedLink(product.links.website, labels?.website, locale),
     withLocalizedLink(product.links.privacy, labels?.privacy, locale),
     withLocalizedLink(product.links.terms, labels?.terms, locale),
     withLocalizedLink(product.links.deleteAccount, labels?.deleteAccount, locale)
