@@ -6,7 +6,6 @@ import { MobileDrawerNav } from "./mobile-drawer-nav";
 export interface AppShellProps {
   product: AppsAvProductConfig;
   navLinks: AppsAvProductLink[];
-  accountArea?: ReactNode;
   children: ReactNode;
   currentPath?: string;
   footerLabels?: AvAppFooterLabels;
@@ -21,7 +20,7 @@ export interface AppShellLabels {
   primaryNavigation?: string;
 }
 
-export function AppShell({ product, navLinks, accountArea, children, currentPath, footerLabels, labels }: AppShellProps) {
+export function AppShell({ product, navLinks, children, currentPath, footerLabels, labels }: AppShellProps) {
   const homeHref = navLinks[0]?.href ?? "/";
   const assistantLabel = labels?.assistant ?? product.assistant?.label;
 
@@ -69,7 +68,6 @@ export function AppShell({ product, navLinks, accountArea, children, currentPath
                 <span>{product.assistant.name}</span>
               </a>
             ) : null}
-            {accountArea}
             <MobileDrawerNav assistant={product.assistant} assistantLabel={assistantLabel} currentPath={currentPath} label={labels?.mobileNavigation} links={navLinks} triggerLabel={labels?.openNavigation} />
           </div>
         </div>
