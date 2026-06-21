@@ -55,7 +55,7 @@ export function AppShell({ product, navLinks, children, currentPath, footerLabel
               <a
                 aria-current={isActiveAppShellLink(product.assistant.href, currentPath) ? "page" : undefined}
                 aria-label={assistantLabel}
-                className={isActiveAppShellLink(product.assistant.href, currentPath) ? "hidden items-center gap-2 rounded-full bg-muted px-2.5 py-1.5 text-sm font-semibold text-foreground sm:inline-flex" : "hidden items-center gap-2 rounded-full px-2.5 py-1.5 text-sm font-semibold text-muted-foreground transition hover:bg-muted hover:text-foreground sm:inline-flex"}
+                className={isActiveAppShellLink(product.assistant.href, currentPath) ? "hidden items-center justify-center rounded-full bg-muted p-1.5 text-sm font-semibold text-foreground sm:inline-flex" : "hidden items-center justify-center rounded-full p-1.5 text-sm font-semibold text-muted-foreground transition hover:bg-muted hover:text-foreground sm:inline-flex"}
                 href={product.assistant.href}
               >
                 {product.assistant.imageSrc ? (
@@ -64,8 +64,9 @@ export function AppShell({ product, navLinks, children, currentPath, footerLabel
                     className="size-8 rounded-full border object-cover object-[78%_68%]"
                     src={product.assistant.imageSrc}
                   />
-                ) : null}
-                <span>{product.assistant.name}</span>
+                ) : (
+                  <span>{product.assistant.name}</span>
+                )}
               </a>
             ) : null}
             <MobileDrawerNav assistant={product.assistant} assistantLabel={assistantLabel} currentPath={currentPath} label={labels?.mobileNavigation} links={navLinks} triggerLabel={labels?.openNavigation} />
