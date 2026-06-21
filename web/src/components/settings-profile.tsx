@@ -13,9 +13,9 @@ export function SettingsProfileScaffold({ children, header, heroClassName, subti
   return (
     <section className="grid gap-6">
       {header}
-      <div className={cn("rounded-lg border border-[#d7c494] bg-[#fff8df]/88 p-6 shadow-lg shadow-[#172f5c]/8 sm:p-8", heroClassName)}>
-        <h1 className="text-4xl font-semibold leading-tight text-[#112a55]">{title}</h1>
-        <p className="mt-3 max-w-2xl text-sm leading-6 text-[#53617a]">{subtitle}</p>
+      <div className={cn("px-1", heroClassName)}>
+        <h1 className="text-3xl font-bold leading-tight text-[#112a55] sm:text-[34px]">{title}</h1>
+        <p className="mt-2 max-w-2xl text-base font-medium leading-7 text-[#53617a]">{subtitle}</p>
       </div>
       <div className="grid gap-4">{children}</div>
     </section>
@@ -32,12 +32,12 @@ export interface SettingsSectionCardProps {
 
 export function SettingsSectionCard({ children, className, spacing = "normal", subtitle, title }: SettingsSectionCardProps) {
   return (
-    <section className={cn("rounded-lg border border-[#d7c494] bg-[#fff8df]/88 p-5 text-[#112a55] shadow-sm shadow-[#172f5c]/6", className)}>
+    <section className={cn("rounded-lg border border-[#d7c494] bg-[#fff8df]/88 p-[22px] text-[#112a55] shadow-sm shadow-[#172f5c]/6", className)}>
       <div>
-        <h2 className="text-lg font-semibold">{title}</h2>
-        <p className="mt-1 text-sm leading-6 text-[#53617a]">{subtitle}</p>
+        <h2 className="text-xl font-bold">{title}</h2>
+        <p className="mt-1.5 text-sm font-medium leading-6 text-[#53617a]">{subtitle}</p>
       </div>
-      <div className={cn("mt-4 grid", spacing === "compact" ? "gap-2" : "gap-3")}>{children}</div>
+      <div className={cn("mt-[18px] grid", spacing === "compact" ? "gap-2.5" : "gap-3")}>{children}</div>
     </section>
   );
 }
@@ -51,11 +51,11 @@ export interface SettingsInfoRowProps {
 
 export function SettingsInfoRow({ action, detail, icon, title }: SettingsInfoRowProps) {
   return (
-    <div className="flex items-start gap-3 rounded-lg border border-[#d7c494] bg-white/55 p-4">
-      <div className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-full bg-[#dff2ce] text-[#3d7f24]">{icon}</div>
+    <div className="flex items-start gap-3">
+      <div className="mt-0.5 flex w-[22px] shrink-0 justify-center text-[#3d7f24]">{icon}</div>
       <div className="min-w-0 flex-1">
         <p className="text-sm font-semibold text-[#112a55]">{title}</p>
-        <p className="mt-1 text-sm leading-6 text-[#53617a]">{detail}</p>
+        <p className="mt-1 text-[13px] font-medium leading-5 text-[#53617a]">{detail}</p>
         {action ? <div className="mt-3">{action}</div> : null}
       </div>
     </div>
@@ -72,7 +72,7 @@ export function SettingsActionRow({ disabled, onAction, ...row }: SettingsAction
     <button
       type="button"
       disabled={disabled}
-      className="text-left disabled:cursor-not-allowed disabled:opacity-50"
+      className="rounded-lg border border-[#d7c494] bg-white/55 p-4 text-left transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-50"
       onClick={onAction}
     >
       <SettingsInfoRow {...row} />
@@ -94,7 +94,7 @@ export function SettingsButton({ children, disabled, loading, onClick, tone = "s
       type="button"
       disabled={disabled || loading}
       className={cn(
-        "inline-flex h-10 items-center justify-center gap-2 rounded-full px-4 text-sm font-semibold transition disabled:pointer-events-none disabled:opacity-60",
+        "inline-flex h-12 w-full items-center justify-center gap-2 rounded-full px-5 text-sm font-bold transition disabled:pointer-events-none disabled:opacity-60",
         tone === "primary" && "bg-[#112a55] text-white hover:bg-[#19396f]",
         tone === "secondary" && "border border-[#c8ad72] bg-white/60 text-[#112a55] hover:bg-white",
         tone === "danger" && "border border-red-200 bg-white/60 text-red-700 hover:bg-red-50"
@@ -120,14 +120,14 @@ export interface SettingsOptionButtonGroupProps {
 
 export function SettingsOptionButtonGroup({ onSelect, options, selectedId }: SettingsOptionButtonGroupProps) {
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="grid grid-cols-[repeat(auto-fit,minmax(8rem,1fr))] gap-2.5">
       {options.map((option) => (
         <button
           key={option.id}
           type="button"
           aria-pressed={selectedId === option.id}
           className={cn(
-            "inline-flex h-10 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition",
+            "inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border px-4 py-3 text-sm font-semibold transition",
             selectedId === option.id
               ? "border-[#112a55] bg-[#112a55] text-white"
               : "border-[#c8ad72] bg-white/60 text-[#112a55] hover:bg-white"

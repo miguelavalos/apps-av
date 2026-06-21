@@ -23,6 +23,7 @@ export interface AppShellLabels {
 
 export function AppShell({ product, navLinks, accountArea, children, currentPath, footerLabels, labels }: AppShellProps) {
   const homeHref = navLinks[0]?.href ?? "/";
+  const assistantLabel = labels?.assistant ?? product.assistant?.label;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -51,28 +52,29 @@ export function AppShell({ product, navLinks, accountArea, children, currentPath
             ))}
           </nav>
           <div className="flex items-center gap-3">
+            {product.assistant ? (
+              <a
+                aria-current={isActiveAppShellLink(product.assistant.href, currentPath) ? "page" : undefined}
+                aria-label={assistantLabel}
+                className={isActiveAppShellLink(product.assistant.href, currentPath) ? "hidden items-center gap-2 rounded-full bg-muted px-2.5 py-1.5 text-sm font-semibold text-foreground sm:inline-flex" : "hidden items-center gap-2 rounded-full px-2.5 py-1.5 text-sm font-semibold text-muted-foreground transition hover:bg-muted hover:text-foreground sm:inline-flex"}
+                href={product.assistant.href}
+              >
+                {product.assistant.imageSrc ? (
+                  <img
+                    alt=""
+                    className="size-8 rounded-full border object-cover object-[78%_68%]"
+                    src={product.assistant.imageSrc}
+                  />
+                ) : null}
+                <span>{product.assistant.name}</span>
+              </a>
+            ) : null}
             {accountArea}
-            <MobileDrawerNav currentPath={currentPath} label={labels?.mobileNavigation} links={navLinks} triggerLabel={labels?.openNavigation} />
+            <MobileDrawerNav assistant={product.assistant} assistantLabel={assistantLabel} currentPath={currentPath} label={labels?.mobileNavigation} links={navLinks} triggerLabel={labels?.openNavigation} />
           </div>
         </div>
       </header>
       <main className="mx-auto max-w-6xl px-4 py-8">{children}</main>
-      {product.assistant ? (
-        <a
-          className="fixed bottom-5 right-4 z-20 flex items-center gap-2 rounded-full border bg-background/92 px-3 py-2 text-sm font-semibold shadow-lg shadow-black/10 backdrop-blur transition hover:-translate-y-0.5 hover:bg-background"
-          href={product.assistant.href}
-          aria-label={labels?.assistant ?? product.assistant.label}
-        >
-          {product.assistant.imageSrc ? (
-            <img
-              alt=""
-              className="size-10 rounded-full border object-cover object-[78%_68%]"
-              src={product.assistant.imageSrc}
-            />
-          ) : null}
-          <span>{product.assistant.name}</span>
-        </a>
-      ) : null}
       <AvAppFooter labels={footerLabels} product={product} />
     </div>
   );

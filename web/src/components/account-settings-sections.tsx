@@ -16,10 +16,10 @@ export function SettingsExternalButton({ children, href, tone = "secondary" }: S
     <a
       className={
         tone === "primary"
-          ? "inline-flex h-10 items-center justify-center rounded-full bg-[#112a55] px-4 text-sm font-semibold text-white hover:bg-[#19396f]"
+          ? "inline-flex h-12 w-full items-center justify-center rounded-full bg-[#112a55] px-5 text-sm font-bold text-white hover:bg-[#19396f]"
           : tone === "danger"
-            ? "inline-flex h-10 items-center justify-center rounded-full border border-red-200 bg-white/60 px-4 text-sm font-semibold text-red-700 hover:bg-red-50"
-            : "inline-flex h-10 items-center justify-center rounded-full border border-[#c8ad72] bg-white/60 px-4 text-sm font-semibold text-[#112a55] hover:bg-white"
+            ? "inline-flex h-12 w-full items-center justify-center rounded-full border border-red-200 bg-white/60 px-5 text-sm font-bold text-red-700 hover:bg-red-50"
+            : "inline-flex h-12 w-full items-center justify-center rounded-full border border-[#c8ad72] bg-white/60 px-5 text-sm font-bold text-[#112a55] hover:bg-white"
       }
       href={href}
     >

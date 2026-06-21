@@ -1,15 +1,17 @@
 import { MenuIcon } from "lucide-react";
-import type { AppsAvProductLink } from "../config/product-config";
+import type { AppsAvProductAssistant, AppsAvProductLink } from "../config/product-config";
 import { isActiveAppShellLink } from "./app-shell";
 
 export interface MobileDrawerNavProps {
+  assistant?: AppsAvProductAssistant;
+  assistantLabel?: string;
   currentPath?: string;
   label?: string;
   links: AppsAvProductLink[];
   triggerLabel?: string;
 }
 
-export function MobileDrawerNav({ currentPath, label = "Mobile navigation", links, triggerLabel = "Open navigation" }: MobileDrawerNavProps) {
+export function MobileDrawerNav({ assistant, assistantLabel, currentPath, label = "Mobile navigation", links, triggerLabel = "Open navigation" }: MobileDrawerNavProps) {
   return (
     <details className="md:hidden">
       <summary className="inline-flex size-10 cursor-pointer list-none items-center justify-center rounded-md border bg-background">
@@ -28,6 +30,17 @@ export function MobileDrawerNav({ currentPath, label = "Mobile navigation", link
               {link.label}
             </a>
           ))}
+          {assistant ? (
+            <a
+              aria-label={assistantLabel ?? assistant.label}
+              aria-current={isActiveAppShellLink(assistant.href, currentPath) ? "page" : undefined}
+              className={isActiveAppShellLink(assistant.href, currentPath) ? "mt-2 flex items-center gap-2 rounded-md bg-muted px-3 py-2 text-sm font-semibold text-foreground" : "mt-2 flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium hover:bg-muted"}
+              href={assistant.href}
+            >
+              {assistant.imageSrc ? <img alt="" className="size-7 rounded-full border object-cover object-[78%_68%]" src={assistant.imageSrc} /> : null}
+              <span>{assistant.name}</span>
+            </a>
+          ) : null}
         </div>
       </nav>
     </details>
