@@ -35,6 +35,63 @@ const sharedChecks = [
   }
 ];
 
+const accountAvChecks = [
+  {
+    file: "private/avalsys-suite/apps/account-av/src/components/app-shell.tsx",
+    forbidden: [
+      {
+        pattern: /\bavatarInitial\b/,
+        message: "Account AV shell must not derive a user avatar initial."
+      },
+      {
+        pattern: /\bsidebar-avatar\b/,
+        message: "Account AV shell must render Avi, not a user avatar."
+      },
+      {
+        pattern: /\bUserButton\b/,
+        message: "Account AV shell must not render Clerk UserButton."
+      }
+    ],
+    required: [
+      {
+        pattern: /\baviAssistantUrl\b/,
+        message: "Account AV shell must render Avi in the signed-in session area."
+      },
+      {
+        pattern: /\bsidebar-assistant\b/,
+        message: "Account AV shell must use the shared assistant session class."
+      }
+    ]
+  },
+  {
+    file: "private/avalsys-suite/apps/account-av/src/routes/account-page.tsx",
+    forbidden: [
+      {
+        pattern: /\bUserButton\b/,
+        message: "Account AV account page must not render Clerk UserButton."
+      }
+    ],
+    required: [
+      {
+        pattern: /\bUserProfile\b/,
+        message: "Account AV account page should keep the Clerk profile management surface."
+      },
+      {
+        pattern: /\baviAssistantUrl\b/,
+        message: "Account AV account page must brand provider avatar visuals with Avi."
+      },
+      {
+        pattern: /\buserPreviewAvatarBox\b/,
+        message: "Account AV UserProfile must override Clerk's visible avatar box."
+      },
+      {
+        pattern: /\buserPreviewAvatarImage\b/,
+        message: "Account AV UserProfile must hide the provider avatar image."
+      }
+    ]
+  }
+];
+
 const forbiddenPatterns = [
   {
     pattern: /accountArea\s*=/,
@@ -67,6 +124,26 @@ for (const check of [...sharedChecks, ...productChecks]) {
       if (pattern.test(source)) {
         failures.push(`${file}: ${message}`);
       }
+    }
+  }
+}
+
+for (const check of accountAvChecks) {
+  const path = resolve(workspaceRoot, check.file);
+  if (!existsSync(path)) {
+    failures.push(`${check.file}: Account AV chrome check target is missing.`);
+    continue;
+  }
+
+  const source = readFileSync(path, "utf8");
+  for (const { message, pattern } of check.forbidden) {
+    if (pattern.test(source)) {
+      failures.push(`${check.file}: ${message}`);
+    }
+  }
+  for (const { message, pattern } of check.required) {
+    if (!pattern.test(source)) {
+      failures.push(`${check.file}: ${message}`);
     }
   }
 }

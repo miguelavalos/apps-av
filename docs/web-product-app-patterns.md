@@ -95,6 +95,9 @@ Use this web pattern across product apps:
 6. Do not render Clerk `UserButton`, provider avatars, or account avatars in
    product app chrome. Account access belongs in the normal navigation and
    account/settings routes; Clerk remains an Account AV implementation detail.
+7. Account AV is the exception for account management itself: it may embed
+   Clerk `UserProfile`, but visible provider avatar surfaces must be branded
+   with Avi and the signed-in shell must not derive a user initial/avatar.
 
 This mirrors the Apple app pattern where Avi is part of the configured app
 experience and appears as contextual content when useful, without covering
