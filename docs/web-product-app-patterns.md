@@ -71,6 +71,9 @@ For each product app:
 - keep the same row structure across account/settings;
 - make product-specific differences copy-only where possible;
 - document any intentional missing section in that product's public docs;
+- keep `bun run --cwd public/apps-av/web check:chrome` passing; it guards
+  Avi-owned chrome, forbids Clerk/account avatars in product chrome, and checks
+  shared Settings selects in migrated apps;
 - run typecheck, tests, production build, and rendered desktop/mobile checks
   before calling the UI aligned.
 

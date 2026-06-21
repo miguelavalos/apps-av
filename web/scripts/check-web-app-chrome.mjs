@@ -35,6 +35,17 @@ const sharedChecks = [
   }
 ];
 
+const settingsChecks = [
+  {
+    app: "series-av",
+    file: "public/series-av/apps/web/src/routes/settings.tsx"
+  },
+  {
+    app: "tune-av",
+    file: "public/tune-av/apps/web/src/routes/settings.tsx"
+  }
+];
+
 const accountAvChecks = [
   {
     file: "private/avalsys-suite/apps/account-av/src/components/app-shell.tsx",
@@ -148,6 +159,21 @@ for (const check of accountAvChecks) {
   }
 }
 
+for (const check of settingsChecks) {
+  const path = resolve(workspaceRoot, check.file);
+  if (!existsSync(path)) {
+    continue;
+  }
+
+  const source = readFileSync(path, "utf8");
+  if (!/\bSettingsSelect\b/.test(source)) {
+    failures.push(`${check.file}: Product settings choices must use shared SettingsSelect.`);
+  }
+  if (/<\s*select\b/.test(source)) {
+    failures.push(`${check.file}: Product settings must not add local <select> styling; use SettingsSelect.`);
+  }
+}
+
 if (failures.length > 0) {
   console.error("Apps AV web chrome check failed:");
   for (const failure of failures) {
@@ -156,4 +182,4 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log("Apps AV web chrome check passed: Avi owns top chrome; no Clerk/account avatar controls found.");
+console.log("Apps AV web chrome check passed: Avi owns top chrome, no Clerk/account avatar controls found, and settings selects use shared controls.");
