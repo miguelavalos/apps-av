@@ -142,3 +142,35 @@ export function SettingsOptionButtonGroup({ onSelect, options, selectedId }: Set
     </div>
   );
 }
+
+export interface SettingsSelectOption {
+  id: string;
+  label: string;
+}
+
+export interface SettingsSelectProps {
+  ariaLabel: string;
+  onSelect: (id: string) => void;
+  options: SettingsSelectOption[];
+  selectedId: string;
+}
+
+export function SettingsSelect({ ariaLabel, onSelect, options, selectedId }: SettingsSelectProps) {
+  return (
+    <label className="grid gap-2">
+      <span className="sr-only">{ariaLabel}</span>
+      <select
+        aria-label={ariaLabel}
+        className="h-12 w-full rounded-lg border border-[#d7c494] bg-[#fff8df]/80 px-4 text-sm font-semibold text-[#112a55] outline-none transition focus:border-[#112a55] focus:ring-2 focus:ring-[#112a55]/20"
+        value={selectedId}
+        onChange={(event) => onSelect(event.target.value)}
+      >
+        {options.map((option) => (
+          <option key={option.id} value={option.id}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </label>
+  );
+}

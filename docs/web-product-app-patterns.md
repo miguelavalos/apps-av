@@ -63,6 +63,8 @@ Use this order for `/account`:
 For each product app:
 
 - import settings primitives from `@avalsys/apps-av-web`, not local copies;
+- use shared settings controls such as `SettingsOptionButtonGroup` and
+  `SettingsSelect` before adding product-local form styling;
 - import shared screen primitives from `@avalsys/apps-av-web` instead of
   product-local equivalents when the component has no product noun;
 - keep section order identical to this guide unless the app lacks that category;
