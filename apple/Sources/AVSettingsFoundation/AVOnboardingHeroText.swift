@@ -22,13 +22,13 @@ public struct AVOnboardingHeroText: View {
     public var body: some View {
         VStack(spacing: 8) {
             Text(title)
-                .font(.system(size: 30, weight: .black))
+                .font(.system(size: subtitleMaxWidth > 316 ? 36 : 30, weight: .black))
                 .foregroundStyle(titleColor)
                 .multilineTextAlignment(.center)
                 .minimumScaleFactor(0.86)
 
             Text(subtitle)
-                .font(.system(size: 15, weight: .medium))
+                .font(.system(size: subtitleMaxWidth > 316 ? 18 : 15, weight: .medium))
                 .foregroundStyle(subtitleColor)
                 .multilineTextAlignment(.center)
                 .lineLimit(3)

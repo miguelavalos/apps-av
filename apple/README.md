@@ -82,7 +82,7 @@ Every Apps AV Apple app should converge on the same common shell contract:
 | Branding | Shared palette model, colors, surfaces, typography, spacing, radius, app identity model | App logo, wordmark, artwork, optional palette override |
 | Launch | Splash layout, hero/logo slots, transition state policy, splash content model | Product startup work, product logo/artwork, launch copy |
 | Onboarding | Shared auth/onboarding panels, CTA surfaces, onboarding content model | Provider wiring, legal URLs, login/guest policy, product copy |
-| Home chrome | Top header layout with settings left, logo center, account right | Logo asset and account/settings routes |
+| Home chrome | Compact top header layout with settings left, logo center, account right; iPad sidebar rule | Logo asset and account/settings routes |
 | Footer | Shared bottom shell with tabs left and Avi/assistant right | Tab enum, tab labels/icons, selected content, assistant state |
 | Settings/account | Shared cards, rows, buttons, notices, headers, destructive surfaces | Account state, URLs, subscription/credits content, product policies |
 | Avi | Shared avatar/card/header/landing hero/panel visuals | Product guidance, domain actions, assistant artwork/personality inputs |
@@ -124,9 +124,22 @@ For a new app, start with the same structure used by Tune AV and Moments AV:
 11. Use `AVAppShellScrollableScreenScaffold` for standard scrollable domain
     screens that need shared padding, hidden scroll indicators, and a branded
     background.
-12. Use `AVAppShellHomeHeader` inside that scaffold for Home so every app keeps
-    the Tune-derived top composition: settings left, app logo center, account
-    right, then the app-specific Home summary and intro content.
+12. Use `AVAppShellHomeHeader` inside that scaffold for compact Home so every
+    app keeps the Tune-derived top composition: settings left, app logo center,
+    account right, then the app-specific Home summary and intro content.
+    On iPad/tablet layouts with a persistent sidebar, do not render the compact
+    Home brand chrome. The sidebar is the only place for the product logo,
+    Settings, and Account. Home content should start with a domain header such
+    as `AVAppShellScreenHeader` plus the app-specific Home summary.
+    Use `AVAppShellTabletSidebarBrandHeader` and
+    `AVAppShellTabletSidebarButton` for iPad sidebars so the leading edge of
+    the product logo aligns with the leading edge of sidebar row icons and
+    labels across all AV apps.
+    If the product has a persistent player, keep it out of the sidebar. On iPad,
+    the mini player and expanded/full player belong to the content area's bottom
+    overlay, reusing the compact player behavior with tablet-specific width and
+    padding. The sidebar stays reserved for global navigation and account/settings
+    entry points.
 13. Keep product tabs, routes, workflows, settings models, legal URLs, and
     account policy in the app.
 14. Use `AVAuthConfiguredOnboardingScreen` for the common Tune-derived
@@ -189,22 +202,33 @@ verify the shared surfaces in a simulator or UI test fixture:
    logo, product copy, product hero artwork, and configured Avi CTA artwork.
 2. Signing in is required when the product has no guest mode.
 3. Home opens as the initial signed-in screen.
-4. Home top chrome has settings on the left, product logo centered, and account
-   on the right. The header buttons expose generic accessibility labels:
-   `Settings` and `Account`.
-5. Footer product tabs stay on the left and the Avi/assistant entry stays on
+4. Compact Home top chrome has settings on the left, product logo centered,
+   and account on the right. On iPad/tablet layouts with a persistent sidebar,
+   Home must not show a second product logo, Settings button, or Account
+   button; those belong only in the sidebar. The compact header buttons expose
+   generic accessibility labels: `Settings` and `Account`.
+5. iPad builds declare `UISupportedInterfaceOrientations~ipad` with portrait,
+   upside-down portrait, and both landscape orientations. A phone-only portrait
+   declaration causes iPad landscape to run the app in a centered portrait
+   compatibility window, making the sidebar, Account, Settings, and buttons
+   appear incorrectly scaled.
+6. Footer product tabs stay on the left and the Avi/assistant entry stays on
    the right.
-6. Avi opens as an informational or guidance surface unless the product has a
+   On iPad/tablet layouts with a persistent sidebar, do not put a mini player
+   or full player in the sidebar. Player chrome belongs to the bottom of the
+   content area, with tablet-specific max width/padding and the same compact
+   player state transitions used on iPhone.
+7. Avi opens as an informational or guidance surface unless the product has a
    richer assistant workflow. The screen must show the configured Avi artwork
    and product guidance content.
-7. Settings and Account open from the shared header and keep the same header
+8. Settings and Account open from the shared header and keep the same header
    selection treatment.
-8. Settings and Account use `AVSettingsFoundation` configured/profile surfaces
+9. Settings and Account use `AVSettingsFoundation` configured/profile surfaces
    for common sections, while product policies and domain rows remain local.
-9. Domain screens use `AVAppShellFoundation` primitives for cards, metrics,
+10. Domain screens use `AVAppShellFoundation` primitives for cards, metrics,
    status, metadata, and scroll spacing. They should not use settings cards as
    generic containers.
-10. The app builds after shared API changes, and Tune AV still builds when the
+11. The app builds after shared API changes, and Tune AV still builds when the
     change affects Apps AV public API.
 
 ### Domain Screen Rule

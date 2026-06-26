@@ -6,6 +6,7 @@ public struct AVAppShellScrollableScreenScaffold<Background: View, Content: View
     private let horizontalPadding: CGFloat
     private let topPadding: CGFloat
     private let bottomPadding: CGFloat
+    private let maxContentWidth: CGFloat?
     private let background: Background
     private let content: Content
 
@@ -15,6 +16,7 @@ public struct AVAppShellScrollableScreenScaffold<Background: View, Content: View
         horizontalPadding: CGFloat = AVAppShellScreenMetric.horizontalPadding,
         topPadding: CGFloat = AVAppShellScreenMetric.topPadding,
         bottomPadding: CGFloat = AVAppShellScreenMetric.bottomContentPadding,
+        maxContentWidth: CGFloat? = nil,
         @ViewBuilder background: () -> Background,
         @ViewBuilder content: () -> Content
     ) {
@@ -23,6 +25,7 @@ public struct AVAppShellScrollableScreenScaffold<Background: View, Content: View
         self.horizontalPadding = horizontalPadding
         self.topPadding = topPadding
         self.bottomPadding = bottomPadding
+        self.maxContentWidth = maxContentWidth
         self.background = background()
         self.content = content()
     }
@@ -37,6 +40,8 @@ public struct AVAppShellScrollableScreenScaffold<Background: View, Content: View
                 top: topPadding,
                 bottom: bottomPadding
             )
+            .frame(maxWidth: maxContentWidth ?? .infinity, alignment: Alignment(horizontal: alignment, vertical: .top))
+            .frame(maxWidth: .infinity, alignment: Alignment(horizontal: alignment, vertical: .top))
         }
         .avShellScreenScrollBehavior()
         .background(background.ignoresSafeArea())

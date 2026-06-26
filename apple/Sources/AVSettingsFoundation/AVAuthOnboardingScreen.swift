@@ -105,7 +105,11 @@ public struct AVAuthOnboardingScreen<Brand: View, HeroArtwork: View, CTACompanio
                     Color.clear
                         .frame(height: max(proxy.safeAreaInsets.top + 44, 62))
 
-                    AVOnboardingHeroText(title: title, subtitle: subtitle)
+                    AVOnboardingHeroText(
+                        title: title,
+                        subtitle: subtitle,
+                        subtitleMaxWidth: proxy.size.width >= 820 ? 460 : 316
+                    )
 
                     Spacer(minLength: authOptionsArePresented ? 18 : 246)
 
@@ -126,6 +130,7 @@ public struct AVAuthOnboardingScreen<Brand: View, HeroArtwork: View, CTACompanio
                             ctaCompanion
                                 .allowsHitTesting(false)
                         }
+                        .frame(maxWidth: proxy.size.width >= 820 ? 560 : .infinity)
                         .padding(.horizontal, 24)
                         .padding(.bottom, max(52, proxy.safeAreaInsets.bottom + 44))
                         .transition(.move(edge: .bottom).combined(with: .opacity))

@@ -8,6 +8,7 @@ public struct AVSettingsProfileScreenScaffold<Chrome: View, Content: View>: View
     private let bottomContentPadding: CGFloat
     private let backgroundStyle: AnyShapeStyle
     private let showsTopSafeAreaShield: Bool
+    private let showsChrome: Bool
     private let chrome: Chrome
     private let content: Content
 
@@ -17,6 +18,7 @@ public struct AVSettingsProfileScreenScaffold<Chrome: View, Content: View>: View
         bottomContentPadding: CGFloat = AVAppShellScreenMetric.bottomContentPadding,
         backgroundStyle: AnyShapeStyle = AnyShapeStyle(AVBrandColor.canvas),
         showsTopSafeAreaShield: Bool = false,
+        showsChrome: Bool = true,
         @ViewBuilder chrome: () -> Chrome,
         @ViewBuilder content: () -> Content
     ) {
@@ -25,6 +27,7 @@ public struct AVSettingsProfileScreenScaffold<Chrome: View, Content: View>: View
         self.bottomContentPadding = bottomContentPadding
         self.backgroundStyle = backgroundStyle
         self.showsTopSafeAreaShield = showsTopSafeAreaShield
+        self.showsChrome = showsChrome
         self.chrome = chrome()
         self.content = content()
     }
@@ -32,7 +35,9 @@ public struct AVSettingsProfileScreenScaffold<Chrome: View, Content: View>: View
     public var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
-                chrome
+                if showsChrome {
+                    chrome
+                }
 
                 AVSettingsScreenHeader(title: title, subtitle: subtitle)
 
