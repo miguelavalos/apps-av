@@ -119,6 +119,9 @@ public enum AVDiagnostics {
             options.dsn = configuration.dsn
             options.environment = configuration.environment.rawValue
             options.tracesSampleRate = NSNumber(value: max(0, min(configuration.tracesSampleRate, 1)))
+            options.beforeSend = { event in
+                shouldSendSentryEvent(event) ? event : nil
+            }
             if let releaseName = configuration.releaseName, !releaseName.isEmpty {
                 options.releaseName = releaseName
             }
@@ -205,6 +208,63 @@ public enum AVDiagnostics {
         guard trimmedValue.count > maxValueLength else { return trimmedValue }
         return String(trimmedValue.prefix(maxValueLength))
     }
+
+    #if canImport(Sentry)
+    private static func shouldSendSentryEvent(_ event: Event) -> Bool {
+        let exception = event.exceptions?.last
+        let requestURL = event.request?.url ?? event.tags?["url"]
+        let nsError = event.error as NSError?
+        return shouldSendSentryEvent(
+            errorDomain: nsError?.domain,
+            errorCode: nsError?.code,
+            exceptionType: exception?.type,
+            exceptionValue: exception?.value,
+            feature: event.tags?["feature"],
+            errorCodeTag: event.tags?["error_code"],
+            requestURL: requestURL
+        )
+    }
+    #endif
+
+    static func shouldSendSentryEvent(
+        errorDomain: String?,
+        errorCode: Int?,
+        exceptionType: String?,
+        exceptionValue: String?,
+        feature: String? = nil,
+        errorCodeTag: String? = nil,
+        requestURL: String?
+    ) -> Bool {
+        if errorDomain == NSURLErrorDomain, errorCode == NSURLErrorCancelled {
+            return false
+        }
+
+        if exceptionType == NSURLErrorDomain, exceptionValue?.contains("Code=-999") == true {
+            return false
+        }
+
+        if feature == "animate.sync", errorCodeTag == "notConfigured" {
+            return false
+        }
+
+        guard exceptionType == "HTTPClientError",
+              exceptionValue?.contains("status code: 503") == true,
+              let requestURL
+        else {
+            return true
+        }
+
+        return !isExpectedTransientHTTP503(url: requestURL)
+    }
+
+    private static func isExpectedTransientHTTP503(url: String) -> Bool {
+        expectedTransientHTTP503URLFragments.contains { url.contains($0) }
+    }
+
+    private static let expectedTransientHTTP503URLFragments = [
+        "api-tune-av.avalsys.com/v1/tune/workspace/realtime-sessions",
+        "api.radio-browser.info/json/stations/search"
+    ]
 }
 
 extension AVDiagnosticsContext {
