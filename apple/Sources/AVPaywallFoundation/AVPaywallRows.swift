@@ -146,3 +146,52 @@ public struct AVPaywallLegalLink: Identifiable {
         self.action = action
     }
 }
+
+public struct AVPaywallFooterActions: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
+    private let actions: [AVPaywallFooterAction]
+
+    public init(actions: [AVPaywallFooterAction]) {
+        self.actions = actions
+    }
+
+    public var body: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 9) {
+            ForEach(Array(actions.enumerated()), id: \.element.id) { item in
+                let index = item.offset
+                let action = item.element
+
+                if index > 0 {
+                    Text("·")
+                        .foregroundStyle(AVBrandColor.textSecondary)
+                }
+
+                Button(action: action.action) {
+                    Text(action.title)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.78)
+                        .allowsTightening(true)
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier(action.accessibilityIdentifier)
+            }
+        }
+        .font(AVBrandTypography.captionStrong)
+        .foregroundStyle(brandPalette.accent)
+        .frame(maxWidth: .infinity, alignment: .center)
+    }
+}
+
+public struct AVPaywallFooterAction: Identifiable {
+    public let id = UUID()
+    public let title: String
+    public let accessibilityIdentifier: String
+    public let action: () -> Void
+
+    public init(title: String, accessibilityIdentifier: String, action: @escaping () -> Void) {
+        self.title = title
+        self.accessibilityIdentifier = accessibilityIdentifier
+        self.action = action
+    }
+}
