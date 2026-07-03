@@ -28,6 +28,8 @@ Shared code owns:
 - identity/account behavior through `AccountAV`;
 - shell, launch, settings, account, assistant, paywall, brand, and haptic
   primitives through `apps-av/apple`;
+- diagnostics through `AVDiagnosticsFoundation` when a maintainer has confirmed
+  an app-specific Sentry project;
 - reusable local-device media analysis when the output is domain-neutral.
 
 If a second product can reuse a component without product words, copy changes,
@@ -80,6 +82,8 @@ Product apps should use these packages before writing local equivalents:
 - `AccountAV`: provider-neutral account API that wraps Clerk configuration,
   sign-in, token refresh, current user mapping, and sign-out.
 - `AVBrandFoundation`: shared Apple brand tokens and surfaces.
+- `AVDiagnosticsFoundation`: shared diagnostics facade for app runtimes that
+  have an approved Sentry DSN.
 - `AVAppShellFoundation`: app chrome, footer/header grammar, screen spacing,
   cards, metrics, metadata rows, and dashboard primitives.
 - `AVLaunchFoundation`: shared splash and launch-transition primitives.
@@ -128,19 +132,22 @@ Start every new Apple product app with this shape:
 4. Add a config generator and runtime checker. The checker must redact
    sensitive values and print the Account AV redirect URI as
    `<bundle-id>://callback`.
-5. Register URL schemes with `$(PRODUCT_BUNDLE_IDENTIFIER)`.
-6. Add Sign in with Apple and keychain entitlements when account sign-in exists.
-7. Add one app experience object that centralizes product identity, brand assets,
+5. If maintainers have confirmed Sentry for the runtime, add the app-specific
+   diagnostics DSN to generated config and wire `AVDiagnosticsFoundation`.
+   Public docs and commits must not expose DSN values.
+6. Register URL schemes with `$(PRODUCT_BUNDLE_IDENTIFIER)`.
+7. Add Sign in with Apple and keychain entitlements when account sign-in exists.
+8. Add one app experience object that centralizes product identity, brand assets,
    legal links, onboarding copy, assistant identity, footer tabs, and shared
    shell configuration.
-8. Apply the experience at the app root with the Apps AV environment modifier.
-9. Use shared launch, onboarding, header, footer, settings, account, help/legal,
+9. Apply the experience at the app root with the Apps AV environment modifier.
+10. Use shared launch, onboarding, header, footer, settings, account, help/legal,
    paywall, and Avi primitives before creating local screens.
-10. Keep product routes, workflows, models, API clients, feature state, and
+11. Keep product routes, workflows, models, API clients, feature state, and
     product copy local.
-11. Add tests for account state sync, sign-out clearing, shell selection,
+12. Add tests for account state sync, sign-out clearing, shell selection,
     settings order, and the product's main workflow states.
-12. Add public-safe docs for install, config hygiene, release checks, and public
+13. Add public-safe docs for install, config hygiene, release checks, and public
     repo safety.
 
 ## Branding And First Run
