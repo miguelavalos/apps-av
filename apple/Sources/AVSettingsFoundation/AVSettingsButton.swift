@@ -3,6 +3,8 @@ import SwiftUI
 
 public struct AVSettingsButton: View {
     @Environment(\.avBrandPalette) private var brandPalette
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @ScaledMetric(relativeTo: .headline) private var titleFontSize: CGFloat = 15
 
     public enum Style {
         case primary
@@ -32,10 +34,11 @@ public struct AVSettingsButton: View {
         Button(action: action) {
             HStack(spacing: 12) {
                 Text(title)
-                    .font(.system(size: 15, weight: .bold))
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.78)
-                    .allowsTightening(true)
+                    .font(.system(size: titleFontSize, weight: .bold))
+                    .lineLimit(dynamicTypeSize.isAccessibilitySize ? 2 : 1)
+                    .minimumScaleFactor(dynamicTypeSize.isAccessibilitySize ? 1 : 0.78)
+                    .allowsTightening(!dynamicTypeSize.isAccessibilitySize)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 if style != .primary && style != .destructivePrimary {
                     Spacer()
@@ -48,7 +51,8 @@ public struct AVSettingsButton: View {
             }
             .foregroundStyle(titleTint)
             .frame(maxWidth: .infinity)
-            .frame(height: 48)
+            .padding(.vertical, dynamicTypeSize.isAccessibilitySize ? 12 : 0)
+            .frame(minHeight: dynamicTypeSize.isAccessibilitySize ? 56 : 48)
             .padding(.horizontal, style == .primary || style == .destructivePrimary ? 0 : 18)
             .background(backgroundShape)
             .overlay {
@@ -146,6 +150,8 @@ public struct AVSettingsLinkButton: View {
 
 public struct AVSettingsOptionButton: View {
     @Environment(\.avBrandPalette) private var brandPalette
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @ScaledMetric(relativeTo: .footnote) private var titleFontSize: CGFloat = 13
 
     private let title: String
     private let systemImage: String
@@ -166,19 +172,25 @@ public struct AVSettingsOptionButton: View {
 
     public var body: some View {
         Button(action: action) {
-            VStack(spacing: AVBrandSpacing.xs) {
-                Image(systemName: systemImage)
-                    .font(.system(size: 17, weight: .semibold))
-                    .foregroundStyle(isSelected ? brandPalette.accent : AVBrandColor.textSecondary)
-
-                Text(title)
-                    .font(.system(size: 13, weight: .semibold, design: .rounded))
-                    .foregroundStyle(AVBrandColor.textPrimary)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.8)
+            Group {
+                if dynamicTypeSize.isAccessibilitySize {
+                    HStack(spacing: AVBrandSpacing.sm) {
+                        optionIcon
+                        optionTitle
+                        Spacer(minLength: 0)
+                    }
+                    .padding(.horizontal, AVBrandSpacing.md)
+                    .padding(.vertical, AVBrandSpacing.sm)
+                    .frame(minHeight: 56)
+                } else {
+                    VStack(spacing: AVBrandSpacing.xs) {
+                        optionIcon
+                        optionTitle
+                    }
+                    .padding(.vertical, AVBrandSpacing.md)
+                }
             }
             .frame(maxWidth: .infinity)
-            .padding(.vertical, AVBrandSpacing.md)
             .background(
                 RoundedRectangle(cornerRadius: AVBrandRadius.footerSelection, style: .continuous)
                     .fill(isSelected ? brandPalette.accent.opacity(0.1) : AVBrandColor.mutedSurface)
@@ -192,5 +204,21 @@ public struct AVSettingsOptionButton: View {
             }
         }
         .buttonStyle(.plain)
+    }
+
+    private var optionIcon: some View {
+        Image(systemName: systemImage)
+            .font(.system(size: 17, weight: .semibold))
+            .foregroundStyle(isSelected ? brandPalette.accent : AVBrandColor.textSecondary)
+            .frame(width: 24, height: 24)
+    }
+
+    private var optionTitle: some View {
+        Text(title)
+            .font(.system(size: titleFontSize, weight: .semibold, design: .rounded))
+            .foregroundStyle(AVBrandColor.textPrimary)
+            .lineLimit(dynamicTypeSize.isAccessibilitySize ? 2 : 1)
+            .minimumScaleFactor(dynamicTypeSize.isAccessibilitySize ? 1 : 0.8)
+            .fixedSize(horizontal: false, vertical: true)
     }
 }

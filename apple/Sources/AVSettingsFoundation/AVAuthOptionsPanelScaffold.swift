@@ -4,6 +4,7 @@ import SwiftUI
 public struct AVAuthOptionsPanelScaffold<Actions: View, Accessory: View>: View {
     @Environment(\.avBrandPalette) private var brandPalette
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     private let title: String
     private let subtitle: String
@@ -46,12 +47,13 @@ public struct AVAuthOptionsPanelScaffold<Actions: View, Accessory: View>: View {
 
             VStack(spacing: 7) {
                 Text(title)
-                    .font(.system(size: 22, weight: .black, design: .serif))
+                    .font(.system(.title2, design: .serif, weight: .black))
                     .foregroundStyle(titleColor)
                     .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 Text(subtitle)
-                    .font(.system(size: 13, weight: .medium))
+                    .font(.subheadline.weight(.medium))
                     .foregroundStyle(subtitleColor)
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
@@ -66,28 +68,34 @@ public struct AVAuthOptionsPanelScaffold<Actions: View, Accessory: View>: View {
 
             if let unavailableMessage {
                 Text(unavailableMessage)
-                    .font(.system(size: 12, weight: .medium))
+                    .font(.footnote.weight(.medium))
                     .foregroundStyle(titleColor.opacity(0.7))
                     .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.top, 12)
             }
 
             if let skipTitle, let onSkip {
-                Button(skipTitle, action: onSkip)
-                    .font(.system(size: 13, weight: .bold))
-                    .foregroundStyle(titleColor.opacity(0.82))
-                    .padding(.top, 16)
+                Button(action: onSkip) {
+                    Text(skipTitle)
+                        .font(.subheadline.weight(.bold))
+                        .foregroundStyle(titleColor.opacity(0.82))
+                        .padding(.vertical, dynamicTypeSize.isAccessibilitySize ? 10 : 13)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .padding(.top, 16)
             }
 
             Text(legalConsentText)
-                .font(.system(size: 12, weight: .medium))
+                .font(.footnote.weight(.medium))
                 .foregroundStyle(titleColor.opacity(0.66))
                 .tint(titleColor.opacity(0.9))
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.top, 12)
         }
-        .padding(.horizontal, 24)
+        .padding(.horizontal, dynamicTypeSize.isAccessibilitySize ? 20 : 24)
         .padding(.bottom, 24)
         .background(
             RoundedRectangle(cornerRadius: 30, style: .continuous)

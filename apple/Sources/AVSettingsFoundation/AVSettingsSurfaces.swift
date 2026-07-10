@@ -73,6 +73,9 @@ public struct AVSettingsSectionCard<Content: View>: View {
 }
 
 public struct AVSettingsSectionHeader: View {
+    @ScaledMetric(relativeTo: .title3) private var titleFontSize: CGFloat = 20
+    @ScaledMetric(relativeTo: .subheadline) private var subtitleFontSize: CGFloat = 14
+
     private let title: String
     private let subtitle: String
 
@@ -84,11 +87,12 @@ public struct AVSettingsSectionHeader: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(title)
-                .font(.system(size: 20, weight: .bold))
+                .font(.system(size: titleFontSize, weight: .bold))
                 .foregroundStyle(AVBrandColor.textPrimary)
+                .fixedSize(horizontal: false, vertical: true)
 
             Text(subtitle)
-                .font(.system(size: 14, weight: .medium))
+                .font(.system(size: min(subtitleFontSize, 23), weight: .medium))
                 .foregroundStyle(AVBrandColor.textSecondary)
                 .fixedSize(horizontal: false, vertical: true)
         }
@@ -96,6 +100,9 @@ public struct AVSettingsSectionHeader: View {
 }
 
 public struct AVSettingsScreenHeader: View {
+    @ScaledMetric(relativeTo: .largeTitle) private var titleFontSize: CGFloat = 34
+    @ScaledMetric(relativeTo: .body) private var subtitleFontSize: CGFloat = 16
+
     private let title: String
     private let subtitle: String
     private let titleAccessibilityIdentifier: String?
@@ -115,7 +122,7 @@ public struct AVSettingsScreenHeader: View {
             titleView
 
             Text(subtitle)
-                .font(.system(size: 16, weight: .medium))
+                .font(.system(size: subtitleFontSize, weight: .medium))
                 .foregroundStyle(AVBrandColor.textSecondary)
                 .fixedSize(horizontal: false, vertical: true)
         }
@@ -124,8 +131,9 @@ public struct AVSettingsScreenHeader: View {
     @ViewBuilder
     private var titleView: some View {
         let text = Text(title)
-            .font(.system(size: 34, weight: .bold))
+            .font(.system(size: min(titleFontSize, 38), weight: .bold))
             .foregroundStyle(AVBrandColor.textPrimary)
+            .fixedSize(horizontal: false, vertical: true)
 
         if let titleAccessibilityIdentifier {
             text.accessibilityIdentifier(titleAccessibilityIdentifier)
@@ -136,6 +144,9 @@ public struct AVSettingsScreenHeader: View {
 }
 
 public struct AVSettingsSheetHeader: View {
+    @ScaledMetric(relativeTo: .title) private var titleFontSize: CGFloat = 28
+    @ScaledMetric(relativeTo: .body) private var subtitleFontSize: CGFloat = 15
+
     private let title: String
     private let subtitle: String
     private let titleAccessibilityIdentifier: String?
@@ -155,7 +166,7 @@ public struct AVSettingsSheetHeader: View {
             titleView
 
             Text(subtitle)
-                .font(.system(size: 15, weight: .medium))
+                .font(.system(size: subtitleFontSize, weight: .medium))
                 .foregroundStyle(AVBrandColor.textSecondary)
                 .fixedSize(horizontal: false, vertical: true)
         }
@@ -164,8 +175,9 @@ public struct AVSettingsSheetHeader: View {
     @ViewBuilder
     private var titleView: some View {
         let text = Text(title)
-            .font(.system(size: 28, weight: .bold))
+            .font(.system(size: titleFontSize, weight: .bold))
             .foregroundStyle(AVBrandColor.textPrimary)
+            .fixedSize(horizontal: false, vertical: true)
 
         if let titleAccessibilityIdentifier {
             text.accessibilityIdentifier(titleAccessibilityIdentifier)
@@ -227,6 +239,10 @@ public struct AVSettingsSheetScaffold<Content: View>: View {
                 if let closeTitle, let onClose {
                     ToolbarItem(placement: .cancellationAction) {
                         Button(closeTitle, action: onClose)
+                            .padding(.horizontal, 8)
+                            .frame(minHeight: 48)
+                            .fixedSize(horizontal: true, vertical: false)
+                            .contentShape(Rectangle())
                             .applyAccessibilityIdentifier(closeAccessibilityIdentifier)
                     }
                 }
@@ -450,6 +466,10 @@ public struct AVSettingsLoadingState: View {
 
 public struct AVSettingsDestructiveActionCard: View {
     @Environment(\.avBrandPalette) private var brandPalette
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @ScaledMetric(relativeTo: .footnote) private var sectionTitleFontSize: CGFloat = 13
+    @ScaledMetric(relativeTo: .body) private var titleFontSize: CGFloat = 15
+    @ScaledMetric(relativeTo: .subheadline) private var detailFontSize: CGFloat = 13
 
     private let sectionTitle: String
     private let systemImage: String
@@ -474,22 +494,25 @@ public struct AVSettingsDestructiveActionCard: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(sectionTitle)
-                .font(.system(size: 13, weight: .bold))
+                .font(.system(size: min(sectionTitleFontSize, 20), weight: .bold))
                 .foregroundStyle(AVBrandColor.textSecondary)
                 .textCase(.uppercase)
+                .fixedSize(horizontal: false, vertical: true)
 
             Button(action: action) {
-                HStack(alignment: .center, spacing: 12) {
+                HStack(alignment: dynamicTypeSize.isAccessibilitySize ? .top : .center, spacing: 12) {
                     Image(systemName: systemImage)
                         .font(.system(size: 16, weight: .semibold))
                         .frame(width: 22)
+                        .padding(.top, dynamicTypeSize.isAccessibilitySize ? 4 : 0)
 
                     VStack(alignment: .leading, spacing: 4) {
                         Text(title)
-                            .font(.system(size: 15, weight: .bold))
+                            .font(.system(size: min(titleFontSize, 24), weight: .bold))
+                            .fixedSize(horizontal: false, vertical: true)
 
                         Text(detail)
-                            .font(.system(size: 13, weight: .medium))
+                            .font(.system(size: min(detailFontSize, 20), weight: .medium))
                             .fixedSize(horizontal: false, vertical: true)
                     }
 
@@ -627,6 +650,8 @@ public struct AVSettingsInlineActionRow: View {
 }
 
 public struct AVSettingsGroupedActionList<Rows: View>: View {
+    @ScaledMetric(relativeTo: .footnote) private var titleFontSize: CGFloat = 13
+
     private let title: String
     private let rows: Rows
 
@@ -638,9 +663,10 @@ public struct AVSettingsGroupedActionList<Rows: View>: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(title)
-                .font(.system(size: 13, weight: .bold))
+                .font(.system(size: min(titleFontSize, 20), weight: .bold))
                 .foregroundStyle(AVBrandColor.textSecondary)
                 .textCase(.uppercase)
+                .fixedSize(horizontal: false, vertical: true)
 
             VStack(spacing: 0) {
                 rows
@@ -702,6 +728,8 @@ public struct AVSettingsGroupedActionRow: View {
 
 private struct AVSettingsRowLayout<Trailing: View>: View {
     @Environment(\.avBrandPalette) private var brandPalette
+    @ScaledMetric(relativeTo: .body) private var titleFontSize: CGFloat = 15
+    @ScaledMetric(relativeTo: .subheadline) private var detailFontSize: CGFloat = 13
 
     let systemImage: String
     let title: String
@@ -717,11 +745,12 @@ private struct AVSettingsRowLayout<Trailing: View>: View {
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(title)
-                    .font(.system(size: 15, weight: .semibold))
+                    .font(.system(size: titleFontSize, weight: .semibold))
                     .foregroundStyle(AVBrandColor.textPrimary)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 Text(detail)
-                    .font(.system(size: 13, weight: .medium))
+                    .font(.system(size: detailFontSize, weight: .medium))
                     .foregroundStyle(AVBrandColor.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
             }

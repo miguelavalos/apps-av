@@ -8,6 +8,7 @@ public struct AVAuthProviderButton<Icon: View>: View {
     }
 
     @Environment(\.avBrandPalette) private var brandPalette
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     private let title: String
     private let isLoading: Bool
@@ -44,10 +45,13 @@ public struct AVAuthProviderButton<Icon: View>: View {
                 .frame(width: 24, height: 24)
 
                 Text(title)
-                    .font(.system(size: 14, weight: .bold))
+                    .font(.headline.weight(.bold))
                     .foregroundStyle(titleTint)
+                    .multilineTextAlignment(.leading)
+                    .fixedSize(horizontal: false, vertical: true)
             }
-            .frame(height: 46)
+            .padding(.vertical, dynamicTypeSize.isAccessibilitySize ? 10 : 8)
+            .frame(minHeight: dynamicTypeSize.isAccessibilitySize ? 56 : 46)
             .frame(maxWidth: .infinity)
             .background(backgroundTint, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
             .overlay {

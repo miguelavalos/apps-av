@@ -20,6 +20,7 @@ public struct AVAuthOnboardingScreen<Brand: View, HeroArtwork: View, CTACompanio
     private let authPanel: AuthPanel
 
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @GestureState private var authOptionsDragOffset: CGFloat = 0
 
     public init(
@@ -101,42 +102,16 @@ public struct AVAuthOnboardingScreen<Brand: View, HeroArtwork: View, CTACompanio
                     .blur(radius: authOptionsArePresented ? 6 : 0)
                     .ignoresSafeArea()
 
-                VStack(spacing: 0) {
-                    Color.clear
-                        .frame(height: max(proxy.safeAreaInsets.top + 44, 62))
-
-                    AVOnboardingHeroText(
-                        title: title,
-                        subtitle: subtitle,
-                        subtitleMaxWidth: proxy.size.width >= 820 ? 460 : 316
-                    )
-
-                    Spacer(minLength: authOptionsArePresented ? 18 : 246)
-
-                    if authOptionsArePresented {
-                        authPanel
-                            .padding(.horizontal, 14)
-                            .padding(.bottom, max(4, proxy.safeAreaInsets.bottom - 10))
-                            .offset(y: authOptionsDragOffset)
-                            .gesture(authOptionsDismissGesture)
-                            .transition(.move(edge: .bottom).combined(with: .opacity))
-                    } else {
-                        AVOnboardingCallToActionSection(
-                            primaryTitle: primaryTitle,
-                            secondaryTitle: secondaryTitle,
-                            primaryAction: primaryAction,
-                            secondaryAction: secondaryAction
-                        ) {
-                            ctaCompanion
-                                .allowsHitTesting(false)
-                        }
-                        .frame(maxWidth: proxy.size.width >= 820 ? 560 : .infinity)
-                        .padding(.horizontal, 24)
-                        .padding(.bottom, max(52, proxy.safeAreaInsets.bottom + 44))
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                if authOptionsArePresented {
+                    ScrollView {
+                        onboardingContent(in: proxy)
+                            .frame(minHeight: proxy.size.height)
                     }
+                    .scrollBounceBehavior(.basedOnSize)
+                } else {
+                    onboardingContent(in: proxy)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
 
                 brand
                     .accessibilityElement(children: .ignore)
@@ -146,6 +121,48 @@ public struct AVAuthOnboardingScreen<Brand: View, HeroArtwork: View, CTACompanio
             }
         }
         .animation(.spring(response: 0.36, dampingFraction: 0.88), value: authOptionsArePresented)
+    }
+
+    private func onboardingContent(in proxy: GeometryProxy) -> some View {
+        VStack(spacing: 0) {
+            Color.clear
+                .frame(height: max(proxy.safeAreaInsets.top + 44, 62))
+
+            AVOnboardingHeroText(
+                title: title,
+                subtitle: subtitle,
+                subtitleMaxWidth: proxy.size.width >= 820 ? 460 : 316
+            )
+
+            Spacer(minLength: authOptionsArePresented ? 18 : 246)
+
+            if authOptionsArePresented {
+                authPanel
+                    .padding(.horizontal, 14)
+                    .padding(.bottom, max(4, proxy.safeAreaInsets.bottom - 10))
+                    .offset(y: authOptionsDragOffset)
+                    .gesture(
+                        authOptionsDismissGesture,
+                        including: dynamicTypeSize.isAccessibilitySize ? .none : .all
+                    )
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+            } else {
+                AVOnboardingCallToActionSection(
+                    primaryTitle: primaryTitle,
+                    secondaryTitle: secondaryTitle,
+                    primaryAction: primaryAction,
+                    secondaryAction: secondaryAction
+                ) {
+                    ctaCompanion
+                        .allowsHitTesting(false)
+                }
+                .frame(maxWidth: proxy.size.width >= 820 ? 560 : .infinity)
+                .padding(.horizontal, 24)
+                .padding(.bottom, max(52, proxy.safeAreaInsets.bottom + 44))
+                .transition(.move(edge: .bottom).combined(with: .opacity))
+            }
+        }
+        .frame(maxWidth: .infinity)
     }
 
     private var onboardingBackdrop: some View {
