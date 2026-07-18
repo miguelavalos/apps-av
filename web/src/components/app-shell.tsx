@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { AppsAvProductConfig, AppsAvProductLink } from "../config/product-config";
+import type { AppsAvLocale, AppsAvProductConfig, AppsAvProductLink } from "../config/product-config";
 import { AvAppFooter, type AvAppFooterLabels } from "./av-app-footer";
 import { MobileDrawerNav } from "./mobile-drawer-nav";
 
@@ -10,6 +10,7 @@ export interface AppShellProps {
   currentPath?: string;
   footerLabels?: AvAppFooterLabels;
   labels?: AppShellLabels;
+  supportedLocales?: readonly AppsAvLocale[];
 }
 
 export interface AppShellLabels {
@@ -20,7 +21,7 @@ export interface AppShellLabels {
   primaryNavigation?: string;
 }
 
-export function AppShell({ product, navLinks, children, currentPath, footerLabels, labels }: AppShellProps) {
+export function AppShell({ product, navLinks, children, currentPath, footerLabels, labels, supportedLocales }: AppShellProps) {
   const homeHref = navLinks[0]?.href ?? "/";
   const assistantLabel = labels?.assistant ?? product.assistant?.label;
 
@@ -74,7 +75,7 @@ export function AppShell({ product, navLinks, children, currentPath, footerLabel
         </div>
       </header>
       <main className="mx-auto max-w-6xl px-4 py-8">{children}</main>
-      <AvAppFooter labels={footerLabels} product={product} />
+      <AvAppFooter labels={footerLabels} locales={supportedLocales} product={product} />
     </div>
   );
 }

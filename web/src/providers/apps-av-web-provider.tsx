@@ -1,18 +1,27 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { ReactNode } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Toaster } from "sonner";
-import { AppsAvLocaleContext, useManagedAppsAvLocale } from "../lib/locale";
+import { AppsAvLocaleContext, setAppsAvLocale, useManagedAppsAvLocale } from "../lib/locale";
 import type { AppsAvLocale } from "../config/product-config";
 
 export interface AppsAvWebProviderProps {
   children: ReactNode;
+  fixedLocale?: AppsAvLocale;
   initialLocale?: AppsAvLocale;
   queryClient?: QueryClient;
+  supportedLocales?: readonly AppsAvLocale[];
 }
 
-export function AppsAvWebProvider({ children, initialLocale = "en", queryClient }: AppsAvWebProviderProps) {
-  const locale = useManagedAppsAvLocale(initialLocale);
+export function AppsAvWebProvider({ children, fixedLocale, initialLocale = "en", queryClient, supportedLocales }: AppsAvWebProviderProps) {
+  const managedLocale = useManagedAppsAvLocale(initialLocale, supportedLocales);
+  const locale = fixedLocale ?? managedLocale;
+
+  useEffect(() => {
+    if (fixedLocale) {
+      setAppsAvLocale(fixedLocale);
+    }
+  }, [fixedLocale]);
   const [client] = useState(
     () =>
       queryClient ??

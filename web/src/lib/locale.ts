@@ -7,24 +7,30 @@ export function useAppsAvLocale() {
   return useContext(AppsAvLocaleContext);
 }
 
-export function useManagedAppsAvLocale(initialLocale: AppsAvLocale = "en") {
+export function useManagedAppsAvLocale(
+  initialLocale: AppsAvLocale = "en",
+  supportedLocales: readonly AppsAvLocale[] = appsAvLocales
+) {
   const [locale, setLocaleState] = useState<AppsAvLocale>(initialLocale);
 
   useEffect(() => {
     const handleLocaleChange = (event: Event) => {
       const locale = (event as CustomEvent<AppsAvLocale>).detail;
-      if (appsAvLocales.includes(locale)) {
+      if (supportedLocales.includes(locale)) {
         setLocaleState(locale);
       }
     };
 
     window.addEventListener(appsAvLocaleChangeEvent, handleLocaleChange);
-    const locale = getAppsAvLocale(initialLocale);
+    const requestedLocale = getAppsAvLocale(initialLocale);
+    const locale = supportedLocales.includes(requestedLocale)
+      ? requestedLocale
+      : supportedLocales[0] ?? initialLocale;
     applyAppsAvLocale(locale);
     setLocaleState(locale);
 
     return () => window.removeEventListener(appsAvLocaleChangeEvent, handleLocaleChange);
-  }, [initialLocale]);
+  }, [initialLocale, supportedLocales]);
 
   return locale;
 }

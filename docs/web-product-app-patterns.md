@@ -77,6 +77,19 @@ For each product app:
 - run typecheck, tests, production build, and rendered desktop/mobile checks
   before calling the UI aligned.
 
+## Localization Support Pattern
+
+Only advertise locales whose complete user journey is translated. Product apps
+must pass their real `supportedLocales` to `AppsAvWebProvider` and `AppShell`;
+the shared footer hides its language selector when fewer than two locales are
+available. A single-language app should also set `fixedLocale` so a stale
+cookie or `?lang=` parameter cannot change the document language while the
+product copy remains in another language.
+
+Adding a locale means translating navigation, workflows, validation, toasts,
+empty/error states, accessibility labels, and public legal/support pages. Do
+not expose a language button that changes only `html.lang` or shared chrome.
+
 ## Series AV Reference
 
 Series AV is the first web implementation of this pattern. Use its

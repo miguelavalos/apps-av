@@ -20,10 +20,11 @@ export interface AvAppFooterLabels {
 export interface AvAppFooterProps {
   className?: string;
   labels?: AvAppFooterLabels;
+  locales?: readonly AppsAvLocale[];
   product: AppsAvProductConfig;
 }
 
-export function AvAppFooter({ className, labels, product }: AvAppFooterProps) {
+export function AvAppFooter({ className, labels, locales = appsAvLocales, product }: AvAppFooterProps) {
   const activeLocale = useAppsAvLocale();
   const links = getFooterLinks(product, labels, activeLocale);
 
@@ -43,18 +44,20 @@ export function AvAppFooter({ className, labels, product }: AvAppFooterProps) {
             </a>
           ))}
         </div>
-        <nav className="flex flex-wrap items-center gap-1" aria-label={labels?.language ?? "Language"}>
-          {appsAvLocales.map((locale) => (
-            <button
-              key={locale}
-              className={cn("inline-flex min-h-10 cursor-pointer items-center rounded-sm px-2 outline-none transition hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary focus-visible:ring-2 focus-visible:ring-primary/45", locale === activeLocale ? "font-semibold text-foreground" : "")}
-              type="button"
-              onClick={() => setAppsAvLocale(locale)}
-            >
-              {appsAvLocaleNames[locale]}
-            </button>
-          ))}
-        </nav>
+        {locales.length > 1 ? (
+          <nav className="flex flex-wrap items-center gap-1" aria-label={labels?.language ?? "Language"}>
+            {locales.map((locale) => (
+              <button
+                key={locale}
+                className={cn("inline-flex min-h-10 cursor-pointer items-center rounded-sm px-2 outline-none transition hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary focus-visible:ring-2 focus-visible:ring-primary/45", locale === activeLocale ? "font-semibold text-foreground" : "")}
+                type="button"
+                onClick={() => setAppsAvLocale(locale)}
+              >
+                {appsAvLocaleNames[locale]}
+              </button>
+            ))}
+          </nav>
+        ) : null}
       </div>
     </footer>
   );
