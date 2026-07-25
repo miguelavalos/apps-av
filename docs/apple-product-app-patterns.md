@@ -168,6 +168,12 @@ unreliable during a copied-app migration, use an explicit
 `LaunchScreen.storyboard` and verify the installed app contains the compiled
 storyboard plus the referenced image resource.
 
+The shared launch background is the canonical warm-paper light surface. Keep
+both the native launch artwork and `AVConfiguredSplashScreen` in a light color
+scheme even when the saved app appearance is dark. Otherwise an asset catalog
+can select its light-ink variant against that same light surface. Return to the
+saved appearance only after the short identity frame finishes.
+
 The product splash is not the native launch logo. It should use product-specific
 artwork and place Avi in a useful assistant role for that app. For example, a
 music app can show Avi listening; a video or image app can show Avi preparing or

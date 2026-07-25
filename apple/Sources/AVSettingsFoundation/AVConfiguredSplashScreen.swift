@@ -24,6 +24,11 @@ public struct AVConfiguredSplashScreen: View {
                 )
             }
         )
+        // Apps AV launch artwork is authored for the canonical warm-paper
+        // surface. Keep that short identity frame light even when the saved
+        // app appearance is dark, otherwise asset catalogs select the
+        // light-ink logo variant against a light launch background.
+        .environment(\.colorScheme, .light)
     }
 }
 

@@ -812,6 +812,11 @@ struct ProductSplashView: View {
 }
 ```
 
+`AVConfiguredSplashScreen` deliberately renders in a light color scheme. The
+Apps AV launch surface is the canonical warm-paper identity frame, so product
+asset catalogs must select their dark-ink light variant even when the saved app
+appearance is dark.
+
 Use the lower-level `AVSplashScreen` only when the product needs a fully custom
 launch hero while preserving the shared launch layout.
 
