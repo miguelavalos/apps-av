@@ -44,6 +44,6 @@ public struct AVOnboardingHeroText: View {
     }
 
     private var subtitleColor: Color {
-        colorScheme == .dark ? AVBrandColor.textSecondary : brandPalette.ink.opacity(0.76)
+        colorScheme == .dark ? AVBrandColor.textPrimary.opacity(0.74) : brandPalette.ink.opacity(0.76)
     }
 }

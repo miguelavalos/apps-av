@@ -16,7 +16,7 @@ public struct AVSettingsProfileScreenScaffold<Chrome: View, Content: View>: View
         title: String,
         subtitle: String,
         bottomContentPadding: CGFloat = AVAppShellScreenMetric.bottomContentPadding,
-        backgroundStyle: AnyShapeStyle = AnyShapeStyle(AVBrandColor.canvas),
+        backgroundStyle: AnyShapeStyle = AnyShapeStyle(AVBrandSurface.shellBackground),
         showsTopSafeAreaShield: Bool = false,
         showsChrome: Bool = true,
         @ViewBuilder chrome: () -> Chrome,

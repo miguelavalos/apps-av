@@ -3,6 +3,7 @@ import SwiftUI
 
 public struct AVOnboardingCallToActionSection<Companion: View>: View {
     @Environment(\.avBrandPalette) private var brandPalette
+    @Environment(\.colorScheme) private var colorScheme
 
     private let primaryTitle: String
     private let secondaryTitle: String?
@@ -41,7 +42,7 @@ public struct AVOnboardingCallToActionSection<Companion: View>: View {
             if let secondaryTitle, let secondaryAction {
                 Button(secondaryTitle, action: secondaryAction)
                     .font(.system(size: 13, weight: .bold))
-                    .foregroundStyle(brandPalette.ink.opacity(0.84))
+                    .foregroundStyle(secondaryLabelColor)
             }
         }
         .background(alignment: .top) {
@@ -57,6 +58,10 @@ public struct AVOnboardingCallToActionSection<Companion: View>: View {
             .frame(height: 220)
             .offset(y: -18)
         }
+    }
+
+    private var secondaryLabelColor: Color {
+        colorScheme == .dark ? AVBrandColor.textPrimary.opacity(0.82) : brandPalette.ink.opacity(0.84)
     }
 }
 
