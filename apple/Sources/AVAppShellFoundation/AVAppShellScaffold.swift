@@ -2,8 +2,6 @@ import AVBrandFoundation
 import SwiftUI
 
 public struct AVAppShellScaffold<ID: Hashable, Content: View, FooterPlayer: View, AssistantIcon: View>: View {
-    @Environment(\.avBrandPalette) private var brandPalette
-
     private let selectedTabID: ID
     private let tabs: [AVAppShellTab<ID>]
     private let assistantID: ID
@@ -13,13 +11,12 @@ public struct AVAppShellScaffold<ID: Hashable, Content: View, FooterPlayer: View
     private let assistantActiveContextSystemImage: String
     private let footerBackdropHeight: CGFloat
     private let footerPlayerTabSpacing: CGFloat
+    private let footerShowsBackdrop: Bool
     private let onSelectTab: (ID) -> Void
     private let onSelectAssistant: () -> Void
     private let content: () -> Content
     private let footerPlayer: () -> FooterPlayer
     private let assistantIcon: (_ isSelected: Bool) -> AssistantIcon
-
-    @Namespace private var footerSelectionAnimation
 
     public init(
         selectedTabID: ID,
@@ -31,6 +28,7 @@ public struct AVAppShellScaffold<ID: Hashable, Content: View, FooterPlayer: View
         assistantActiveContextSystemImage: String = "waveform",
         footerBackdropHeight: CGFloat,
         footerPlayerTabSpacing: CGFloat,
+        footerShowsBackdrop: Bool = true,
         onSelectTab: @escaping (ID) -> Void,
         onSelectAssistant: @escaping () -> Void,
         @ViewBuilder content: @escaping () -> Content,
@@ -46,6 +44,7 @@ public struct AVAppShellScaffold<ID: Hashable, Content: View, FooterPlayer: View
         self.assistantActiveContextSystemImage = assistantActiveContextSystemImage
         self.footerBackdropHeight = footerBackdropHeight
         self.footerPlayerTabSpacing = footerPlayerTabSpacing
+        self.footerShowsBackdrop = footerShowsBackdrop
         self.onSelectTab = onSelectTab
         self.onSelectAssistant = onSelectAssistant
         self.content = content
@@ -78,6 +77,7 @@ public struct AVAppShellScaffold<ID: Hashable, Content: View, FooterPlayer: View
             assistantActiveContextSystemImage: assistantActiveContextSystemImage,
             footerBackdropHeight: footerConfiguration.backdropHeight,
             footerPlayerTabSpacing: footerConfiguration.playerTabSpacing,
+            footerShowsBackdrop: footerConfiguration.showsBackdrop,
             onSelectTab: onSelectTab,
             onSelectAssistant: onSelectAssistant,
             content: content,
@@ -94,31 +94,98 @@ public struct AVAppShellScaffold<ID: Hashable, Content: View, FooterPlayer: View
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .overlay(alignment: .bottom) {
-            footer
+            AVAppShellFooter(
+                selectedTabID: selectedTabID,
+                tabs: tabs,
+                assistantID: assistantID,
+                assistantAccessibilityLabel: assistantAccessibilityLabel,
+                assistantAccessibilityIdentifier: assistantAccessibilityIdentifier,
+                hasAssistantActiveContext: hasAssistantActiveContext,
+                assistantActiveContextSystemImage: assistantActiveContextSystemImage,
+                footerConfiguration: AVAppShellFooterConfiguration(
+                    backdropHeight: footerBackdropHeight,
+                    playerTabSpacing: footerPlayerTabSpacing,
+                    showsBackdrop: footerShowsBackdrop
+                ),
+                onSelectTab: onSelectTab,
+                onSelectAssistant: onSelectAssistant,
+                footerPlayer: footerPlayer,
+                assistantIcon: assistantIcon
+            )
         }
     }
 
-    private var footer: some View {
-        ZStack(alignment: .bottom) {
-            LinearGradient(
-                stops: [
-                    .init(color: AVBrandColor.footerBackdrop.opacity(0), location: 0),
-                    .init(color: AVBrandColor.footerBackdrop.opacity(0.96), location: 0.42),
-                    .init(color: AVBrandColor.footerBackdrop, location: 1)
-                ],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .frame(height: footerBackdropHeight)
-            .allowsHitTesting(false)
+}
 
-            Rectangle()
-                .fill(AVBrandColor.footerBackdrop)
-                .frame(height: 104)
-                .frame(maxHeight: .infinity, alignment: .bottom)
+public struct AVAppShellFooter<ID: Hashable, FooterPlayer: View, AssistantIcon: View>: View {
+    @Environment(\.avBrandPalette) private var brandPalette
+
+    private let selectedTabID: ID
+    private let tabs: [AVAppShellTab<ID>]
+    private let assistantID: ID
+    private let assistantAccessibilityLabel: String
+    private let assistantAccessibilityIdentifier: String
+    private let hasAssistantActiveContext: Bool
+    private let assistantActiveContextSystemImage: String
+    private let footerConfiguration: AVAppShellFooterConfiguration
+    private let onSelectTab: (ID) -> Void
+    private let onSelectAssistant: () -> Void
+    private let footerPlayer: () -> FooterPlayer
+    private let assistantIcon: (_ isSelected: Bool) -> AssistantIcon
+
+    @Namespace private var footerSelectionAnimation
+
+    public init(
+        selectedTabID: ID,
+        tabs: [AVAppShellTab<ID>],
+        assistantID: ID,
+        assistantAccessibilityLabel: String,
+        assistantAccessibilityIdentifier: String,
+        hasAssistantActiveContext: Bool = false,
+        assistantActiveContextSystemImage: String = "waveform",
+        footerConfiguration: AVAppShellFooterConfiguration = .contentOnly,
+        onSelectTab: @escaping (ID) -> Void,
+        onSelectAssistant: @escaping () -> Void,
+        @ViewBuilder footerPlayer: @escaping () -> FooterPlayer,
+        @ViewBuilder assistantIcon: @escaping (_ isSelected: Bool) -> AssistantIcon
+    ) {
+        self.selectedTabID = selectedTabID
+        self.tabs = tabs
+        self.assistantID = assistantID
+        self.assistantAccessibilityLabel = assistantAccessibilityLabel
+        self.assistantAccessibilityIdentifier = assistantAccessibilityIdentifier
+        self.hasAssistantActiveContext = hasAssistantActiveContext
+        self.assistantActiveContextSystemImage = assistantActiveContextSystemImage
+        self.footerConfiguration = footerConfiguration
+        self.onSelectTab = onSelectTab
+        self.onSelectAssistant = onSelectAssistant
+        self.footerPlayer = footerPlayer
+        self.assistantIcon = assistantIcon
+    }
+
+    public var body: some View {
+        ZStack(alignment: .bottom) {
+            if footerConfiguration.showsBackdrop {
+                LinearGradient(
+                    stops: [
+                        .init(color: AVBrandColor.footerBackdrop.opacity(0), location: 0),
+                        .init(color: AVBrandColor.footerBackdrop.opacity(0.96), location: 0.42),
+                        .init(color: AVBrandColor.footerBackdrop, location: 1)
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .frame(height: footerConfiguration.backdropHeight)
                 .allowsHitTesting(false)
 
-            VStack(spacing: footerPlayerTabSpacing) {
+                Rectangle()
+                    .fill(AVBrandColor.footerBackdrop)
+                    .frame(height: 104)
+                    .frame(maxHeight: .infinity, alignment: .bottom)
+                    .allowsHitTesting(false)
+            }
+
+            VStack(spacing: footerConfiguration.playerTabSpacing) {
                 footerPlayer()
 
                 HStack(spacing: 14) {

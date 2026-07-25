@@ -117,6 +117,11 @@ For a new app, start with the same structure used by Tune AV and Moments AV:
    Build the footer assistant with
    `AVAppShellConfiguredAssistant(experience:accessibilityIdentifier:)` so the
    assistant name and artwork come from `AVCommonAppExperience`.
+   Hybrid hosts that render their screen content outside SwiftUI must embed
+   `AVAppShellFooter` directly with `.floating`; do not place the complete
+   scaffold inside a footer-height host view. The floating configuration keeps
+   the same Tune controls and native materials while leaving the surrounding
+   area transparent, so the product surface remains visible below the footer.
 9. Use `AVAppShellConfiguredBrandHeader` for the top header: settings on the
    left, configured product logo centered, account on the right.
 10. Use `AVAppShellScreenMetric` and `avShellScreenContentPadding` for standard
@@ -214,6 +219,9 @@ verify the shared surfaces in a simulator or UI test fixture:
    appear incorrectly scaled.
 6. Footer product tabs stay on the left and the Avi/assistant entry stays on
    the right.
+   Footer-only hybrid integrations keep the outside area transparent and
+   expose the same tab and assistant accessibility identifiers as the full
+   scaffold.
    On iPad/tablet layouts with a persistent sidebar, do not put a mini player
    or full player in the sidebar. Player chrome belongs to the bottom of the
    content area, with tablet-specific max width/padding and the same compact
