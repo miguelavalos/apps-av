@@ -43,8 +43,11 @@ public struct AVPaywallOfferCard<Avatar: View, RestoreButton: View>: View {
                     Text(title)
                         .font(AVBrandTypography.cardTitle)
                         .foregroundStyle(AVBrandColor.textPrimary)
-                        .lineLimit(1)
+                        .lineLimit(2)
                         .minimumScaleFactor(0.86)
+                        .allowsTightening(true)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .layoutPriority(1)
 
                     Text(detail)
                         .font(AVBrandTypography.captionStrong)
