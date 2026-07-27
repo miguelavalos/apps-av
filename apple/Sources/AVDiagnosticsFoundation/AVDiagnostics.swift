@@ -16,6 +16,7 @@ public struct AVDiagnosticsConfiguration: Sendable {
     public let environment: AVDiagnosticsEnvironment
     public let releaseName: String?
     public let tracesSampleRate: Double
+    public let capturesFailedRequests: Bool
     public let isEnabled: Bool
 
     public init(
@@ -23,12 +24,14 @@ public struct AVDiagnosticsConfiguration: Sendable {
         environment: AVDiagnosticsEnvironment,
         releaseName: String? = nil,
         tracesSampleRate: Double = 0,
+        capturesFailedRequests: Bool = true,
         isEnabled: Bool
     ) {
         self.dsn = dsn.trimmingCharacters(in: .whitespacesAndNewlines)
         self.environment = environment
         self.releaseName = releaseName
         self.tracesSampleRate = tracesSampleRate
+        self.capturesFailedRequests = capturesFailedRequests
         self.isEnabled = isEnabled
     }
 
@@ -119,6 +122,7 @@ public enum AVDiagnostics {
             options.dsn = configuration.dsn
             options.environment = configuration.environment.rawValue
             options.tracesSampleRate = NSNumber(value: max(0, min(configuration.tracesSampleRate, 1)))
+            options.enableCaptureFailedRequests = configuration.capturesFailedRequests
             options.beforeSend = { event in
                 shouldSendSentryEvent(event) ? event : nil
             }

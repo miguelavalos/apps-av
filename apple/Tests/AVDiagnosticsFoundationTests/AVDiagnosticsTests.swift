@@ -4,6 +4,30 @@ import Testing
 
 @Suite("AVDiagnostics")
 struct AVDiagnosticsTests {
+    @Test("Failed-request capture can be disabled per app")
+    func failedRequestCaptureCanBeDisabled() {
+        let configuration = AVDiagnosticsConfiguration(
+            dsn: "https://public@example.invalid/1",
+            environment: .production,
+            capturesFailedRequests: false,
+            isEnabled: true
+        )
+
+        #expect(!configuration.capturesFailedRequests)
+        #expect(configuration.shouldStartProvider)
+    }
+
+    @Test("Failed-request capture remains enabled by default")
+    func failedRequestCaptureDefaultsToEnabled() {
+        let configuration = AVDiagnosticsConfiguration(
+            dsn: "https://public@example.invalid/1",
+            environment: .production,
+            isEnabled: true
+        )
+
+        #expect(configuration.capturesFailedRequests)
+    }
+
     @Test("HTTP 4xx request failures are kept as breadcrumbs")
     func requestFailure4xxIsBreadcrumbOnly() {
         for code in ["request_failed_400", "request_failed_401", "request_failed_404", "request_failed_499"] {
