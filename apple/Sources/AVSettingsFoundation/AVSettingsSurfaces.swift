@@ -194,6 +194,7 @@ public struct AVSettingsSheetScaffold<Content: View>: View {
     private let bottomPadding: CGFloat
     private let backgroundStyle: AnyShapeStyle
     private let closeTitle: String?
+    private let closeSystemImage: String?
     private let closeAccessibilityIdentifier: String?
     private let onClose: (() -> Void)?
     private let content: Content
@@ -205,6 +206,7 @@ public struct AVSettingsSheetScaffold<Content: View>: View {
         bottomPadding: CGFloat = 28,
         backgroundStyle: AnyShapeStyle = AnyShapeStyle(AVBrandColor.footerBackdrop),
         closeTitle: String? = nil,
+        closeSystemImage: String? = nil,
         closeAccessibilityIdentifier: String? = nil,
         onClose: (() -> Void)? = nil,
         @ViewBuilder content: () -> Content
@@ -215,6 +217,7 @@ public struct AVSettingsSheetScaffold<Content: View>: View {
         self.bottomPadding = bottomPadding
         self.backgroundStyle = backgroundStyle
         self.closeTitle = closeTitle
+        self.closeSystemImage = closeSystemImage
         self.closeAccessibilityIdentifier = closeAccessibilityIdentifier
         self.onClose = onClose
         self.content = content()
@@ -238,7 +241,16 @@ public struct AVSettingsSheetScaffold<Content: View>: View {
             .toolbar {
                 if let closeTitle, let onClose {
                     ToolbarItem(placement: .cancellationAction) {
-                        Button(closeTitle, action: onClose)
+                        Button(action: onClose) {
+                            if let closeSystemImage {
+                                Image(systemName: closeSystemImage)
+                                    .font(.system(size: 17, weight: .bold))
+                                    .frame(minWidth: 44, minHeight: 44)
+                            } else {
+                                Text(closeTitle)
+                            }
+                        }
+                        .accessibilityLabel(closeTitle)
                             .padding(.horizontal, 8)
                             .frame(minHeight: 48)
                             .fixedSize(horizontal: true, vertical: false)

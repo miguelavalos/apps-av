@@ -4,6 +4,7 @@ import SwiftUI
 public struct AVPaywallSheetScaffold<Content: View>: View {
     private let navigationTitle: String
     private let closeTitle: String
+    private let closeSystemImage: String?
     private let accessibilityIdentifier: String
     private let horizontalPadding: CGFloat
     private let topPadding: CGFloat
@@ -16,6 +17,7 @@ public struct AVPaywallSheetScaffold<Content: View>: View {
     public init(
         navigationTitle: String,
         closeTitle: String,
+        closeSystemImage: String? = nil,
         accessibilityIdentifier: String = "paywall.sheet",
         horizontalPadding: CGFloat = 22,
         topPadding: CGFloat = 18,
@@ -27,6 +29,7 @@ public struct AVPaywallSheetScaffold<Content: View>: View {
     ) {
         self.navigationTitle = navigationTitle
         self.closeTitle = closeTitle
+        self.closeSystemImage = closeSystemImage
         self.accessibilityIdentifier = accessibilityIdentifier
         self.horizontalPadding = horizontalPadding
         self.topPadding = topPadding
@@ -57,7 +60,16 @@ public struct AVPaywallSheetScaffold<Content: View>: View {
             .avPaywallNavigationTitleDisplayMode()
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(closeTitle, action: onClose)
+                    Button(action: onClose) {
+                        if let closeSystemImage {
+                            Image(systemName: closeSystemImage)
+                                .font(.system(size: 17, weight: .bold))
+                                .frame(minWidth: 44, minHeight: 44)
+                        } else {
+                            Text(closeTitle)
+                        }
+                    }
+                    .accessibilityLabel(closeTitle)
                 }
             }
         }
