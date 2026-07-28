@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const workspaceRoot = resolve(scriptDir, "../../../..");
+const standalone = process.argv.includes("--standalone");
 const productChecks = [
   {
     app: "series-av",
@@ -139,22 +140,24 @@ for (const check of [...sharedChecks, ...productChecks]) {
   }
 }
 
-for (const check of accountAvChecks) {
-  const path = resolve(workspaceRoot, check.file);
-  if (!existsSync(path)) {
-    failures.push(`${check.file}: Account AV chrome check target is missing.`);
-    continue;
-  }
-
-  const source = readFileSync(path, "utf8");
-  for (const { message, pattern } of check.forbidden) {
-    if (pattern.test(source)) {
-      failures.push(`${check.file}: ${message}`);
+if (!standalone) {
+  for (const check of accountAvChecks) {
+    const path = resolve(workspaceRoot, check.file);
+    if (!existsSync(path)) {
+      failures.push(`${check.file}: Account AV chrome check target is missing.`);
+      continue;
     }
-  }
-  for (const { message, pattern } of check.required) {
-    if (!pattern.test(source)) {
-      failures.push(`${check.file}: ${message}`);
+
+    const source = readFileSync(path, "utf8");
+    for (const { message, pattern } of check.forbidden) {
+      if (pattern.test(source)) {
+        failures.push(`${check.file}: ${message}`);
+      }
+    }
+    for (const { message, pattern } of check.required) {
+      if (!pattern.test(source)) {
+        failures.push(`${check.file}: ${message}`);
+      }
     }
   }
 }

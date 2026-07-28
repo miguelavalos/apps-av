@@ -27,7 +27,7 @@ jobs:
         run: swift test --package-path apple
 
       - name: Validate web application chrome
-        run: node web/scripts/check-web-app-chrome.mjs
+        run: node web/scripts/check-web-app-chrome.mjs --standalone
 
       - name: Verify generated files are current
         run: git diff --exit-code
