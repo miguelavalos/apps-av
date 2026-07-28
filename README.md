@@ -4,6 +4,11 @@ Shared libraries for AV apps.
 
 `apps-av` contains cross-app building blocks for AV products such as Tune AV, Moments AV, Series AV, and future apps. Keep product-specific behavior in each app; use this repo for primitives that should behave consistently across products.
 
+## License Posture
+
+No license is granted merely by publication of this repository. Use outside
+the AVALSYS product family requires explicit permission from the maintainers.
+
 Before validating signed native workflows, read [AGENTS.md](AGENTS.md). Shared
 client primitives must stay product-neutral, and signed runtime evidence belongs
 to the private AVALSYS runbooks.
