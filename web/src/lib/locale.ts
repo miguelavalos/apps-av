@@ -22,7 +22,7 @@ export function useManagedAppsAvLocale(
     };
 
     window.addEventListener(appsAvLocaleChangeEvent, handleLocaleChange);
-    const requestedLocale = getAppsAvLocale(initialLocale);
+    const requestedLocale = getAppsAvLocale(initialLocale, supportedLocales);
     const locale = supportedLocales.includes(requestedLocale)
       ? requestedLocale
       : supportedLocales[0] ?? initialLocale;
@@ -45,7 +45,10 @@ function applyAppsAvLocale(locale: AppsAvLocale) {
   document.documentElement.lang = locale;
 }
 
-export function getAppsAvLocale(fallbackLocale: AppsAvLocale = "en") {
+export function getAppsAvLocale(
+  fallbackLocale: AppsAvLocale = "en",
+  supportedLocales: readonly AppsAvLocale[] = appsAvLocales
+) {
   if (typeof document === "undefined") {
     return fallbackLocale;
   }
@@ -58,7 +61,33 @@ export function getAppsAvLocale(fallbackLocale: AppsAvLocale = "en") {
     .find((entry) => entry.startsWith(`${appsAvLocaleCookieName}=`))
     ?.split("=")[1];
 
-  return appsAvLocales.includes(cookie as AppsAvLocale) ? (cookie as AppsAvLocale) : fallbackLocale;
+  if (supportedLocales.includes(cookie as AppsAvLocale)) {
+    return cookie as AppsAvLocale;
+  }
+
+  const preferredLanguages = typeof navigator === "undefined"
+    ? []
+    : navigator.languages?.length
+      ? navigator.languages
+      : navigator.language
+        ? [navigator.language]
+        : [];
+  return resolveInitialAppsAvLocale(preferredLanguages, supportedLocales, fallbackLocale);
+}
+
+export function resolveInitialAppsAvLocale(
+  preferredLanguages: readonly string[],
+  supportedLocales: readonly AppsAvLocale[] = appsAvLocales,
+  fallbackLocale: AppsAvLocale = "en"
+): AppsAvLocale {
+  const primaryLanguage = normalizeLanguageCode(preferredLanguages[0]);
+  if (primaryLanguage && supportedLocales.includes(primaryLanguage as AppsAvLocale)) {
+    return primaryLanguage as AppsAvLocale;
+  }
+
+  return supportedLocales.includes(fallbackLocale)
+    ? fallbackLocale
+    : supportedLocales[0] ?? "en";
 }
 
 export function getAppsAvLocaleFromSearch(search: string | undefined) {
@@ -74,4 +103,9 @@ function getRequestedLocale() {
 
   const locale = new URLSearchParams(window.location.search).get("lang");
   return appsAvLocales.includes(locale as AppsAvLocale) ? (locale as AppsAvLocale) : undefined;
+}
+
+function normalizeLanguageCode(rawValue: string | undefined) {
+  const primarySubtag = rawValue?.trim().replaceAll("_", "-").split("-", 1)[0]?.toLowerCase();
+  return primarySubtag && /^[a-z]+$/.test(primarySubtag) ? primarySubtag : undefined;
 }

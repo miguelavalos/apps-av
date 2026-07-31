@@ -43,6 +43,11 @@ Current products:
 - `AVPaywallFoundation`: shared Apple paywall and upgrade prompt UI primitives
 - `AVHaptics`: semantic haptics for common app events
 
+Localized products also use the
+[Initial App Language contract](docs/initial-app-language.md) from
+`AVSettingsFoundation`: first launch follows the device's primary supported
+language, persists that decision, and falls back to English.
+
 During local development, apps can add the Apple package by path. For app repositories that live next to this package, use the relative path that matches the app project. For example, from `public/tune-av/apps/ios` the package path is `../../../apps-av/apple`.
 
 When publishing a stable release, prefer pinning this package by Git tag.

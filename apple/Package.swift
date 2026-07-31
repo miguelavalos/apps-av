@@ -98,6 +98,10 @@ let package = Package(
             dependencies: ["AVExternalLinkFoundation"]
         ),
         .testTarget(
+            name: "AVSettingsFoundationTests",
+            dependencies: ["AVSettingsFoundation"]
+        ),
+        .testTarget(
             name: "AVProductAccountFoundationTests",
             dependencies: ["AVProductAccountFoundation"]
         )
