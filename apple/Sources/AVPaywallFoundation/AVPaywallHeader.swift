@@ -34,14 +34,12 @@ public struct AVPaywallHeader: View {
             Text(title)
                 .font(.system(size: titleFontSize, weight: .black, design: .rounded))
                 .foregroundStyle(AVBrandColor.textPrimary)
-                .lineLimit(2)
-                .minimumScaleFactor(0.82)
+                .fixedSize(horizontal: false, vertical: true)
 
             Text(subtitle)
                 .font(.system(size: subtitleFontSize, weight: .semibold, design: .rounded))
                 .foregroundStyle(AVBrandColor.textSecondary)
-                .lineLimit(2)
-                .minimumScaleFactor(0.84)
+                .fixedSize(horizontal: false, vertical: true)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }

@@ -15,13 +15,11 @@ public struct AVPlanSummaryPill: View {
             Text(title)
                 .font(.system(size: 12, weight: .black, design: .rounded))
                 .foregroundStyle(AVBrandColor.textPrimary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.8)
+                .fixedSize(horizontal: false, vertical: true)
 
             Text(detail)
                 .font(.system(size: 11, weight: .bold, design: .rounded))
                 .foregroundStyle(AVBrandColor.textSecondary)
-                .lineLimit(2)
                 .fixedSize(horizontal: false, vertical: true)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -68,8 +66,7 @@ public struct AVPlanComparisonCard: View {
                     Text(title)
                         .font(.system(size: 18, weight: .black, design: .rounded))
                         .foregroundStyle(AVBrandColor.textPrimary)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.82)
+                        .fixedSize(horizontal: false, vertical: true)
 
                     Text(subtitle)
                         .font(.system(size: 13, weight: .bold, design: .rounded))
@@ -83,8 +80,7 @@ public struct AVPlanComparisonCard: View {
                     Text(currentLabel)
                         .font(.system(size: 11, weight: .black, design: .rounded))
                         .foregroundStyle(AVBrandColor.textInverse)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.75)
+                        .fixedSize()
                         .padding(.horizontal, AVBrandSpacing.sm)
                         .padding(.vertical, 6)
                         .background(

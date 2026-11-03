@@ -26,14 +26,12 @@ public struct AVPaywallBenefitRow: View {
                 Text(title)
                     .font(.system(size: 14, weight: .black))
                     .foregroundStyle(AVBrandColor.textPrimary)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.82)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 Text(detail)
                     .font(.system(size: 12, weight: .semibold))
                     .foregroundStyle(AVBrandColor.textSecondary)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.84)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
@@ -118,19 +116,28 @@ public struct AVPaywallLegalLinks: View {
     }
 
     public var body: some View {
-        HStack(spacing: AVBrandSpacing.xxl) {
-            ForEach(links) { link in
-                Button(action: link.action) {
-                    Text(link.title)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.78)
-                        .allowsTightening(true)
-                }
-                .accessibilityIdentifier(link.accessibilityIdentifier)
+        ViewThatFits(in: .horizontal) {
+            HStack(spacing: AVBrandSpacing.xxl) {
+                linkButtons
+            }
+
+            VStack(spacing: AVBrandSpacing.xs) {
+                linkButtons
             }
         }
         .font(AVBrandTypography.captionStrong)
         .foregroundStyle(brandPalette.accent)
+    }
+
+    private var linkButtons: some View {
+        ForEach(links) { link in
+            Button(action: link.action) {
+                Text(link.title)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .accessibilityIdentifier(link.accessibilityIdentifier)
+        }
     }
 }
 
@@ -157,29 +164,37 @@ public struct AVPaywallFooterActions: View {
     }
 
     public var body: some View {
-        HStack(alignment: .firstTextBaseline, spacing: 9) {
-            ForEach(Array(actions.enumerated()), id: \.element.id) { item in
-                let index = item.offset
-                let action = item.element
+        ViewThatFits(in: .horizontal) {
+            HStack(alignment: .firstTextBaseline, spacing: 9) {
+                ForEach(Array(actions.enumerated()), id: \.element.id) { item in
+                    if item.offset > 0 {
+                        Text("·")
+                            .foregroundStyle(AVBrandColor.textSecondary)
+                    }
 
-                if index > 0 {
-                    Text("·")
-                        .foregroundStyle(AVBrandColor.textSecondary)
+                    actionButton(item.element)
                 }
+            }
 
-                Button(action: action.action) {
-                    Text(action.title)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.78)
-                        .allowsTightening(true)
+            VStack(spacing: AVBrandSpacing.xs) {
+                ForEach(actions) { action in
+                    actionButton(action)
                 }
-                .buttonStyle(.plain)
-                .accessibilityIdentifier(action.accessibilityIdentifier)
             }
         }
         .font(AVBrandTypography.captionStrong)
         .foregroundStyle(brandPalette.accent)
         .frame(maxWidth: .infinity, alignment: .center)
+    }
+
+    private func actionButton(_ action: AVPaywallFooterAction) -> some View {
+        Button(action: action.action) {
+            Text(action.title)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier(action.accessibilityIdentifier)
     }
 }
 

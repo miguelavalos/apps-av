@@ -63,6 +63,7 @@ public struct AVUpgradePromptSheet: View {
                     Text(title)
                         .font(.system(size: 22, weight: .bold))
                         .foregroundStyle(AVBrandColor.textPrimary)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
 
@@ -77,9 +78,9 @@ public struct AVUpgradePromptSheet: View {
                     Text(primaryButtonTitle)
                         .font(AVBrandTypography.button)
                         .foregroundStyle(AVBrandColor.textInverse)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.78)
-                        .allowsTightening(true)
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding(.horizontal, AVBrandSpacing.lg)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, AVBrandSpacing.lg)
                         .background(brandPalette.accent, in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
@@ -91,9 +92,9 @@ public struct AVUpgradePromptSheet: View {
                     Text(dismissButtonTitle)
                         .font(AVBrandTypography.button)
                         .foregroundStyle(AVBrandColor.textPrimary)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.78)
-                        .allowsTightening(true)
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding(.horizontal, AVBrandSpacing.lg)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, AVBrandSpacing.lg)
                         .background(AVBrandColor.mutedSurface, in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
