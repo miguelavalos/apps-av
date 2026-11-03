@@ -65,9 +65,9 @@ public struct AVAviCompanionCard<Avatar: View>: View {
                 Text(detail)
                     .font(AVBrandTypography.captionStrong)
                     .foregroundStyle(AVBrandColor.textSecondary)
-                    .lineLimit(3)
                     .fixedSize(horizontal: false, vertical: true)
             }
+            .layoutPriority(1)
 
             Spacer(minLength: AVBrandSpacing.xs)
 

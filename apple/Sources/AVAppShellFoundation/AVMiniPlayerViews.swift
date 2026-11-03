@@ -44,21 +44,33 @@ public struct AVMiniPlayerScaffold<Artwork: View, Controls: View>: View {
             artwork
 
             VStack(alignment: .leading, spacing: 2) {
-                Text(title)
-                    .font(.subheadline.weight(.bold))
-                    .lineLimit(1)
-                    .foregroundStyle(AVBrandColor.textPrimary)
+                ViewThatFits(in: .horizontal) {
+                    titleText
+                        .font(.subheadline.weight(.bold))
+                        .lineLimit(1)
+
+                    titleText
+                        .font(.footnote.weight(.bold))
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
 
                 Text(subtitle)
                     .font(.caption.weight(.semibold))
                     .foregroundStyle(isSubtitleHighlighted ? brandPalette.accent : AVBrandColor.textSecondary)
                     .lineLimit(1)
+                    .minimumScaleFactor(0.75)
+                    .allowsTightening(true)
 
                 Text(detail)
                     .font(.caption2.weight(.medium))
                     .foregroundStyle(AVBrandColor.textSecondary.opacity(0.88))
                     .lineLimit(1)
+                    .minimumScaleFactor(0.75)
+                    .allowsTightening(true)
             }
+            .layoutPriority(1)
 
             Spacer(minLength: 8)
 
@@ -89,6 +101,12 @@ public struct AVMiniPlayerScaffold<Artwork: View, Controls: View>: View {
         .accessibilityLabel(accessibilityLabel)
         .accessibilityHint(accessibilityHint)
         .accessibilityIdentifier(accessibilityIdentifier)
+    }
+
+    private var titleText: some View {
+        Text(title)
+            .foregroundStyle(AVBrandColor.textPrimary)
+            .allowsTightening(true)
     }
 }
 
@@ -269,7 +287,8 @@ public struct AVExpandedFooterPlayerScaffold<Artwork: View, Controls: View>: Vie
                 .foregroundStyle(isSubtitleHighlighted ? brandPalette.accent : AVBrandColor.textSecondary)
                 .multilineTextAlignment(.center)
                 .lineLimit(1)
-                .truncationMode(.tail)
+                .minimumScaleFactor(0.7)
+                .allowsTightening(true)
                 .frame(height: 19, alignment: .center)
 
             Text(title)
@@ -277,8 +296,8 @@ public struct AVExpandedFooterPlayerScaffold<Artwork: View, Controls: View>: Vie
                 .foregroundStyle(AVBrandColor.textPrimary)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
-                .minimumScaleFactor(0.86)
-                .truncationMode(.tail)
+                .minimumScaleFactor(0.7)
+                .allowsTightening(true)
                 .frame(height: 40, alignment: .top)
         }
         .frame(maxWidth: .infinity, alignment: .center)
@@ -291,8 +310,8 @@ public struct AVExpandedFooterPlayerScaffold<Artwork: View, Controls: View>: Vie
             .foregroundStyle(AVBrandColor.textSecondary)
             .multilineTextAlignment(.center)
             .lineLimit(1)
-            .minimumScaleFactor(0.78)
-            .truncationMode(.tail)
+            .minimumScaleFactor(0.7)
+            .allowsTightening(true)
             .frame(height: 18, alignment: .center)
             .frame(maxWidth: .infinity, alignment: .center)
             .contentShape(Rectangle())
