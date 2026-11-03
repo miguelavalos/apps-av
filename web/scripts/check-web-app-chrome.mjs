@@ -104,6 +104,8 @@ const accountAvChecks = [
   }
 ];
 
+const selectStyleChoicePattern = /<\s*select\b|role=["'](?:listbox|combobox)["']/;
+
 const forbiddenPatterns = [
   {
     pattern: /accountArea\s*=/,
@@ -169,8 +171,10 @@ for (const check of settingsChecks) {
   }
 
   const source = readFileSync(path, "utf8");
-  if (!/\bSettingsSelect\b/.test(source)) {
-    failures.push(`${check.file}: Product settings choices must use shared SettingsSelect.`);
+  const hasSelectStyleChoice = selectStyleChoicePattern.test(source);
+  const usesSharedSettingsSelect = /\bSettingsSelect\b/.test(source);
+  if (hasSelectStyleChoice && !usesSharedSettingsSelect) {
+    failures.push(`${check.file}: Product settings select-style choices must use shared SettingsSelect.`);
   }
   if (/<\s*select\b/.test(source)) {
     failures.push(`${check.file}: Product settings must not add local <select> styling; use SettingsSelect.`);
