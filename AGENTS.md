@@ -58,3 +58,24 @@ Mandatory rules:
 
 If the private repo is unavailable, stop and say that the authoritative runbook
 cannot be checked. Do not substitute a guessed local workflow.
+
+## Verification
+
+Before opening a pull request, run once from the repository root:
+
+```bash
+swift test --package-path apple
+```
+
+That is the command behind the required check "Test Swift packages". The
+web chrome validation, the generated-files check and release builds belong
+to CI and the required checks; do not repeat them locally unless the change
+needs it.
+
+## Review
+
+The independent review that sets `agent-review` follows
+[`project-bootstrap/docs/REVIEW.md`](https://github.com/miguelavalos/project-bootstrap/blob/main/docs/REVIEW.md)
+(`~/github/project-bootstrap/docs/REVIEW.md` on agent machines). The
+reviewer is a fresh agent that did not write the change, and its review
+comment starts with `PASS` or `BLOCK`.
