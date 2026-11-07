@@ -3,6 +3,7 @@ import SwiftUI
 
 public struct AVAppShellIconButton: View {
     @Environment(\.avBrandPalette) private var brandPalette
+    @AVScaledFontSize private var iconSize: CGFloat
 
     private let systemName: String
     private let accessibilityLabel: String
@@ -28,14 +29,15 @@ public struct AVAppShellIconButton: View {
         self.isSelected = isSelected
         self.fontSize = fontSize
         self.action = action
+        _iconSize = AVScaledFontSize(wrappedValue: fontSize)
     }
 
     public var body: some View {
         Button(action: action) {
             Image(systemName: systemName)
-                .font(.system(size: fontSize, weight: .semibold))
+                .font(.system(size: iconSize, weight: .semibold))
                 .foregroundStyle(isSelected ? brandPalette.accent : AVBrandColor.textPrimary)
-                .frame(width: 36, height: 36)
+                .frame(width: 36 + $iconSize, height: 36 + $iconSize)
                 .background(isSelected ? AVBrandColor.footerGlassSelected : AVBrandColor.elevatedSurface, in: Circle())
                 .overlay {
                     Circle()

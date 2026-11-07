@@ -662,6 +662,26 @@ Circle()
 
 The product includes generic tokens for color, surface gradients, typography, spacing, radius, icon sizing, and motion. Use semantic names such as `ink`, `canvas`, `accentBase`, `textPrimary`, and `accentGradient` in Apps AV. Product-specific apps should keep their local theme adapters when they need app-specific names.
 
+Fixed point sizes follow the text size chosen in Settings (Dynamic Type) through
+`avScaledFont` and `AVScaledFontSize`: `Font.system(size:)` does not scale, so both scale
+the size with `ScaledMetric` along the system text style whose default size is closest
+(`AVTypeScale.textStyle(for:)`), which keeps the rendering at the default size unchanged and
+respects a `.dynamicTypeSize(...)` cap on a parent. Use the modifier where
+`.font(.system(size:))` was used, and the property wrapper where a view needs the number,
+such as an icon whose circle grows by the points the icon gains:
+
+```swift
+Text(title)
+    .avScaledFont(size: 14, weight: .bold)
+    .fixedSize(horizontal: false, vertical: true)
+
+@AVScaledFontSize private var iconSize: CGFloat = 13
+
+Image(systemName: "sparkles")
+    .font(.system(size: iconSize, weight: .black))
+    .frame(width: 28 + $iconSize, height: 28 + $iconSize)
+```
+
 Brand token ownership is intentionally narrow:
 
 | Type | Role |

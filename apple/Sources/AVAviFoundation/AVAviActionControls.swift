@@ -2,6 +2,8 @@ import AVBrandFoundation
 import SwiftUI
 
 public struct AVAviActionChip: View {
+    @AVScaledFontSize private var fontSize: CGFloat = 13
+
     private let title: String
     private let systemImage: String
     private let action: () -> Void
@@ -16,16 +18,15 @@ public struct AVAviActionChip: View {
         Button(action: action) {
             HStack(spacing: AVBrandSpacing.xs) {
                 Image(systemName: systemImage)
-                    .font(.system(size: 13, weight: .black))
+                    .font(.system(size: fontSize, weight: .black))
 
                 Text(title)
-                    .font(.system(size: 13, weight: .black))
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.82)
+                    .font(.system(size: fontSize, weight: .black))
+                    .fixedSize(horizontal: false, vertical: true)
             }
             .foregroundStyle(AVBrandColor.textPrimary)
             .padding(.horizontal, AVBrandSpacing.lg)
-            .frame(height: 38)
+            .frame(minHeight: 38 + $fontSize)
             .background(AVBrandColor.cardSurface, in: Capsule(style: .continuous))
             .overlay {
                 Capsule(style: .continuous)
@@ -38,6 +39,7 @@ public struct AVAviActionChip: View {
 
 public struct AVAviPreviewStep: View {
     @Environment(\.avBrandPalette) private var brandPalette
+    @AVScaledFontSize private var indexSize: CGFloat = 12
 
     private let index: Int
     private let title: String
@@ -50,13 +52,13 @@ public struct AVAviPreviewStep: View {
     public var body: some View {
         HStack(spacing: AVBrandSpacing.sm) {
             Text("\(index)")
-                .font(.system(size: 12, weight: .black))
+                .font(.system(size: indexSize, weight: .black))
                 .foregroundStyle(brandPalette.accent)
-                .frame(width: 24, height: 24)
+                .frame(width: 24 + $indexSize, height: 24 + $indexSize)
                 .background(brandPalette.accent.opacity(0.12), in: Circle())
 
             Text(title)
-                .font(AVBrandTypography.captionStrong)
+                .avScaledFont(size: 13, weight: .bold)
                 .foregroundStyle(AVBrandColor.textPrimary)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .fixedSize(horizontal: false, vertical: true)
@@ -73,6 +75,7 @@ public struct AVAviPreviewStep: View {
 
 public struct AVAviPreviewChip: View {
     @Environment(\.avBrandPalette) private var brandPalette
+    @AVScaledFontSize private var fontSize: CGFloat = 11
 
     private let title: String
     private let systemImage: String
@@ -84,13 +87,12 @@ public struct AVAviPreviewChip: View {
 
     public var body: some View {
         Label(title, systemImage: systemImage)
-            .font(.system(size: 11, weight: .black))
-            .lineLimit(1)
-            .minimumScaleFactor(0.78)
+            .font(.system(size: fontSize, weight: .black))
+            .fixedSize(horizontal: false, vertical: true)
             .foregroundStyle(brandPalette.accent)
             .labelStyle(.titleAndIcon)
             .padding(.horizontal, AVBrandSpacing.sm)
-            .frame(height: 30)
+            .frame(minHeight: 30 + $fontSize)
             .background(brandPalette.accent.opacity(0.1), in: Capsule(style: .continuous))
             .overlay {
                 Capsule(style: .continuous)
@@ -101,6 +103,7 @@ public struct AVAviPreviewChip: View {
 
 public struct AVAviInfoRow: View {
     @Environment(\.avBrandPalette) private var brandPalette
+    @AVScaledFontSize private var iconSize: CGFloat = 15
 
     private let title: String
     private let detail: String
@@ -117,18 +120,19 @@ public struct AVAviInfoRow: View {
     public var body: some View {
         HStack(alignment: .top, spacing: AVBrandSpacing.md) {
             Image(systemName: systemImage)
-                .font(.system(size: 15, weight: .semibold))
+                .font(.system(size: iconSize, weight: .semibold))
                 .foregroundStyle(brandPalette.accent)
-                .frame(width: 28, height: 28)
+                .frame(width: 28 + $iconSize, height: 28 + $iconSize)
                 .background(brandPalette.accent.opacity(0.12), in: Circle())
 
             VStack(alignment: .leading, spacing: AVBrandSpacing.xxs) {
                 Text(title)
-                    .font(.system(size: 14, weight: .bold))
+                    .avScaledFont(size: 14, weight: .bold)
                     .foregroundStyle(AVBrandColor.textPrimary)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 Text(detail)
-                    .font(AVBrandTypography.caption)
+                    .avScaledFont(size: 13, weight: .medium)
                     .foregroundStyle(AVBrandColor.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -185,6 +189,8 @@ public struct AVAviActionInfoRow: View {
 
 public struct AVAviSuggestedItemRow<Trailing: View>: View {
     @Environment(\.avBrandPalette) private var brandPalette
+    @AVScaledFontSize private var playIconSize: CGFloat = 12
+    @AVScaledFontSize private var detailsIconSize: CGFloat = 17
 
     private let title: String
     private let detail: String
@@ -219,9 +225,9 @@ public struct AVAviSuggestedItemRow<Trailing: View>: View {
         HStack(spacing: AVBrandSpacing.sm) {
             Button(action: playAction) {
                 Image(systemName: "play.fill")
-                    .font(.system(size: 12, weight: .bold))
+                    .font(.system(size: playIconSize, weight: .bold))
                     .foregroundStyle(AVBrandColor.textInverse)
-                    .frame(width: 32, height: 32)
+                    .frame(width: 32 + $playIconSize, height: 32 + $playIconSize)
                     .background(brandPalette.accent, in: Circle())
             }
             .buttonStyle(.plain)
@@ -229,15 +235,15 @@ public struct AVAviSuggestedItemRow<Trailing: View>: View {
 
             VStack(alignment: .leading, spacing: AVBrandSpacing.xxs) {
                 Text(title)
-                    .font(.system(size: 14, weight: .bold))
+                    .avScaledFont(size: 14, weight: .bold)
                     .foregroundStyle(AVBrandColor.textPrimary)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 HStack(spacing: 5) {
                     Text(detail)
-                        .font(.system(size: 12, weight: .semibold))
+                        .avScaledFont(size: 12, weight: .semibold)
                         .foregroundStyle(AVBrandColor.textSecondary)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
 
                     trailing
                 }
@@ -246,9 +252,9 @@ public struct AVAviSuggestedItemRow<Trailing: View>: View {
 
             Button(action: detailsAction) {
                 Image(systemName: "info.circle")
-                    .font(.system(size: 17, weight: .semibold))
+                    .font(.system(size: detailsIconSize, weight: .semibold))
                     .foregroundStyle(AVBrandColor.textSecondary)
-                    .frame(width: 34, height: 34)
+                    .frame(width: 34 + $detailsIconSize, height: 34 + $detailsIconSize)
             }
             .buttonStyle(.plain)
             .accessibilityLabel(detailsAccessibilityLabel)
@@ -284,6 +290,8 @@ public extension AVAviSuggestedItemRow where Trailing == EmptyView {
 }
 
 public struct AVAviActionButton: View {
+    @AVScaledFontSize private var fontSize: CGFloat = 14
+
     private let title: String
     private let systemImage: String
     private let action: () -> Void
@@ -297,9 +305,12 @@ public struct AVAviActionButton: View {
     public var body: some View {
         Button(action: action) {
             Label(title, systemImage: systemImage)
-                .font(.system(size: 14, weight: .bold))
+                .font(.system(size: fontSize, weight: .bold))
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.horizontal, AVBrandSpacing.md)
                 .frame(maxWidth: .infinity)
-                .frame(height: 48)
+                .frame(minHeight: 48 + $fontSize)
                 .foregroundStyle(AVBrandColor.textPrimary)
                 .background(AVBrandColor.elevatedSurface, in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
                 .overlay {
@@ -313,6 +324,7 @@ public struct AVAviActionButton: View {
 
 public struct AVAviPrimaryActionButton: View {
     @Environment(\.avBrandPalette) private var brandPalette
+    @AVScaledFontSize private var fontSize: CGFloat = 13
 
     private let title: String
     private let systemImage: String
@@ -335,16 +347,17 @@ public struct AVAviPrimaryActionButton: View {
         Button(action: action) {
             HStack(spacing: AVBrandSpacing.xs) {
                 Image(systemName: systemImage)
-                    .font(.system(size: 13, weight: .black))
+                    .font(.system(size: fontSize, weight: .black))
 
                 Text(title)
-                    .font(.system(size: 13, weight: .black))
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.82)
+                    .font(.system(size: fontSize, weight: .black))
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             .foregroundStyle(AVBrandColor.textInverse)
+            .padding(.horizontal, AVBrandSpacing.md)
             .frame(maxWidth: .infinity)
-            .frame(height: 44)
+            .frame(minHeight: 44 + $fontSize)
             .background(brandPalette.accent, in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
         }
         .buttonStyle(.plain)
@@ -355,6 +368,7 @@ public struct AVAviPrimaryActionButton: View {
 
 public struct AVAviQuickActionButton: View {
     @Environment(\.avBrandPalette) private var brandPalette
+    @AVScaledFontSize private var fontSize: CGFloat = 14
 
     private let title: String
     private let systemImage: String
@@ -379,10 +393,13 @@ public struct AVAviQuickActionButton: View {
     public var body: some View {
         Button(action: action) {
             Label(title, systemImage: systemImage)
-                .font(.system(size: 14, weight: .black))
+                .font(.system(size: fontSize, weight: .black))
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
                 .foregroundStyle(isSelected ? brandPalette.accent : AVBrandColor.textPrimary)
+                .padding(.horizontal, AVBrandSpacing.md)
                 .frame(maxWidth: .infinity)
-                .frame(height: 44)
+                .frame(minHeight: 44 + $fontSize)
                 .background(AVBrandColor.elevatedSurface, in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
                 .overlay {
                     RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous)
@@ -396,6 +413,7 @@ public struct AVAviQuickActionButton: View {
 
 public struct AVAviIconActionButton: View {
     @Environment(\.avBrandPalette) private var brandPalette
+    @AVScaledFontSize private var iconSize: CGFloat = 16
 
     private let systemImage: String
     private let isSelected: Bool
@@ -420,9 +438,9 @@ public struct AVAviIconActionButton: View {
     public var body: some View {
         Button(action: action) {
             Image(systemName: systemImage)
-                .font(.system(size: 16, weight: .black))
+                .font(.system(size: iconSize, weight: .black))
                 .foregroundStyle(isSelected ? brandPalette.accent : AVBrandColor.textPrimary)
-                .frame(width: 44, height: 44)
+                .frame(width: 44 + $iconSize, height: 44 + $iconSize)
                 .background(AVBrandColor.elevatedSurface, in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
                 .overlay {
                     RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous)
@@ -450,12 +468,11 @@ public struct AVAviPromptButton: View {
         Button(action: action) {
             HStack(spacing: AVBrandSpacing.xs) {
                 Image(systemName: systemImage)
-                    .font(.system(size: 13, weight: .black))
+                    .avScaledFont(size: 13, weight: .black)
 
                 Text(title)
-                    .font(.system(size: 13, weight: .black))
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.78)
+                    .avScaledFont(size: 13, weight: .black)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 Spacer(minLength: 0)
             }
@@ -529,6 +546,8 @@ public enum AVAviPanelOptionButtonStyle {
 
 public struct AVAviPanelOptionButton: View {
     @Environment(\.avBrandPalette) private var brandPalette
+    @AVScaledFontSize private var iconFontSize: CGFloat
+    @AVScaledFontSize private var titleFontSize: CGFloat
 
     private let title: String
     private let systemImage: String
@@ -551,30 +570,31 @@ public struct AVAviPanelOptionButton: View {
         self.style = style
         self.accessibilityIdentifier = accessibilityIdentifier
         self.action = action
+        _iconFontSize = AVScaledFontSize(wrappedValue: style.iconFontSize)
+        _titleFontSize = AVScaledFontSize(wrappedValue: style.titleFontSize)
     }
 
     public var body: some View {
         Button(role: role, action: action) {
             HStack(spacing: style.spacing) {
                 Image(systemName: systemImage)
-                    .font(.system(size: style.iconFontSize, weight: .bold))
+                    .font(.system(size: iconFontSize, weight: .bold))
                     .foregroundStyle(iconColor)
-                    .frame(width: style.iconSize, height: style.iconSize)
+                    .frame(width: style.iconSize + $iconFontSize, height: style.iconSize + $iconFontSize)
                     .background(iconColor.opacity(0.1), in: Circle())
 
                 Text(title)
-                    .font(.system(size: style.titleFontSize, weight: .bold))
+                    .font(.system(size: titleFontSize, weight: .bold))
                     .foregroundStyle(AVBrandColor.textPrimary)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.76)
+                    .fixedSize(horizontal: false, vertical: true)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 10, weight: .black))
+                    .avScaledFont(size: 10, weight: .black)
                     .foregroundStyle(AVBrandColor.textSecondary.opacity(0.7))
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .frame(height: style.height)
+            .frame(minHeight: style.height + $titleFontSize)
             .padding(.horizontal, style.horizontalPadding)
             .background(AVBrandColor.cardSurface.opacity(0.92), in: RoundedRectangle(cornerRadius: 15, style: .continuous))
             .overlay {
@@ -593,6 +613,8 @@ public struct AVAviPanelOptionButton: View {
 
 public struct AVAviPreviewPrimaryButton: View {
     @Environment(\.avBrandPalette) private var brandPalette
+    @AVScaledFontSize private var iconSize: CGFloat = 16
+    @AVScaledFontSize private var titleSize: CGFloat = 16
 
     private let title: String
     private let systemImage: String
@@ -615,23 +637,22 @@ public struct AVAviPreviewPrimaryButton: View {
         Button(action: action) {
             HStack(spacing: AVBrandSpacing.md) {
                 Image(systemName: systemImage)
-                    .font(.system(size: 16, weight: .black))
-                    .frame(width: 30, height: 30)
+                    .font(.system(size: iconSize, weight: .black))
+                    .frame(width: 30 + $iconSize, height: 30 + $iconSize)
                     .background(AVBrandColor.textInverse.opacity(0.16), in: Circle())
 
                 Text(title)
-                    .font(.system(size: 16, weight: .black, design: .rounded))
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.82)
+                    .font(.system(size: titleSize, weight: .black, design: .rounded))
+                    .fixedSize(horizontal: false, vertical: true)
 
                 Spacer(minLength: 0)
 
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 12, weight: .black))
+                    .avScaledFont(size: 12, weight: .black)
             }
             .foregroundStyle(AVBrandColor.textInverse)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .frame(height: 52)
+            .frame(minHeight: 52 + $titleSize)
             .padding(.horizontal, AVBrandSpacing.lg)
             .background(brandPalette.accent, in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
             .shadow(color: brandPalette.accent.opacity(0.24), radius: 12, y: 7)
@@ -644,6 +665,7 @@ public struct AVAviPreviewPrimaryButton: View {
 
 public struct AVAviPreviewCapabilityRow: View {
     @Environment(\.avBrandPalette) private var brandPalette
+    @AVScaledFontSize private var iconSize: CGFloat = 13
 
     private let systemImage: String
     private let title: String
@@ -658,20 +680,19 @@ public struct AVAviPreviewCapabilityRow: View {
     public var body: some View {
         HStack(alignment: .top, spacing: AVBrandSpacing.md) {
             Image(systemName: systemImage)
-                .font(.system(size: 13, weight: .black))
+                .font(.system(size: iconSize, weight: .black))
                 .foregroundStyle(brandPalette.accent)
-                .frame(width: 30, height: 30)
+                .frame(width: 30 + $iconSize, height: 30 + $iconSize)
                 .background(brandPalette.accent.opacity(0.1), in: Circle())
 
             VStack(alignment: .leading, spacing: 3) {
                 Text(title)
-                    .font(.system(size: 14, weight: .black, design: .rounded))
+                    .avScaledFont(size: 14, weight: .black, design: .rounded)
                     .foregroundStyle(AVBrandColor.textPrimary)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.82)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 Text(detail)
-                    .font(.system(size: 12, weight: .semibold, design: .rounded))
+                    .avScaledFont(size: 12, weight: .semibold, design: .rounded)
                     .foregroundStyle(AVBrandColor.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -683,6 +704,8 @@ public struct AVAviPreviewCapabilityRow: View {
 
 public struct AVAviPreviewSecondaryButton: View {
     @Environment(\.avBrandPalette) private var brandPalette
+    @AVScaledFontSize private var iconSize: CGFloat = 16
+    @AVScaledFontSize private var titleSize: CGFloat = 13
 
     private let title: String
     private let systemImage: String
@@ -705,21 +728,20 @@ public struct AVAviPreviewSecondaryButton: View {
         Button(action: action) {
             VStack(spacing: AVBrandSpacing.xs) {
                 Image(systemName: systemImage)
-                    .font(.system(size: 16, weight: .black))
+                    .font(.system(size: iconSize, weight: .black))
                     .foregroundStyle(brandPalette.accent)
-                    .frame(width: 30, height: 30)
+                    .frame(width: 30 + $iconSize, height: 30 + $iconSize)
                     .background(brandPalette.accent.opacity(0.1), in: Circle())
 
                 Text(title)
-                    .font(.system(size: 13, weight: .black, design: .rounded))
+                    .font(.system(size: titleSize, weight: .black, design: .rounded))
                     .foregroundStyle(AVBrandColor.textPrimary)
-                    .lineLimit(2)
                     .multilineTextAlignment(.center)
-                    .minimumScaleFactor(0.82)
+                    .fixedSize(horizontal: false, vertical: true)
                     .frame(maxWidth: .infinity)
             }
             .frame(maxWidth: .infinity)
-            .frame(height: 76)
+            .frame(minHeight: 76 + $iconSize + $titleSize)
             .padding(.horizontal, AVBrandSpacing.sm)
             .background(AVBrandColor.cardSurface, in: RoundedRectangle(cornerRadius: AVBrandRadius.md, style: .continuous))
             .overlay {

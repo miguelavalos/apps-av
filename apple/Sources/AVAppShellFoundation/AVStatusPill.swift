@@ -32,9 +32,10 @@ public struct AVStatusPill: View {
 
     public var body: some View {
         Text(displayTitle)
-            .font(.system(size: fontSize, weight: .semibold))
+            .avScaledFont(size: fontSize, weight: .semibold)
             .foregroundStyle(brandPalette.accent)
-            .lineLimit(1)
+            .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
             .padding(.horizontal, horizontalPadding)
             .padding(.vertical, verticalPadding)
             .background(brandPalette.accent.opacity(fillOpacity), in: Capsule())
