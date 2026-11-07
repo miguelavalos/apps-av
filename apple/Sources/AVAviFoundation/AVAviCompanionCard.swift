@@ -3,6 +3,7 @@ import SwiftUI
 
 public struct AVAviCompanionCard<Avatar: View>: View {
     @Environment(\.avBrandPalette) private var brandPalette
+    @AVScaledFontSize private var actionIconSize: CGFloat = 15
 
     private let title: String
     private let detail: String
@@ -59,11 +60,12 @@ public struct AVAviCompanionCard<Avatar: View>: View {
 
             VStack(alignment: .leading, spacing: 5) {
                 Text(title)
-                    .font(.system(size: 15, weight: .black))
+                    .avScaledFont(size: 15, weight: .black)
                     .foregroundStyle(AVBrandColor.textPrimary)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 Text(detail)
-                    .font(AVBrandTypography.captionStrong)
+                    .avScaledFont(size: 13, weight: .bold)
                     .foregroundStyle(AVBrandColor.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -73,9 +75,9 @@ public struct AVAviCompanionCard<Avatar: View>: View {
 
             Button(action: action) {
                 Image(systemName: actionSystemImage)
-                    .font(.system(size: 15, weight: .black))
+                    .font(.system(size: actionIconSize, weight: .black))
                     .foregroundStyle(brandPalette.ink)
-                    .frame(width: 42, height: 42)
+                    .frame(width: 42 + $actionIconSize, height: 42 + $actionIconSize)
                     .background(brandPalette.accent, in: Circle())
             }
             .buttonStyle(.plain)

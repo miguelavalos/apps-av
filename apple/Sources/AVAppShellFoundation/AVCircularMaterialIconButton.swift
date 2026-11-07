@@ -34,7 +34,7 @@ public struct AVCircularMaterialIconButton: View {
     public var body: some View {
         Button(action: action) {
             Image(systemName: systemImage)
-                .font(.system(size: fontSize, weight: fontWeight))
+                .avScaledFont(size: fontSize, weight: fontWeight)
                 .foregroundStyle(AVBrandColor.textSecondary.opacity(isEnabled ? 1 : 0.28))
                 .frame(width: size, height: size)
                 .background(.ultraThinMaterial.opacity(isEnabled ? 1 : 0.45), in: Circle())
@@ -47,6 +47,10 @@ public struct AVCircularMaterialIconButton: View {
         .disabled(!isEnabled)
         .applyAccessibilityLabel(accessibilityLabel)
         .accessibilityIdentifier(accessibilityIdentifier)
+        // The circle keeps the `size` the host's control row is built on (the player's 54 pt
+        // circles sit five in a row): past the second accessibility size the icon would no
+        // longer fit inside it.
+        .dynamicTypeSize(...DynamicTypeSize.accessibility2)
     }
 }
 

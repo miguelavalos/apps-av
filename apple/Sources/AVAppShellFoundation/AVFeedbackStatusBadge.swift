@@ -3,12 +3,12 @@ import SwiftUI
 
 public struct AVFeedbackStatusBadge: View {
     @Environment(\.avBrandPalette) private var brandPalette
+    @AVScaledFontSize private var iconSize: CGFloat
 
     private let systemImage: String
     private let accessibilityLabel: String
     private let isHighlighted: Bool
     private let size: CGFloat
-    private let fontSize: CGFloat?
     private let borderOpacity: Double
 
     public init(
@@ -23,21 +23,24 @@ public struct AVFeedbackStatusBadge: View {
         self.accessibilityLabel = accessibilityLabel
         self.isHighlighted = isHighlighted
         self.size = size
-        self.fontSize = fontSize
         self.borderOpacity = borderOpacity
+        _iconSize = AVScaledFontSize(wrappedValue: fontSize ?? size * 0.41)
     }
 
     public var body: some View {
         Image(systemName: systemImage)
-            .font(.system(size: fontSize ?? size * 0.41, weight: .black))
+            .font(.system(size: iconSize, weight: .black))
             .foregroundStyle(isHighlighted ? brandPalette.ink : AVBrandColor.textInverse)
-            .frame(width: size, height: size)
+            .frame(width: size + $iconSize, height: size + $iconSize)
             .background(backgroundColor, in: Circle())
             .overlay {
                 Circle()
                     .stroke(Color.white.opacity(borderOpacity), lineWidth: 1)
             }
             .accessibilityLabel(accessibilityLabel)
+            // The badge marks a corner of an artwork or a control that keeps its size: past the
+            // second accessibility size it would cover what it marks.
+            .dynamicTypeSize(...DynamicTypeSize.accessibility2)
     }
 
     private var backgroundColor: Color {

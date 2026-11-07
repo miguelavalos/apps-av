@@ -3,6 +3,7 @@ import SwiftUI
 
 public struct AVMiniPlayerScaffold<Artwork: View, Controls: View>: View {
     @Environment(\.avBrandPalette) private var brandPalette
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     private let title: String
     private let subtitle: String
@@ -51,7 +52,7 @@ public struct AVMiniPlayerScaffold<Artwork: View, Controls: View>: View {
 
                     titleText
                         .font(.footnote.weight(.bold))
-                        .lineLimit(2)
+                        .lineLimit(isAccessibilitySize ? 3 : 2)
                         .minimumScaleFactor(0.85)
                         .fixedSize(horizontal: false, vertical: true)
                 }
@@ -59,22 +60,28 @@ public struct AVMiniPlayerScaffold<Artwork: View, Controls: View>: View {
                 Text(subtitle)
                     .font(.caption.weight(.semibold))
                     .foregroundStyle(isSubtitleHighlighted ? brandPalette.accent : AVBrandColor.textSecondary)
-                    .lineLimit(1)
+                    .lineLimit(secondaryLineLimit)
                     .minimumScaleFactor(0.75)
                     .allowsTightening(true)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 Text(detail)
                     .font(.caption2.weight(.medium))
                     .foregroundStyle(AVBrandColor.textSecondary.opacity(0.88))
-                    .lineLimit(1)
+                    .lineLimit(secondaryLineLimit)
                     .minimumScaleFactor(0.75)
                     .allowsTightening(true)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             .layoutPriority(1)
 
             Spacer(minLength: 8)
 
             controls
+                // The controls are 34 pt circles beside the host's play button, in one row next
+                // to the text: past the first accessibility size their icons would no longer fit
+                // inside them.
+                .dynamicTypeSize(...DynamicTypeSize.accessibility1)
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 12)
@@ -107,6 +114,20 @@ public struct AVMiniPlayerScaffold<Artwork: View, Controls: View>: View {
         Text(title)
             .foregroundStyle(AVBrandColor.textPrimary)
             .allowsTightening(true)
+    }
+
+    private var isAccessibilitySize: Bool {
+        dynamicTypeSize.isAccessibilitySize
+    }
+
+    /// One line each at the default text size and below, as before; above it the lines are
+    /// too wide for the column, so they may wrap to two, and to three at the accessibility
+    /// sizes, instead of being cut.
+    private var secondaryLineLimit: Int {
+        if isAccessibilitySize {
+            return 3
+        }
+        return dynamicTypeSize > .large ? 2 : 1
     }
 }
 
@@ -154,7 +175,7 @@ public extension AVMiniPlayerControlButton where Label == AnyView {
         ) {
             AnyView(
                 Image(systemName: systemImage)
-                    .font(.system(size: 13, weight: .bold))
+                    .avScaledFont(size: 13, weight: .bold)
             )
         }
     }
@@ -362,7 +383,7 @@ public extension AVFooterPlayerControlButton where Label == AnyView {
         ) {
             AnyView(
                 Image(systemName: systemImage)
-                    .font(.system(size: 18, weight: .bold))
+                    .avScaledFont(size: 18, weight: .bold)
             )
         }
     }
@@ -389,5 +410,9 @@ private struct AVMaterialControlButton<Label: View>: View {
         .buttonStyle(.plain)
         .disabled(!isEnabled)
         .accessibilityIdentifier(accessibilityIdentifier)
+        // The circle keeps the size the host's control row is built on (54 pt circles sit five
+        // in a row in the player): past the second accessibility size the icon would no longer
+        // fit inside it.
+        .dynamicTypeSize(...DynamicTypeSize.accessibility2)
     }
 }

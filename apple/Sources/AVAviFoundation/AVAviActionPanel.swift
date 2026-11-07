@@ -56,7 +56,7 @@ public struct AVAviActionPanel<Content: View, Footer: View>: View {
         }
         .padding(AVBrandSpacing.sm)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .frame(height: 356, alignment: .top)
+        .frame(minHeight: 356, alignment: .top)
         .background(AVBrandColor.elevatedSurface.opacity(0.62), in: RoundedRectangle(cornerRadius: AVBrandRadius.card, style: .continuous))
     }
 
@@ -64,12 +64,14 @@ public struct AVAviActionPanel<Content: View, Footer: View>: View {
         HStack(alignment: .center, spacing: AVBrandSpacing.sm) {
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
-                    .font(.system(size: 14, weight: .black))
+                    .avScaledFont(size: 14, weight: .black)
                     .foregroundStyle(AVBrandColor.textPrimary)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 Text(pageLabel)
-                    .font(.system(size: 11, weight: .bold))
+                    .avScaledFont(size: 11, weight: .bold)
                     .foregroundStyle(AVBrandColor.textSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
             }
 
             Spacer(minLength: 0)
@@ -105,10 +107,7 @@ public struct AVAviActionPanel<Content: View, Footer: View>: View {
         action: @escaping () -> Void
     ) -> some View {
         Button(action: action) {
-            Image(systemName: systemImage)
-                .font(.system(size: 10, weight: .black))
-                .frame(width: 28, height: 28)
-                .background(AVBrandColor.cardSurface, in: Circle())
+            AVAviPanelPagingIcon(systemImage: systemImage)
         }
         .buttonStyle(.plain)
         .disabled(!isEnabled)
@@ -212,13 +211,14 @@ public struct AVAviPopoverActionPanel<Content: View>: View {
         HStack(alignment: .center, spacing: 10) {
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
-                    .font(.system(size: 13, weight: .bold))
+                    .avScaledFont(size: 13, weight: .bold)
                     .foregroundStyle(AVBrandColor.textPrimary)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 Text(pageLabel)
-                    .font(.system(size: 11, weight: .bold))
+                    .avScaledFont(size: 11, weight: .bold)
                     .foregroundStyle(AVBrandColor.textSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
             }
 
             Spacer(minLength: 0)
@@ -256,10 +256,7 @@ public struct AVAviPopoverActionPanel<Content: View>: View {
         action: @escaping () -> Void
     ) -> some View {
         Button(action: action) {
-            Image(systemName: systemImage)
-                .font(.system(size: 10, weight: .black))
-                .frame(width: 28, height: 28)
-                .background(AVBrandColor.cardSurface, in: Circle())
+            AVAviPanelPagingIcon(systemImage: systemImage)
         }
         .buttonStyle(.plain)
         .disabled(!isEnabled)
@@ -268,7 +265,23 @@ public struct AVAviPopoverActionPanel<Content: View>: View {
     }
 }
 
+/// The chevron of a paging button, in a circle that grows by the points the icon gains.
+private struct AVAviPanelPagingIcon: View {
+    @AVScaledFontSize private var iconSize: CGFloat = 10
+
+    let systemImage: String
+
+    var body: some View {
+        Image(systemName: systemImage)
+            .font(.system(size: iconSize, weight: .black))
+            .frame(width: 28 + $iconSize, height: 28 + $iconSize)
+            .background(AVBrandColor.cardSurface, in: Circle())
+    }
+}
+
 public struct AVAviPanelCloseButton: View {
+    @AVScaledFontSize private var iconSize: CGFloat = 11
+
     private let accessibilityLabel: String
     private let accessibilityIdentifier: String?
     private let action: () -> Void
@@ -286,9 +299,9 @@ public struct AVAviPanelCloseButton: View {
     public var body: some View {
         Button(action: action) {
             Image(systemName: "xmark")
-                .font(.system(size: 11, weight: .black))
+                .font(.system(size: iconSize, weight: .black))
                 .foregroundStyle(AVBrandColor.textSecondary)
-                .frame(width: 30, height: 30)
+                .frame(width: 30 + $iconSize, height: 30 + $iconSize)
                 .background(AVBrandColor.cardSurface, in: Circle())
         }
         .buttonStyle(.plain)
@@ -299,6 +312,8 @@ public struct AVAviPanelCloseButton: View {
 
 public struct AVAviCommandButton: View {
     @Environment(\.avBrandPalette) private var brandPalette
+    @AVScaledFontSize private var iconSize: CGFloat = 13
+    @AVScaledFontSize private var titleSize: CGFloat = 14
 
     private let title: String
     private let systemImage: String
@@ -321,26 +336,25 @@ public struct AVAviCommandButton: View {
         Button(action: action) {
             HStack(spacing: AVBrandSpacing.md) {
                 Image(systemName: systemImage)
-                    .font(.system(size: 13, weight: .black))
+                    .font(.system(size: iconSize, weight: .black))
                     .foregroundStyle(brandPalette.accent)
-                    .frame(width: 28, height: 28)
+                    .frame(width: 28 + $iconSize, height: 28 + $iconSize)
                     .background(brandPalette.accent.opacity(0.1), in: Circle())
 
                 Text(title)
-                    .font(.system(size: 14, weight: .black))
+                    .font(.system(size: titleSize, weight: .black))
                     .foregroundStyle(AVBrandColor.textPrimary)
-                    .lineLimit(1)
                     .multilineTextAlignment(.leading)
-                    .minimumScaleFactor(0.78)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 Spacer(minLength: 0)
 
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 10, weight: .black))
+                    .avScaledFont(size: 10, weight: .black)
                     .foregroundStyle(AVBrandColor.textSecondary.opacity(0.7))
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .frame(height: 36)
+            .frame(minHeight: 36 + $titleSize)
             .padding(.horizontal, AVBrandSpacing.sm)
             .background(AVBrandColor.cardSurface.opacity(0.92), in: RoundedRectangle(cornerRadius: 15, style: .continuous))
             .overlay {
@@ -355,6 +369,9 @@ public struct AVAviCommandButton: View {
 }
 
 public struct AVAviStopPanelButton: View {
+    @AVScaledFontSize private var iconSize: CGFloat = 11
+    @AVScaledFontSize private var titleSize: CGFloat = 13
+
     private let title: String
     private let accessibilityIdentifier: String
     private let action: () -> Void
@@ -373,20 +390,21 @@ public struct AVAviStopPanelButton: View {
         Button(action: action) {
             HStack(spacing: AVBrandSpacing.sm) {
                 Image(systemName: "stop.fill")
-                    .font(.system(size: 11, weight: .black))
+                    .font(.system(size: iconSize, weight: .black))
                     .foregroundStyle(AVBrandColor.textSecondary)
-                    .frame(width: 28, height: 28)
+                    .frame(width: 28 + $iconSize, height: 28 + $iconSize)
                     .background(AVBrandColor.textSecondary.opacity(0.1), in: Circle())
 
                 Text(title)
-                    .font(.system(size: 13, weight: .black))
+                    .font(.system(size: titleSize, weight: .black))
                     .foregroundStyle(AVBrandColor.textSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 Spacer(minLength: 0)
             }
             .padding(.horizontal, 11)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .frame(height: 38)
+            .frame(minHeight: 38 + $titleSize)
             .background(AVBrandColor.cardSurface.opacity(0.7), in: RoundedRectangle(cornerRadius: 15, style: .continuous))
             .overlay {
                 RoundedRectangle(cornerRadius: 15, style: .continuous)

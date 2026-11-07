@@ -12,9 +12,10 @@ public struct AVCompactStatusBadge: View {
 
     public var body: some View {
         Text(title)
-            .font(.system(size: 10, weight: .black))
+            .avScaledFont(size: 10, weight: .black)
             .foregroundStyle(brandPalette.accent)
-            .lineLimit(1)
+            .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
             .padding(.horizontal, 7)
             .padding(.vertical, 3)
             .background(brandPalette.accent.opacity(0.1), in: Capsule())
